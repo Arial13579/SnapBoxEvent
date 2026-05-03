@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snap Box | בוטיק עמדות צילום</title>
-        /* תמונת עסק */
-
-<link rel="icon" type="image/jpeg" href="https://files.oaiusercontent.com/file-m06i8L3qAnQe6qQ2FndVpW?se=2026-05-03T15%3A17%3A50Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D4585c54c-811c-43f1-9c3f-c1f0b0051e7f.webp&sig=q4yq/R5Zf74/e0S7A7oE5V7aF8Y9U6l8X6n3g3o3z8E%3D">
-
     
+    <!-- לוגו בלשונית הדפדפן -->
+    <link rel="icon" type="image/jpeg" href="https://files.oaiusercontent.com/file-m06i8L3qAnQe6qQ2FndVpW?se=2026-05-03T15%3A17%3A50Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D4585c54c-811c-43f1-9c3f-c1f0b0051e7f.webp&sig=q4yq/R5Zf74/e0S7A7oE5V7aF8Y9U6l8X6n3g3o3z8E%3D">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -50,31 +49,30 @@
         @keyframes fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-in { animation: fade-in 1.2s ease-out forwards; }
 
-        /* כפתור וואטסאפ צף */
-      /* כפתור וואטסאפ צף */
-.whatsapp-float { 
-    position: fixed; 
-    bottom: 30px; 
-    left: 30px; 
-background-color: #00000;   
-    color: white; 
-    width: 60px; 
-    height: 60px; 
-    border-radius: 50px; 
-    text-align: center; 
-    font-size: 30px; 
-    box-shadow: 2px 2px 15px rgba(0,0,0,0.2); 
-    z-index: 400; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    transition: transform 0.3s ease; 
-}
+        /* כפתור וואטסאפ צף - מעודכן לשחור פרימיום */
+        .whatsapp-float { 
+            position: fixed; 
+            bottom: 30px; 
+            left: 30px; 
+            background-color: #1A1A1A;   
+            color: white; 
+            width: 60px; 
+            height: 60px; 
+            border-radius: 50px; 
+            text-align: center; 
+            font-size: 30px; 
+            box-shadow: 2px 2px 15px rgba(0,0,0,0.2); 
+            z-index: 400; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: all 0.3s ease; 
+        }
 
-.whatsapp-float:hover { 
-    transform: scale(1.1); 
-    background-color: #D4AF37; /* צבע מעבר לזהב כשעוברים עם העכבר */
-}
+        .whatsapp-float:hover { 
+            transform: scale(1.1); 
+            background-color: #D4AF37; /* הופך לזהב במעבר עכבר */
+        }
     </style>
 </head>
 <body>
@@ -224,4 +222,4 @@ background-color: #00000;
         }
     </script>
 </body>
-</html>	
+</html>
