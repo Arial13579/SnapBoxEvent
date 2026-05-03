@@ -49,37 +49,40 @@
         @keyframes fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-in { animation: fade-in 1.2s ease-out forwards; }
 
-        /* כפתור וואטסאפ צף - מתוקן לשחור */
+        /* עיצוב בסיסי לכפתור וואטסאפ (הצבע נקבע ישירות ב-HTML למטה כדי למנוע דריסה) */
         .whatsapp-float { 
             position: fixed; 
             bottom: 30px; 
             left: 30px; 
-            background-color: #1A1A1A; /* צבע שחור פרימיום תקין */
-            color: white; 
             width: 60px; 
             height: 60px; 
             border-radius: 50px; 
             text-align: center; 
             font-size: 30px; 
-            box-shadow: 2px 2px 15px rgba(0,0,0,0.2); 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
             z-index: 400; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            transition: all 0.3s ease; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .whatsapp-float:hover { 
-            transform: scale(1.1); 
-            background-color: #D4AF37; /* הופך לזהב במעבר עכבר */
+            transform: scale(1.1) rotate(5deg); 
+            background-color: #D4AF37 !important; /* הופך לזהב במעבר עכבר */
         }
     </style>
 </head>
 <body>
 
-    <!-- כפתור וואטסאפ צף -->
-    <a href="https://wa.me/972546056180?text=היי%20מה%20נשמע%20רציתי%20לשמוע%20יותר%20על%20החבילות%20שלכם%20של%20העמדת%20צילום?" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
-        <i data-lucide="message-circle"></i>
+    <!-- כפתור וואטסאפ צף - הוספת צבע שחור ישיר (Inline Style) -->
+    <a href="https://wa.me/972546056180?text=היי%20מה%20נשמע%20רציתי%20לשמוע%20יותר%20על%20החבילות%20שלכם%20של%20העמדת%20צילום?" 
+       class="whatsapp-float" 
+       style="background-color: #1A1A1A !important; color: #FFFFFF !important;"
+       target="_blank" 
+       rel="noopener noreferrer">
+        <i data-lucide="message-circle" style="width: 32px; height: 32px;"></i>
     </a>
 
     <!-- תפריט נגישות -->
