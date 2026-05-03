@@ -1,0 +1,362 @@
+import React, { useState, useEffect, useMemo } from 'react';
+import { initializeApp } from 'firebase/app';
+import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from 'firebase/auth';
+import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { 
+  CheckCircle, MessageCircle, 
+  Send, Instagram, Facebook,
+  Accessibility, X, Contrast, Type, Eye
+} from 'lucide-react';
+
+// Firebase configuration
+const firebaseConfig = JSON.parse(__firebase_config);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const appId = typeof __app_id !== 'undefined' ? __app_id : 'snap-box-booth';
+
+// --- Business Config ---
+const MY_WHATSAPP_NUMBER = "972546056180"; 
+const BUSINESS_NAME = "Snap Box";
+const INSTAGRAM_URL = "https://www.instagram.com/snapbox_event.official?igsh=MWNlMHU1eXF4OXh6cA==";
+const FACEBOOK_URL = "https://www.facebook.com/share/18GcWQXLqA/?mibextid=wwXIfr";
+
+const CustomLogo = ({ className = "h-12 w-12" }) => (
+  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 45 L35 75 M50 45 L65 75 M42 75 L58 75" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+    <rect x="32" y="30" width="36" height="22" rx="3" stroke="currentColor" strokeWidth="2.5"/>
+    <circle cx="50" cy="41" r="6" stroke="currentColor" strokeWidth="2.5"/>
+    <rect x="46" y="26" width="8" height="4" rx="1" fill="currentColor"/>
+    <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 2" opacity="0.3"/>
+  </svg>
+);
+
+export default function App() {
+  const [user, setUser] = useState(null);
+  const [showAccMenu, setShowAccMenu] = useState(false);
+  const [accSettings, setAccSettings] = useState({
+    largeText: false,
+    highContrast: false,
+    highlight: false
+  });
+  
+  const [dateParts, setDateParts] = useState({ day: '', month: '', year: '' });
+  const [formData, setFormData] = useState({
+    name: '', phone: '', eventType: '', guests: '', city: '', notes: ''
+  });
+  const [status, setStatus] = useState('idle');
+  const [finalWhatsappUrl, setFinalWhatsappUrl] = useState('');
+
+  const days = useMemo(() => Array.from({ length: 31 }, (_, i) => (i + 1).toString().padStart(2, '0')), []);
+  const months = useMemo(() => Array.from({ length: 12 }, (_, i) => (i + 1).toString().padStart(2, '0')), []);
+  const years = useMemo(() => Array.from({ length: 10 }, (_, i) => (2026 + i).toString()), []);
+
+  useEffect(() => {
+    const initAuth = async () => {
+      try {
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+          await signInWithCustomToken(auth, __initial_auth_token);
+        } else {
+          await signInAnonymously(auth);
+        }
+      } catch (error) { console.error(error); }
+    };
+    initAuth();
+    const unsubscribe = onAuthStateChanged(auth, setUser);
+    return () => unsubscribe();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!user || !dateParts.day || !dateParts.month || !dateParts.year) return;
+    setStatus('loading');
+    
+    const fullDate = `${dateParts.day}/${dateParts.month}/${dateParts.year}`;
+    
+    try {
+      await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'leads'), {
+        ...formData, 
+        eventDate: fullDate, 
+        businessName: BUSINESS_NAME, 
+        createdAt: serverTimestamp(), 
+        userId: user.uid
+      });
+
+      const messageText = `שלום, אשמח לקבל פרטים נוספים לגבי הזמנת עמדת צילום לאירוע שלי\n\n` +
+                          `הנה הפרטים ששלחתי:\n` +
+                          `שם: ${formData.name}\n` +
+                          `טלפון: ${formData.phone}\n` +
+                          `מיקום: ${formData.city || 'לא צוין'}\n` +
+                          `סוג אירוע: ${formData.eventType}\n` +
+                          `תאריך: ${fullDate}\n` +
+                          `כמות אורחים: ${formData.guests}\n` +
+                          (formData.notes ? `הערות נוספות: ${formData.notes}\n` : '') +
+                          `תודה, אשמח שתחזרו אלי בקרוב!`;
+
+      const whatsappLink = `https://wa.me/${MY_WHATSAPP_NUMBER}?text=${encodeURIComponent(messageText)}`;
+      setFinalWhatsappUrl(whatsappLink);
+      setStatus('success');
+      window.open(whatsappLink, '_blank');
+    } catch (error) {
+      console.error(error);
+      setStatus('error');
+    }
+  };
+
+  const toggleAcc = (key) => setAccSettings(prev => ({ ...prev, [key]: !prev[key] }));
+  const scrollToContact = () => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+
+  const floatingWhatsappText = "היי מה נשמע רציתי לשמוע יותר על החבילות שלכם של העמדת צילום?";
+  const floatingWhatsappUrl = `https://wa.me/${MY_WHATSAPP_NUMBER}?text=${encodeURIComponent(floatingWhatsappText)}`;
+
+  return (
+    <div 
+      className={`min-h-screen transition-all duration-500 rtl selection:bg-[#D4AF37]/30 
+        ${accSettings.largeText ? 'large-text-active' : ''}
+        ${accSettings.highContrast ? 'bg-black text-white' : 'bg-[#FCFBFA] text-[#1A1A1A]'}
+        ${accSettings.highlight ? 'highlight-mode' : ''}
+      `} 
+      dir="rtl"
+    >
+      
+      {/* Accessibility Menu */}
+      <div className="fixed top-24 left-6 z-[300] flex flex-col items-center">
+        <button 
+          onClick={() => setShowAccMenu(!showAccMenu)}
+          className={`w-14 h-14 rounded-full shadow-2xl bg-[#1A1A1A] text-white flex items-center justify-center transition-all duration-500 border border-white/20 
+            ${showAccMenu ? 'rotate-180 scale-110' : ''}
+          `}
+        >
+          {showAccMenu ? <X size={24} /> : <Accessibility size={24} />}
+        </button>
+
+        <div className={`absolute top-0 left-0 w-14 h-14 transition-all duration-500 ${showAccMenu ? 'opacity-100 scale-100' : 'opacity-0 scale-0 pointer-events-none'}`}>
+          <button 
+            onClick={() => toggleAcc('largeText')}
+            className={`absolute transition-all duration-500 bg-white text-black w-12 h-12 rounded-full shadow-xl flex items-center justify-center border border-gray-100 hover:bg-[#D4AF37] hover:text-white
+              ${showAccMenu ? 'translate-y-20' : 'translate-y-0'}
+              ${accSettings.largeText ? 'bg-[#D4AF37] text-white ring-4 ring-[#D4AF37]/30' : ''}
+            `}
+            title="הגדלת טקסט"
+          >
+            <span className="font-bold text-lg">A+</span>
+          </button>
+          <button 
+            onClick={() => toggleAcc('highContrast')}
+            className={`absolute transition-all duration-500 bg-white text-black w-12 h-12 rounded-full shadow-xl flex items-center justify-center border border-gray-100 hover:bg-[#D4AF37] hover:text-white
+              ${showAccMenu ? 'translate-y-16 translate-x-16' : 'translate-y-0 translate-x-0'}
+              ${accSettings.highContrast ? 'bg-[#D4AF37] text-white ring-4 ring-[#D4AF37]/30' : ''}
+            `}
+            title="ניגודיות"
+          >
+            <Contrast size={20} />
+          </button>
+          <button 
+            onClick={() => toggleAcc('highlight')}
+            className={`absolute transition-all duration-500 bg-white text-black w-12 h-12 rounded-full shadow-xl flex items-center justify-center border border-gray-100 hover:bg-[#D4AF37] hover:text-white
+              ${showAccMenu ? 'translate-x-20' : 'translate-x-0'}
+              ${accSettings.highlight ? 'bg-[#D4AF37] text-white ring-4 ring-[#D4AF37]/30' : ''}
+            `}
+            title="הבלטה"
+          >
+            <Eye size={20} />
+          </button>
+        </div>
+      </div>
+
+      {/* Floating WhatsApp */}
+      <a 
+        href={floatingWhatsappUrl}
+        target="_blank" rel="noopener noreferrer"
+        className="fixed bottom-8 left-8 z-[100] w-16 h-16 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-all border-2 border-white bg-[#1A1A1A]"
+      >
+        <MessageCircle size={30} color="white" />
+      </a>
+
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 z-[150] px-4 py-6 md:px-12">
+        <nav className={`max-w-7xl mx-auto flex justify-between items-center p-4 px-10 rounded-full bg-white/70 backdrop-blur-xl border border-gray-100 shadow-sm transition-all duration-500
+          ${accSettings.highContrast ? 'bg-zinc-900 border-white/20' : ''}
+        `}>
+          <div className="flex items-center gap-4">
+            <CustomLogo className={`h-10 w-10 ${accSettings.highContrast ? 'text-white' : 'text-[#D4AF37]'}`} />
+            <div className="flex flex-col">
+              <span className={`nav-brand-text font-black uppercase tracking-tight leading-none text-2xl ${accSettings.highContrast ? 'text-white' : ''}`}>{BUSINESS_NAME}</span>
+              <span className={`nav-sub-text text-[10px] font-bold tracking-[0.2em] uppercase mt-1 ${accSettings.highContrast ? 'text-gray-400' : 'text-gray-500'}`}>פשוט רגעים יפים מעץ טבעי</span>
+            </div>
+          </div>
+          <button onClick={scrollToContact} className={`nav-cta-btn rounded-full font-black uppercase transition-all tracking-wider text-[11px] px-8 py-3 shadow-lg
+            ${accSettings.highContrast ? 'bg-white text-black hover:bg-[#D4AF37]' : 'bg-[#1A1A1A] text-white hover:bg-[#D4AF37]'}
+          `}>
+            שריינו תאריך
+          </button>
+        </nav>
+      </header>
+
+      {/* Hero */}
+      <section className="relative pt-64 pb-16 px-6 max-w-7xl mx-auto text-center">
+        <div className="mb-12 inline-flex items-center gap-6 animate-fade-in">
+          <div className={`h-[1px] w-16 ${accSettings.highContrast ? 'bg-white' : 'bg-[#D4AF37]'}`}></div>
+          <span className={`hero-tag font-bold uppercase tracking-[0.4em] text-sm ${accSettings.highContrast ? 'text-white' : 'text-[#D4AF37]'}`}>בוטיק עמדות צילום</span>
+          <div className={`h-[1px] w-16 ${accSettings.highContrast ? 'bg-white' : 'bg-[#D4AF37]'}`}></div>
+        </div>
+        
+        <h1 className={`hero-title leading-[1.1] mb-14 tracking-tighter text-6xl md:text-[8rem] font-serif italic transition-all
+          ${accSettings.highContrast ? 'text-white' : 'text-[#1A1A1A]'}
+        `}>
+          היופי שברגע <br />
+          <span className={`font-light not-italic ${accSettings.highContrast ? 'text-[#D4AF37]' : 'text-[#D4AF37]'}`}>מעץ טבעי.</span>
+        </h1>
+
+        <p className={`hero-subtext max-w-2xl mx-auto text-xl md:text-2xl font-medium leading-relaxed
+          ${accSettings.highContrast ? 'text-gray-300' : 'text-gray-500'}
+        `}>
+          עמדת צילום בוטיק בעבודת יד. <br />
+          שילוב מושלם של חמימות אורגנית וטכנולוגיה עילית.
+        </p>
+      </section>
+
+      {/* Form */}
+      <section id="contact-form" className="py-20 px-6 max-w-6xl mx-auto">
+        <div className={`form-container transition-all duration-700 p-8 md:p-24 rounded-[100px] shadow-2xl border
+          ${accSettings.highContrast ? 'bg-zinc-900 border-white/20' : 'bg-white border-gray-100/50'}
+        `}>
+          <div className="text-center mb-24">
+            <h2 className={`section-title mb-8 text-6xl md:text-7xl font-serif italic ${accSettings.highContrast ? 'text-white' : 'text-[#1A1A1A]'}`}>שריינו מקום</h2>
+            <div className="mx-auto mb-10 w-24 h-[1px] bg-[#D4AF37]"></div>
+            <p className="section-subtitle font-black tracking-[0.3em] uppercase text-xs text-gray-400">נשמח לחזור אליכם עם הצעה מותאמת אישית</p>
+          </div>
+
+          {status === 'success' ? (
+            <div className="text-center py-20">
+              <CheckCircle size={64} className="text-green-500 mx-auto mb-8" />
+              <h3 className={`success-title text-4xl font-black mb-8 ${accSettings.highContrast ? 'text-white' : ''}`}>הפרטים נשלחו!</h3>
+              <a href={finalWhatsappUrl} target="_blank" rel="noopener noreferrer" className="success-btn inline-flex items-center gap-4 bg-black text-white px-12 py-6 rounded-full text-xl font-bold hover:scale-105 transition-all">
+                מעבר לוואטסאפ <MessageCircle size={24} />
+              </a>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-20">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
+                <div className={`border-b focus-within:border-[#D4AF37] transition-all ${accSettings.highContrast ? 'border-zinc-700' : 'border-gray-200'}`}>
+                  <label className="form-label block font-black uppercase mb-3 tracking-widest text-[12px] text-[#D4AF37]">שם מלא</label>
+                  <input required placeholder="איך קוראים לכם?" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className={`form-input w-full bg-transparent py-6 outline-none text-3xl font-medium placeholder:text-gray-300 ${accSettings.highContrast ? 'text-white' : ''}`} />
+                </div>
+                <div className={`border-b focus-within:border-[#D4AF37] transition-all text-left ${accSettings.highContrast ? 'border-zinc-700' : 'border-gray-200'}`}>
+                  <label className="form-label block font-black uppercase mb-3 tracking-widest text-[12px] text-[#D4AF37] text-right">טלפון נייד</label>
+                  <input required type="tel" placeholder="050-0000000" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className={`form-input w-full bg-transparent py-6 outline-none text-3xl font-medium text-left placeholder:text-gray-300 ${accSettings.highContrast ? 'text-white' : ''}`} />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14">
+                {['סוג אירוע', 'עיר', 'כמות אורחים', 'תאריך'].map((label, idx) => (
+                  <div key={idx} className={`border-b ${accSettings.highContrast ? 'border-zinc-700' : 'border-gray-200'}`}>
+                    <label className="form-label block font-black uppercase mb-3 tracking-widest text-[12px] text-[#D4AF37]">{label}</label>
+                    {label === 'סוג אירוע' ? (
+                      <select required value={formData.eventType} onChange={(e) => setFormData({...formData, eventType: e.target.value})} className={`form-select w-full bg-transparent py-6 outline-none text-xl font-medium ${accSettings.highContrast ? 'text-white' : ''}`}>
+                        <option value="" disabled>בחר</option>
+                        <option value="חתונה">חתונה</option>
+                        <option value="בר/בת מצווה">בר/בת מצווה</option>
+                        <option value="אירוע עסקי">אירוע עסקי</option>
+                      </select>
+                    ) : label === 'תאריך' ? (
+                      <div className="flex gap-1">
+                        <select required value={dateParts.day} onChange={(e) => setDateParts({...dateParts, day: e.target.value})} className={`form-date-select bg-transparent py-6 outline-none text-sm ${accSettings.highContrast ? 'text-white' : ''}`}>
+                          <option value="">יום</option>
+                          {days.map(d => <option key={d} value={d}>{d}</option>)}
+                        </select>
+                        <select required value={dateParts.month} onChange={(e) => setDateParts({...dateParts, month: e.target.value})} className={`form-date-select bg-transparent py-6 outline-none text-sm ${accSettings.highContrast ? 'text-white' : ''}`}>
+                          <option value="">חודש</option>
+                          {months.map(m => <option key={m} value={m}>{m}</option>)}
+                        </select>
+                        <select required value={dateParts.year} onChange={(e) => setDateParts({...dateParts, year: e.target.value})} className={`form-date-select bg-transparent py-6 outline-none text-sm ${accSettings.highContrast ? 'text-white' : ''}`}>
+                          <option value="">שנה</option>
+                          {years.map(y => <option key={y} value={y}>{y}</option>)}
+                        </select>
+                      </div>
+                    ) : (
+                      <input 
+                        placeholder={label === 'עיר' ? 'איפה זה?' : 'כמה?'} 
+                        value={label === 'עיר' ? formData.city : formData.guests}
+                        onChange={(e) => setFormData({...formData, [label === 'עיר' ? 'city' : 'guests']: e.target.value})}
+                        className={`form-input-small w-full bg-transparent py-6 outline-none text-xl font-medium ${accSettings.highContrast ? 'text-white' : ''}`} 
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              <button type="submit" className={`form-submit-btn w-full py-10 text-xl rounded-3xl transition-all font-black uppercase tracking-[0.3em] shadow-2xl
+                ${accSettings.highContrast ? 'bg-white text-black hover:bg-[#D4AF37]' : 'bg-[#1A1A1A] text-white hover:bg-[#D4AF37]'}
+              `}>
+                {status === 'loading' ? 'שולח...' : 'שליחה ותיאום בוואטסאפ'}
+              </button>
+            </form>
+          )}
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className={`py-24 text-center border-t transition-all ${accSettings.highContrast ? 'bg-zinc-950 border-zinc-800' : 'bg-white border-gray-100'}`}>
+        <div className="flex justify-center gap-12 mb-12">
+          <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className={`social-icon transition-all duration-300 transform hover:scale-125 hover:text-[#D4AF37] ${accSettings.highContrast ? 'text-white' : 'text-gray-400'}`}>
+            <Instagram size={36} strokeWidth={1.5} />
+          </a>
+          <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className={`social-icon transition-all duration-300 transform hover:scale-125 hover:text-[#D4AF37] ${accSettings.highContrast ? 'text-white' : 'text-gray-400'}`}>
+            <Facebook size={36} strokeWidth={1.5} />
+          </a>
+        </div>
+        <div className="flex flex-col items-center">
+            <h3 className={`footer-brand-text text-3xl font-black uppercase tracking-[0.8em] mr-[-0.8em] mb-4 ${accSettings.highContrast ? 'text-white' : 'text-[#1A1A1A]'}`}>
+              SNAP BOX
+            </h3>
+            <p className="footer-copyright text-[11px] text-gray-400 font-medium tracking-widest uppercase mt-2">
+                © 2026 כל הזכויות שמורות ל-SNAP BOX EVENT
+            </p>
+        </div>
+      </footer>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+        
+        body { font-family: 'Assistant', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        
+        /* AGGRESSIVE LARGE TEXT SYSTEM 
+           We use specific classes to ensure EVERY element scales up
+        */
+        .large-text-active { 
+            font-size: 1.5rem !important; /* Increase base font size */
+        }
+        
+        .large-text-active .hero-title { font-size: clamp(4rem, 15vw, 10rem) !important; }
+        .large-text-active .hero-subtext { font-size: 2rem !important; max-width: 90% !important; }
+        .large-text-active .section-title { font-size: 5rem !important; }
+        .large-text-active .section-subtitle { font-size: 1.2rem !important; }
+        
+        .large-text-active .form-label { font-size: 1.1rem !important; }
+        .large-text-active .form-input { font-size: 2.5rem !important; }
+        .large-text-active .form-select, 
+        .large-text-active .form-date-select, 
+        .large-text-active .form-input-small { 
+            font-size: 1.5rem !important; 
+        }
+        
+        .large-text-active .nav-brand-text { font-size: 2rem !important; }
+        .large-text-active .nav-cta-btn { font-size: 1rem !important; padding: 1rem 2.5rem !important; }
+        .large-text-active .form-submit-btn { font-size: 1.8rem !important; padding: 3rem !important; }
+        
+        .large-text-active .footer-brand-text { font-size: 2.5rem !important; }
+        .large-text-active .footer-copyright { font-size: 1rem !important; }
+
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fade-in 1.2s ease-out forwards; }
+        .highlight-mode a, .highlight-mode button { outline: 5px solid #D4AF37 !important; outline-offset: 6px !important; }
+        html { scroll-behavior: smooth; }
+      `}} />
+    </div>
+  );
+}
