@@ -19,32 +19,44 @@
         .font-serif { font-family: 'Playfair Display', serif; }
 
 
-        /* גלריה אינסופית מתוקנת */
+/* גלריה אינסופית - גרסה מהירה ויציבה */
 .marquee-container { 
     overflow: hidden; 
     width: 100%;
-    padding: 3rem 0; 
+    padding: 2rem 0; 
     background: #fff; 
-    margin: 2rem 0;
+    margin: 1rem 0;
     white-space: nowrap;
+    position: relative;
 }
 
 .marquee-content { 
     display: inline-flex; 
-    gap: 2rem;
-    width: max-content; /* גורם לתוכן לא להישבר */
-    animation: scroll-left 40s linear infinite; 
+    gap: 1.5rem; /* רווח בין התמונות */
+    width: max-content;
+    /* שינוי המהירות ל-15s הופך את זה למהיר בהרבה */
+    animation: scroll-left 15s linear infinite; 
 }
+
 .gallery-item {
-    height: 400px;
-    width: 300px;
-    object-fit: cover;
+    /* גובה ורוחב אחידים לכל סוגי המדיה */
+    height: 450px; 
+    width: 320px;
+    /* המאפיין החשוב ביותר למניעת עיוות */
+    object-fit: cover; 
     flex-shrink: 0;
     border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
+
 @keyframes scroll-left {
     0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); } /* תנועה שמאלה ללופ חלק */
+    100% { transform: translateX(-50%); } 
+}
+
+/* ביטול השפעות של נגישות על הגלריה אם הן מעוותות אותה */
+.high-contrast-active .marquee-container {
+    background-color: #1a1a1a !important;
 }
         /* נגישות */
         .large-text-active { --base-font-size: 20px; }
