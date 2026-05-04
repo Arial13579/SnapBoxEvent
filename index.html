@@ -9,6 +9,8 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+    <!-- הוספת Font Awesome כגיבוי חזק לאייקונים חברתיים -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
@@ -97,7 +99,8 @@
         .animate-fade-in { animation: fade-in 1s ease-out forwards; }
         @keyframes fade-in { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
-        .social-link:hover { color: #D4AF37; transform: scale(1.15); }
+        .social-link { color: #1A1A1A; transition: all 0.3s ease; }
+        .social-link:hover { color: #D4AF37; transform: scale(1.2); }
     </style>
 </head>
 <body>
@@ -105,7 +108,7 @@
     <!-- כפתור וואטסאפ -->
     <a href="https://wa.me/972546056180?text=היי%20מה%20נשמע%20רציתי%20לשמוע%20יותר%20על%20החבילות%20שלכם%20של%20העמדת%20צילום?" 
        class="whatsapp-float" target="_blank">
-        <i data-lucide="message-circle" size="32"></i>
+        <i class="fab fa-whatsapp text-3xl"></i>
     </a>
 
     <!-- נגישות -->
@@ -185,13 +188,13 @@
         </div>
     </section>
 
-    <!-- רשתות חברתיות -->
-    <div class="flex justify-center items-center gap-12 py-16">
-        <a href="https://www.instagram.com/snapbox_event.official?igsh=MWNlMHU1eXF4OXh6cA==" target="_blank" rel="noopener noreferrer" class="social-link text-[#1A1A1A] transition-all duration-300">
-            <i data-lucide="instagram" style="width: 45px; height: 45px;"></i>
+    <!-- רשתות חברתיות - תיקון נראות -->
+    <div class="flex justify-center items-center gap-12 py-16 bg-white/50">
+        <a href="https://www.instagram.com/snapbox_event.official?igsh=MWNlMHU1eXF4OXh6cA==" target="_blank" rel="noopener noreferrer" class="social-link">
+            <i class="fab fa-instagram text-5xl"></i>
         </a>
-        <a href="https://www.facebook.com/share/18GcWQXLqA/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="social-link text-[#1A1A1A] transition-all duration-300">
-            <i data-lucide="facebook" style="width: 45px; height: 45px;"></i>
+        <a href="https://www.facebook.com/share/18GcWQXLqA/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="social-link">
+            <i class="fab fa-facebook text-5xl"></i>
         </a>
     </div>
 
@@ -201,7 +204,6 @@
     </footer>
 
     <script>
-        // אתחול אייקונים - וודא שהפונקציה רצה בסוף
         lucide.createIcons();
 
         // גלריה אינסופית
