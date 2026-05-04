@@ -20,36 +20,42 @@
         body { font-family: 'Assistant', sans-serif; overflow-x: hidden; scroll-behavior: smooth; background-color: #FCFBFA; color: #1A1A1A; transition: background 0.3s, color 0.3s; }
         .font-serif { font-family: 'Playfair Display', serif; }
 
-        /* גלריה אינסופית (Marquee) */
-        .marquee-container { 
-            overflow: hidden; 
-            width: 100%;
-            padding: 3rem 0; 
-            background: #fff; 
-            margin: 2rem 0;
-            white-space: nowrap;
-        }
+      .marquee-container { 
+        overflow: hidden; 
+        width: 100%;
+        padding: 2rem 0; 
+        background: #fff; 
+        margin: 1rem 0;
+        white-space: nowrap;
+    }
 
-        .marquee-content { 
-            display: inline-flex; 
-            gap: 2rem;
-            width: max-content;
-            animation: scroll-left 10s linear infinite; 
-        }
+    .marquee-content { 
+        display: inline-flex; 
+        gap: 1.5rem;
+        width: max-content;
+        /* מהירות גבוהה: 5s. אם אתה רוצה "טיסה" ממש - שנה ל-3s */
+        animation: scroll-left 5s linear infinite; 
+        will-change: transform;
+    }
 
-        .gallery-item {
-            height: 350px;
-            width: auto;
-            border-radius: 24px;
-            object-fit: cover;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
+    /* אופטימיזציה לאנימציה חלקה */
+    @keyframes scroll-left {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
 
-        @keyframes scroll-left {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
+    .gallery-item {
+        height: 300px; /* הקטנתי מעט כדי שייכנסו יותר תמונות בפריים אחד */
+        width: auto;
+        border-radius: 20px;
+        object-fit: cover;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
 
+    /* עצירה במעבר עכבר - נותן תחושת שליטה למשתמש */
+    .marquee-container:hover .marquee-content {
+        animation-play-state: paused;
+    }
         /* מערכת נגישות */
         .large-text-active { --base-font-size: 20px; }
         .high-contrast-active { background-color: #000 !important; color: #fff !important; }
