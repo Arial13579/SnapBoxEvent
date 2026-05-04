@@ -30,7 +30,7 @@
         .marquee-content { 
             display: inline-flex; 
             gap: 15px;
-            animation: scroll-left 25s linear infinite; 
+            animation: scroll-left 40s linear infinite; 
         }
         .gallery-item {
             height: 400px;
@@ -82,7 +82,7 @@
 </head>
 <body>
 
-    <!-- כפתור וואטסאפ צף (Inline SVG למניעת היעלמות) -->
+    <!-- כפתור וואטסאפ צף -->
     <a href="https://wa.me/972546056180?text=היי%20מה%20נשמע%20רציתי%20לשמוע%20יותר%20על%20החבילות%20שלכם%20של%20העמדת%20צילום?" 
        class="whatsapp-float bg-[#1A1A1A] text-white" 
        target="_blank">
@@ -125,19 +125,27 @@
         <h1 class="text-6xl md:text-8xl italic font-serif leading-[1.1]">היופי שברגע <br /><span class="text-[#D4AF37] not-italic font-light">מעץ טבעי.</span></h1>
     </section>
 
-    <!-- גלריה -->
+    <!-- גלריה עם כל המדיה שביקשת -->
     <div class="marquee-container">
         <div class="marquee-content" id="marquee-inner">
-            <img src="photo_5893407665646406938_y.jpg" class="gallery-item" alt="עמדת צילום">
+            <img src="photo_5893407665646406938_y.jpg" class="gallery-item" alt="עמדת צילום 1">
+            <img src="photo_5893407665646406939_y.jpg" class="gallery-item" alt="עמדת צילום 2">
+            <img src="photo_5893407665646406940_y.jpg" class="gallery-item" alt="עמדת צילום 3">
             <video src="video_2025-11-02_20-35-12 (13).mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5893407665646406939_y.jpg" class="gallery-item" alt="עמדת צילום">
             <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5893407665646406940_y.jpg" class="gallery-item" alt="עמדת צילום">
             <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="עמדת צילום">
+            <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="עמדת צילום 4">
             <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5893407665646406936_y.jpg" class="gallery-item" alt="עמדת צילום">
-            <img src="photo_5893407665646406937_y.jpg" class="gallery-item" alt="עמדת צילום">
+            <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_5893407665186412855.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_5893407665186412857.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_5893407665186412858.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_5893407665186412859.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_5893407665186412860.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_5893407665646406936_y.jpg" class="gallery-item" alt="עמדת צילום 5">
+            <img src="photo_5893407665646406937_y.jpg" class="gallery-item" alt="עמדת צילום 6">
         </div>
     </div>
 
@@ -160,7 +168,7 @@
         </div>
     </section>
 
-    <!-- רשתות חברתיות - תיקון סופי עם SVG ישיר -->
+    <!-- רשתות חברתיות -->
     <div class="flex justify-center gap-12 py-12">
         <a href="https://www.instagram.com/snapbox_event.official?igsh=MWNlMHU1eXF4OXh6cA==" target="_blank" class="transition-all duration-300 transform hover:scale-125 text-[#1A1A1A] hover:text-[#D4AF37]">
             <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
@@ -179,6 +187,7 @@
     <script>
         lucide.createIcons();
         const marquee = document.getElementById('marquee-inner');
+        // שכפול התוכן כדי ליצור לופ אינסופי חלק
         marquee.innerHTML += marquee.innerHTML;
 
         const daySel = document.getElementById('day'), monthSel = document.getElementById('month'), yearSel = document.getElementById('year');
