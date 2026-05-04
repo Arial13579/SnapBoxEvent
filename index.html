@@ -72,6 +72,8 @@
             transform: scale(1.1) rotate(5deg); 
             background-color: #D4AF37 !important; /* הופך לזהב במעבר עכבר */
         }
+        .social-link { transition: all 0.3s ease; color: #9CA3AF; }
+        .social-link:hover { color: #D4AF37; transform: scale(1.2); }
     </style>
 </head>
 <body>
@@ -192,15 +194,22 @@
         </a>
     </div>
 
-    <!-- Footer -->
+   <!-- Footer -->
     <footer class="py-16 text-center border-t">
-        <h3 class="text-2xl font-black tracking-[0.5em] mb-4">SNAP BOX</h3>
+        <div class="flex justify-center gap-12 mb-10">
+            <a href="https://www.instagram.com/snapbox_event.official" target="_blank" class="social-link">
+                <i data-lucide="instagram" style="width: 32px; height: 32px;"></i>
+            </a>
+            <a href="https://www.facebook.com/share/18GcWQXLqA/" target="_blank" class="social-link">
+                <i data-lucide="facebook" style="width: 32px; height: 32px;"></i>
+            </a>
+        </div>
+        <h3 class="text-2xl font-black tracking-[0.5em] mb-4 uppercase">SNAP BOX</h3>
         <p class="text-[10px] text-gray-400">© 2026 כל הזכויות שמורות</p>
     </footer>
-
     <script>
+// אתחול אייקונים
         lucide.createIcons();
-
         // מילוי תאריכים
         const daySel = document.getElementById('day'), monthSel = document.getElementById('month'), yearSel = document.getElementById('year');
         for(let i=1; i<=31; i++) daySel.options.add(new Option(i, i));
