@@ -9,7 +9,8 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
         :root { --base-font-size: 16px; }
         html { font-size: var(--base-font-size); transition: font-size 0.3s ease; }
@@ -26,39 +27,25 @@
         .hero-tag-container { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; }
         .gold-line { height: 1px; width: 45px; background: linear-gradient(90deg, transparent, #D4AF37, transparent); }
 
- .marquee-container {
-    overflow: hidden;
-    width: 100%;
-    position: relative;
-    padding: 20px 0;
-}
+        /* גלריה זזה - מותאם לאורך (Portrait) */
+        .marquee-container { overflow: hidden; white-space: nowrap; padding: 3rem 0; background: transparent; margin: 2rem 0; }
+        .marquee-content { display: inline-flex; animation: scroll-left 40s linear infinite; gap: 20px; }
+        
+        @keyframes scroll-left {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); } /* תיקון כיוון האנימציה ללופ חלק */
+        }
+        
+        .gallery-item { 
+            width: 300px; /* רוחב צר */
+            height: 500px; /* גובה רב */
+            border-radius: 24px; 
+            object-fit: cover; 
+            flex-shrink: 0; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
+            border: 1px solid rgba(212, 175, 55, 0.2); 
+        }
 
-.marquee-content {
-    display: flex;
-    gap: 20px;
-    width: max-content; /* חשוב: גורם לתוכן להיפרס לרוחב המלא שלו */
-    animation: scroll 60s linear infinite; /* לופ אינסופי חלק */
-}
-
-/* האנימציה שיוצרת את הלופ */
-@keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); } /* זז בדיוק חצי מהדרך כי השכפלנו את התוכן */
-}
-
-.gallery-item {
-    width: 300px;  /* רוחב מותאם לאורך */
-    height: 500px; /* גובה מותאם לאורך */
-    object-fit: cover;
-    border-radius: 20px;
-    flex-shrink: 0; /* מונע מהתמונות להתכווץ */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-
-/* עצירת האנימציה כשהעכבר מעל (אופציונלי - נחמד למשתמש) */
-.marquee-container:hover .marquee-content {
-    animation-play-state: paused;
-}
         /* תפריט נגישות */
         .acc-menu-open #accMainBtn { transform: rotate(180deg); }
         .acc-option { position: absolute; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); opacity: 0; pointer-events: none; transform: scale(0); }
@@ -79,7 +66,7 @@
         .whatsapp-float:hover { transform: scale(1.1) rotate(5deg); background-color: #D4AF37 !important; }
 
         /* תיקון כפתורי רשתות חברתיות */
-.social-link { transition: all 0.3s ease; color: #9CA3AF; }
+        .social-link { display: inline-block; transition: all 0.3s ease; color: #9CA3AF; }
         .social-link:hover { color: #D4AF37; transform: scale(1.2); }
     </style>
 </head>
@@ -129,35 +116,25 @@
         <h1 class="text-6xl md:text-8xl italic font-serif leading-[1.1]">היופי שברגע <br /><span class="text-[#D4AF37] not-italic font-light">מעץ טבעי.</span></h1>
     </section>
 
-<div class="marquee-container">
-    <div class="marquee-content">
-        <!-- כל הקבצים - ישנים וחדשים -->
-        <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="1">
-        <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="2">
-        <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="3">
-        <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="4">
-        <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="5">
-        <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="6">
-        
-        <!-- הקבצים החדשים -->
-        <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="7">
-        <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-
-        <!-- שכפול של 4-5 פריטים ראשונים כדי ליצור לופ חלק -->
-        <img src="photo_5949512990937779361_y.jpg" class="gallery-item" aria-hidden="true">
-        <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline aria-hidden="true"></video>
-        <img src="photo_5949512990937779362_y.jpg" class="gallery-item" aria-hidden="true">
-        <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline aria-hidden="true"></video>
+    <!-- גלריה - Portrait -->
+    <div class="marquee-container">
+        <div class="marquee-content">
+            <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox 1">
+            <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox 2">
+            <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="SnapBox 3">
+            <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="SnapBox 4">
+            <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="SnapBox 5">
+            <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="SnapBox 6">
+            <!-- כפילות ליצירת לופ אינסופי חלק -->
+            <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="">
+            <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="">
+            <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        </div>
     </div>
-</div>
 
     <!-- Form Section -->
     <section id="contact-form" class="py-20 px-6 max-w-6xl mx-auto">
@@ -202,7 +179,7 @@
         </div>
     </section>
 
- <!-- Footer -->
+    <!-- Footer -->
     <footer class="py-16 text-center border-t">
         <div class="flex justify-center gap-12 mb-10">
             <a href="https://www.instagram.com/snapbox_event.official" target="_blank" class="social-link">
