@@ -113,14 +113,26 @@
                     <option>בר/בת מצווה</option>
                     <option>אירוע עסקי</option>
                 </select>
+                <!-- שדה מלל חופשי חדש -->
+<textarea id="freeText" placeholder="ספרו לנו קצת על האירוע שלכם (תאריך, מיקום, בקשות מיוחדות...)" rows="3" class="w-full border-b py-3 outline-none focus:border-[#D4AF37] transition-colors resize-none"></textarea>
                 <button type="submit" class="w-full py-5 bg-[#1A1A1A] text-white rounded-xl font-bold hover:bg-[#D4AF37] transition-all">שלחו הודעה לתיאום</button>
             </form>
         </div>
     </section>
 
-    <footer class="py-12 text-center border-t border-gray-100">
-        <p class="text-xs text-gray-400 uppercase tracking-widest">© 2026 Snap Box Studio</p>
-    </footer>
+    <footer class="py-16 text-center border-t border-gray-100">
+    <!-- קישורים לרשתות חברתיות -->
+    <div class="flex justify-center gap-8 mb-8">
+        <a href="https://www.instagram.com/snapbox_event.official" target="_blank" class="text-gray-400 hover:text-[#D4AF37] transition-all transform hover:scale-125">
+            <i data-lucide="instagram" size="32"></i>
+        </a>
+        <a href="https://www.facebook.com/share/18GcWQXLqA/" target="_blank" class="text-gray-400 hover:text-[#D4AF37] transition-all transform hover:scale-125">
+            <i data-lucide="facebook" size="32"></i>
+        </a>
+    </div>
+    <p class="text-xs text-gray-400 uppercase tracking-widest font-bold">SNAP BOX STUDIO</p>
+    <p class="text-[10px] text-gray-300 mt-2">© 2026 כל הזכויות שמורות</p>
+</footer>
 
     <script>
         lucide.createIcons();
@@ -129,14 +141,19 @@
         function toggleLargeText() { document.documentElement.classList.toggle('large-text-active'); }
         function toggleContrast() { document.body.classList.toggle('high-contrast-active'); }
         function toggleHighlight() { document.body.classList.toggle('highlight-active'); }
-
-        function sendToWhatsapp(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const event = document.getElementById('eventType').value;
-            const msg = `היי, אני ${name}, אשמח לפרטים על עמדת צילום לאירוע מסוג ${event}`;
-            window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
-        }
+function sendToWhatsapp(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const event = document.getElementById('eventType').value;
+    const freeText = document.getElementById('freeText').value; // איסוף המלל החופשי
+    
+    const msg = `✨ *פנייה חדשה מאתר SnapBox* ✨\n\n` +
+                `👤 *שם:* ${name}\n` +
+                `🎉 *אירוע:* ${event || 'לא צוין'}\n` +
+                `📝 *הערות:* ${freeText || 'אין הערות נוספות'}`;
+                
+    window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
+}
     </script>
 </body>
 </html>
