@@ -72,10 +72,6 @@
             transform: scale(1.1) rotate(5deg); 
             background-color: #D4AF37 !important; /* הופך לזהב במעבר עכבר */
         }
-        @keyframes scroll-left {
-    from { transform: translateX(0); }
-    to { transform: translateX(-100%); } /* שינוי למינוס מאה כדי שינוע שמאלה עד הסוף */
-}
     </style>
 </head>
 <body>
@@ -126,6 +122,7 @@
     </section>
 
     <!-- גלריה זזה - Marquee -->
+   <!-- גלריה זזה - Marquee -->
     <div class="marquee-container">
     <div class="marquee-content">
         <!-- התחלה עם סרטון ודילוגים ביניהם -->
@@ -199,15 +196,32 @@
         </div>
     </section>
 
-    <!-- רשתות חברתיות למטה -->
-    <div class="flex justify-center gap-12 py-10">
-        <a href="https://www.instagram.com/snapbox_event.official?igsh=MWNlMHU1eXF4OXh6cA==" target="_blank" rel="noopener noreferrer" class="social-icon transition-all duration-300 transform hover:scale-125 hover:text-[#D4AF37] text-gray-400">
-            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
-        </a>
-        <a href="https://www.facebook.com/share/18GcWQXLqA/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="social-icon transition-all duration-300 transform hover:scale-125 hover:text-[#D4AF37] text-gray-400">
-            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-        </a>
-    </div>
+    <!-- רשתות חברתיות עם אפקט זוהר זהב -->
+<div class="flex justify-center gap-12 py-12">
+    <!-- Instagram Button -->
+    <a href="https://www.instagram.com/snapbox_event.official?igsh=MWNlMHU1eXF4OXh6cA==" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       class="social-btn group relative p-4 rounded-full bg-white shadow-lg border border-gray-100 transition-all duration-500 hover:-translate-y-2">
+        <div class="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 shadow-[0_0_20px_#D4AF37]"></div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="relative z-10 text-[#1A1A1A] group-hover:text-[#D4AF37] transition-colors duration-300">
+            <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+        </svg>
+    </a>
+
+    <!-- Facebook Button -->
+    <a href="https://www.facebook.com/share/18GcWQXLqA/?mibextid=wwXIfr" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       class="social-btn group relative p-4 rounded-full bg-white shadow-lg border border-gray-100 transition-all duration-500 hover:-translate-y-2">
+        <div class="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 shadow-[0_0_20px_#D4AF37]"></div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="relative z-10 text-[#1A1A1A] group-hover:text-[#D4AF37] transition-colors duration-300">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+        </svg>
+    </a>
+</div>
 
     <!-- Footer -->
     <footer class="py-16 text-center border-t">
