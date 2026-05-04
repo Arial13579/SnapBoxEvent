@@ -26,42 +26,42 @@
         .hero-tag-container { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; }
         .gold-line { height: 1px; width: 45px; background: linear-gradient(90deg, transparent, #D4AF37, transparent); }
 
-        /* גלריה זזה - מהירות מוגברת (15s) */
-        .marquee-container { overflow: hidden; white-space: nowrap; padding: 3rem 0; background: #fff; margin: 2rem 0; }
-/* מהירות גלילה - 35 שניות יתאימו לכמות הגדולה של המדיה */
-    .marquee-content {
-        animation: scroll-left 35s linear infinite;
-    }
-    /* עיצוב המכולה */
-    .marquee-container {
-        width: 100%;
-        overflow: hidden;
-        background: transparent;
-        padding: 20px 0;
-    }
+        /* גלריה זזה - עיצוב מאוזן (Landscape) */
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            background: transparent;
+            padding: 40px 0;
+            margin: 2rem 0;
+        }
 
-    .marquee-content {
-        display: flex;
-        gap: 20px;
-        width: max-content;
-        animation: scroll-left 40s linear infinite;
-    }
+        .marquee-content {
+            display: flex;
+            gap: 20px;
+            width: max-content;
+            animation: scroll-left 45s linear infinite;
+        }
 
-    /* הגדרות למראה מאוזן (Landscape) */
-    .gallery-item {
-        width: 550px; /* רוחב גדול יותר */
-        height: 350px; /* גובה קטן יותר */
-        object-fit: cover; /* מבטיח שהתוכן ימלא את המלבן בלי להתעוות */
-        border-radius: 20px;
-        flex-shrink: 0;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
+        .gallery-item {
+            width: 550px; /* רוחב מאוזן */
+            height: 350px; /* גובה מותאם */
+            object-fit: cover;
+            border-radius: 24px;
+            flex-shrink: 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            background-color: #f0f0f0;
+        }
 
-    /* אנימציית הגלילה */
-    @keyframes scroll-left {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-    }
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .marquee-container:hover .marquee-content {
+            animation-play-state: paused;
+        }
+
+        /* רכיבי נגישות צפים */
         .acc-option { position: absolute; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); opacity: 0; pointer-events: none; transform: scale(0); }
         .acc-menu-open .acc-option { opacity: 1; pointer-events: auto; transform: scale(1); }
         .acc-menu-open .opt-1 { transform: translate(0, 75px); }
@@ -81,7 +81,7 @@
 </head>
 <body>
 
-    <!-- כפתור וואטסאפ צף עם הודעה מעודכנת -->
+    <!-- כפתור וואטסאפ צף -->
     <a href="https://wa.me/972546056180?text=%D7%94%D7%99%D7%99%20%D7%9E%D7%94%20%D7%A0%D7%A9%D7%9E%D7%A2%20%D7%A8%D7%A6%D7%99%D7%AA%D7%99%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%99%D7%95%D7%AA%D7%A8%20%D7%A2%D7%9C%20%D7%94%D7%97%D7%91%D7%99%D7%9C%D7%95%D7%AA%20%D7%A9%D7%9C%D7%9B%D7%9D%20%D7%A9%D7%9C%20%D7%94%D7%A2%D7%9E%D7%93%D7%AA%20%D7%A6%D7%99%D7%9C%D7%95%D7%9D" 
        class="whatsapp-float" 
        style="background-color: #1A1A1A !important; color: #FFFFFF !important;"
@@ -125,46 +125,47 @@
         <h1 class="text-6xl md:text-8xl italic font-serif leading-[1.1]">היופי שברגע <br /><span class="text-[#D4AF37] not-italic font-light">מעץ טבעי.</span></h1>
     </section>
 
- <!-- גלריה מאוזנת (Horizontal) - כל המדיה משולבת -->
-<div class="marquee-container">
-    <div class="marquee-content">
-        <!-- בלוק מדיה 1 (16 פריטים) -->
-        <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="SnapBox">
-        <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox">
-        <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox">
-        <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="SnapBox">
-        <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="SnapBox">
-        <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="SnapBox">
-        <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="SnapBox">
+    <!-- גלריה מאוחדת ומאוזנת (Horizontal Marquee) -->
+    <div class="marquee-container">
+        <div class="marquee-content">
+            <!-- בלוק מדיה 1 -->
+            <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="SnapBox">
+            <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox">
+            <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox">
+            <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="SnapBox">
+            <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="SnapBox">
+            <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="SnapBox">
+            <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="SnapBox">
 
-        <!-- בלוק מדיה 2 (שכפול ללופ אינסופי) -->
-        <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="">
-        <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="">
-        <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="">
-        <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="">
-        <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="">
-        <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="">
-        <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="">
+            <!-- בלוק מדיה 2 (שכפול ללופ אינסופי חלק) -->
+            <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="">
+            <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="">
+            <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="">
+            <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="">
+            <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="">
+            <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="">
+            <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="">
+        </div>
     </div>
-</div>
+
     <!-- Form Section -->
     <section id="contact-form" class="py-20 px-6 max-w-6xl mx-auto">
         <div class="form-container bg-white p-8 md:p-20 rounded-[60px] shadow-2xl border border-gray-100/50">
