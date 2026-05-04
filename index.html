@@ -72,6 +72,10 @@
             transform: scale(1.1) rotate(5deg); 
             background-color: #D4AF37 !important; /* הופך לזהב במעבר עכבר */
         }
+        @keyframes scroll-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); } /* שינוי למינוס מאה כדי שינוע שמאלה עד הסוף */
+}
     </style>
 </head>
 <body>
