@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snap Box | בוטיק עמדות צילום</title>
+    <title>Snap Box | בוטיק עמדות צילום מעץ</title>
     
     <!-- לוגו בלשונית הדפדפן -->
     <link rel="icon" type="image/jpeg" href="logo.jpg">
@@ -18,58 +18,44 @@
         body { font-family: 'Assistant', sans-serif; overflow-x: hidden; scroll-behavior: smooth; background-color: #FCFBFA; color: #1A1A1A; transition: background 0.3s, color 0.3s; }
         .font-serif { font-family: 'Playfair Display', serif; }
 
-       /* תיקון האנימציה ללופ מושלם */
-.marquee-content { 
-    display: inline-flex; 
-    gap: 2rem;
-    width: max-content; 
-    animation: scroll-left 40s linear infinite; 
-}
+        /* גלריה אינסופית - מהירה וחלקה */
+        .marquee-container { 
+            overflow: hidden; 
+            width: 100%;
+            padding: 2rem 0; 
+            background: #fff; 
+            white-space: nowrap;
+            position: relative;
+        }
 
-@keyframes scroll-left {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); } /* חייב להיות 50% בגלל השכפול */
-}
+        .marquee-content { 
+            display: inline-flex; 
+            gap: 15px;
+            animation: scroll-left 25s linear infinite; 
+        }
 
-/* מניעת עצירה או קפיצות במובייל */
-.gallery-item {
-    will-change: transform;
-}
-        .marquee-container {
-    position: relative;
-    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-}
         .gallery-item {
-    height: 450px; /* הגדלנו מעט לנוכחות */
-    width: 320px;
-    object-fit: cover;
-    border-radius: 24px; /* רדיוס עגול ויוקרתי יותר */
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08); /* צל רך מאוד */
-    transition: transform 0.5s cubic-bezier(0.2, 0, 0.2, 1);
-    background: #eee; /* צבע רקע בזמן טעינה */
-}
+            height: 400px;
+            width: 280px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
 
-/* אפקט קטן במעבר עכבר */
-.gallery-item:hover {
-    transform: scale(1.02);
-}@media (max-width: 768px) {
-    .gallery-item {
-        height: 350px;
-        width: 250px;
-    }
-    .marquee-content {
-        gap: 1rem; /* רווח קטן יותר במובייל */
-    }
-}
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
         /* נגישות */
         .large-text-active { --base-font-size: 20px; }
         .high-contrast-active { background-color: #000 !important; color: #fff !important; }
         .high-contrast-active .bg-white, .high-contrast-active .form-container, .high-contrast-active .marquee-container { background-color: #1a1a1a !important; color: #fff !important; border-color: #fff !important; }
-        .high-contrast-active .text-gray-400, .high-contrast-active .text-gray-500 { color: #ccc !important; }
-        .highlight-active a, .highlight-active button:not(#accMainBtn) { outline: 3px solid #D4AF37 !important; outline-offset: 4px !important; }
+        .high-contrast-active .text-gray-400, .high-contrast-active .text-gray-500, .high-contrast-active .text-[#D4AF37] { color: #D4AF37 !important; }
+        .highlight-active a, .highlight-active button { outline: 3px solid #D4AF37 !important; outline-offset: 4px !important; }
 
-        /* תפריט נגישות */
+        /* תפריט נגישות צף */
         .acc-menu-open #accMainBtn { transform: rotate(180deg); }
         .acc-option { position: absolute; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); opacity: 0; pointer-events: none; transform: scale(0); }
         .acc-menu-open .acc-option { opacity: 1; pointer-events: auto; transform: scale(1); }
@@ -77,157 +63,35 @@
         .acc-menu-open .opt-2 { transform: translate(65px, 45px); }
         .acc-menu-open .opt-3 { transform: translate(75px, -20px); }
 
-        @keyframes fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fade-in { animation: fade-in 1.2s ease-out forwards; }
-
+        /* כפתור וואטסאפ */
         .whatsapp-float { 
             position: fixed; 
             bottom: 30px; 
             left: 30px; 
-            width: 60px; 
-            height: 60px; 
+            width: 65px; 
+            height: 65px; 
             border-radius: 50px; 
-            text-align: center; 
-            font-size: 30px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
-            z-index: 400; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            border: 1px solid rgba(255,255,255,0.1);
+            z-index: 400; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
         }
-
-        .whatsapp-float:hover { 
-            transform: scale(1.1) rotate(5deg); 
-            background-color: #D4AF37 !important; 
-        }
-    <!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snap Box | בוטיק עמדות צילום</title>
-    
-    <!-- לוגו בלשונית הדפדפן -->
-    <link rel="icon" type="image/jpeg" href="logo.jpg">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <style>
-        :root { --base-font-size: 16px; }
-        html { font-size: var(--base-font-size); transition: font-size 0.3s ease; }
-        body { font-family: 'Assistant', sans-serif; overflow-x: hidden; scroll-behavior: smooth; background-color: #FCFBFA; color: #1A1A1A; transition: background 0.3s, color 0.3s; }
-        .font-serif { font-family: 'Playfair Display', serif; }
-
-       /* תיקון האנימציה ללופ מושלם */
-.marquee-content { 
-    display: inline-flex; 
-    gap: 2rem;
-    width: max-content; 
-    animation: scroll-left 40s linear infinite; 
-}
-
-@keyframes scroll-left {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); } /* חייב להיות 50% בגלל השכפול */
-}
-
-/* מניעת עצירה או קפיצות במובייל */
-.gallery-item {
-    will-change: transform;
-}
-        .marquee-container {
-    position: relative;
-    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-}
-        .gallery-item {
-    height: 450px; /* הגדלנו מעט לנוכחות */
-    width: 320px;
-    object-fit: cover;
-    border-radius: 24px; /* רדיוס עגול ויוקרתי יותר */
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08); /* צל רך מאוד */
-    transition: transform 0.5s cubic-bezier(0.2, 0, 0.2, 1);
-    background: #eee; /* צבע רקע בזמן טעינה */
-}
-
-/* אפקט קטן במעבר עכבר */
-.gallery-item:hover {
-    transform: scale(1.02);
-}@media (max-width: 768px) {
-    .gallery-item {
-        height: 350px;
-        width: 250px;
-    }
-    .marquee-content {
-        gap: 1rem; /* רווח קטן יותר במובייל */
-    }
-}
-        /* נגישות */
-        .large-text-active { --base-font-size: 20px; }
-        .high-contrast-active { background-color: #000 !important; color: #fff !important; }
-        .high-contrast-active .bg-white, .high-contrast-active .form-container, .high-contrast-active .marquee-container { background-color: #1a1a1a !important; color: #fff !important; border-color: #fff !important; }
-        .high-contrast-active .text-gray-400, .high-contrast-active .text-gray-500 { color: #ccc !important; }
-        .highlight-active a, .highlight-active button:not(#accMainBtn) { outline: 3px solid #D4AF37 !important; outline-offset: 4px !important; }
-
-        /* תפריט נגישות */
-        .acc-menu-open #accMainBtn { transform: rotate(180deg); }
-        .acc-option { position: absolute; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); opacity: 0; pointer-events: none; transform: scale(0); }
-        .acc-menu-open .acc-option { opacity: 1; pointer-events: auto; transform: scale(1); }
-        .acc-menu-open .opt-1 { transform: translate(0, 75px); }
-        .acc-menu-open .opt-2 { transform: translate(65px, 45px); }
-        .acc-menu-open .opt-3 { transform: translate(75px, -20px); }
+        .whatsapp-float:hover { transform: scale(1.1); background-color: #D4AF37 !important; }
 
         @keyframes fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-in { animation: fade-in 1.2s ease-out forwards; }
-
-        .whatsapp-float { 
-            position: fixed; 
-            bottom: 30px; 
-            left: 30px; 
-            width: 60px; 
-            height: 60px; 
-            border-radius: 50px; 
-            text-align: center; 
-            font-size: 30px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
-            z-index: 400; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .whatsapp-float:hover { 
-            transform: scale(1.1) rotate(5deg); 
-            background-color: #D4AF37 !important; 
-        }
-        .social-link { 
-    transition: all 0.3s ease; 
-    color: #1A1A1A; /* צבע שחור חזק שיראו אותם */
-    display: inline-flex; /* חשוב כדי שהאייקון יתמרכז */
-    align-items: center;
-    justify-content: center;
-}
-.social-link:hover { 
-    color: #D4AF37; 
-    transform: translateY(-3px); /* אפקט עליה קטן */
-}
     </style>
 </head>
 <body>
 
     <!-- כפתור וואטסאפ צף -->
     <a href="https://wa.me/972546056180?text=היי%20מה%20נשמע%20רציתי%20לשמוע%20יותר%20על%20החבילות%20שלכם%20של%20העמדת%20צילום?" 
-       class="whatsapp-float" 
-       style="background-color: #1A1A1A !important; color: #FFFFFF !important;"
+       class="whatsapp-float bg-[#1A1A1A] text-white" 
        target="_blank" 
        rel="noopener noreferrer">
-        <i data-lucide="message-circle" style="width: 32px; height: 32px;"></i>
+        <i data-lucide="message-circle" style="width: 35px; height: 35px;"></i>
     </a>
 
     <!-- תפריט נגישות -->
@@ -242,25 +106,25 @@
 
     <!-- Header -->
     <header class="fixed top-0 left-0 right-0 z-[150] px-4 py-6 md:px-12">
-        <nav class="max-w-7xl mx-auto flex justify-between items-center p-4 px-10 rounded-full bg-white/70 backdrop-blur-xl border border-gray-100 shadow-sm">
+        <nav class="max-w-7xl mx-auto flex justify-between items-center p-4 px-10 rounded-full bg-white/80 backdrop-blur-md border border-gray-100 shadow-sm">
             <div class="flex items-center gap-4">
                 <div class="text-[#D4AF37]">
                     <svg viewBox="0 0 100 100" class="h-10 w-10" fill="none" stroke="currentColor"><path d="M50 45 L35 75 M50 45 L65 75 M42 75 L58 75" stroke-width="2.5" stroke-linecap="round"/><rect x="32" y="30" width="36" height="22" rx="3" stroke-width="2.5"/><circle cx="50" cy="41" r="6" stroke-width="2.5"/></svg>
                 </div>
                 <div class="flex flex-col">
-                    <span class="nav-brand-text font-black uppercase leading-none">Snap Box</span>
+                    <span class="font-black uppercase leading-none">Snap Box</span>
                     <span class="text-[10px] font-bold tracking-[0.2em] uppercase mt-1 text-gray-500">פשוט רגעים יפים מעץ טבעי</span>
                 </div>
             </div>
-            <button onclick="document.getElementById('contact-form').scrollIntoView({behavior:'smooth'})" class="bg-[#1A1A1A] text-white rounded-full font-black px-6 py-2 text-[11px] hover:bg-[#D4AF37] transition-all">שריינו תאריך</button>
+            <button onclick="document.getElementById('contact-form').scrollIntoView({behavior:'smooth'})" class="bg-[#1A1A1A] text-white rounded-full font-bold px-6 py-2 text-[12px] hover:bg-[#D4AF37] transition-all">שריינו תאריך</button>
         </nav>
     </header>
 
     <!-- Hero -->
-    <section class="relative pt-64 pb-20 px-6 max-w-7xl mx-auto text-center animate-fade-in">
-        <div class="hero-tag-container flex items-center justify-center gap-4 mb-4">
+    <section class="relative pt-48 pb-12 px-6 max-w-7xl mx-auto text-center animate-fade-in">
+        <div class="flex items-center justify-center gap-4 mb-6">
             <div class="h-[1px] w-12 bg-[#D4AF37]"></div>
-            <span class="hero-tag font-bold uppercase tracking-[0.4em] text-sm text-[#D4AF37]">בוטיק עמדות צילום</span>
+            <span class="font-bold uppercase tracking-[0.4em] text-sm text-[#D4AF37]">בוטיק עמדות צילום</span>
             <div class="h-[1px] w-12 bg-[#D4AF37]"></div>
         </div>
         <h1 class="text-6xl md:text-8xl italic font-serif leading-[1.1]">היופי שברגע <br /><span class="text-[#D4AF37] not-italic font-light">מעץ טבעי.</span></h1>
@@ -268,27 +132,26 @@
 
     <!-- גלריה זזה - Marquee -->
     <div class="marquee-container">
-        <div class="marquee-content">
-            <!-- קבוצה 1 -->
-            <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox 1">
-            <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox 2">
-            <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="SnapBox 3">
-            <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="SnapBox 4">
-            <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="SnapBox 5">
-            <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="SnapBox 6">
-            <!-- שכפול לקבלת לופ אינסופי -->
-            <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox 1">
-            <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox 2">
-            <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="SnapBox 3">
-            <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="SnapBox 4">
-            <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="SnapBox 5">
-            <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="SnapBox 6">
+        <div class="marquee-content" id="marquee-inner">
+            <!-- התוכן משוכפל פעמיים ב-JS כדי ליצור לופ אינסופי -->
+            <img src="photo_5893407665646406938_y.jpg" class="gallery-item" alt="עמדת צילום">
+            <video src="video_2025-11-02_20-35-12 (13).mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_5893407665646406939_y.jpg" class="gallery-item" alt="עמדת צילום">
+            <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_5893407665646406940_y.jpg" class="gallery-item" alt="עמדת צילום">
+            <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="עמדת צילום">
+            <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_5893407665186412855.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_5893407665186412857.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_5893407665186412858.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_5893407665186412859.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_5893407665186412860.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_5893407665646406936_y.jpg" class="gallery-item" alt="עמדת צילום">
+            <img src="photo_5893407665646406937_y.jpg" class="gallery-item" alt="עמדת צילום">
         </div>
     </div>
 
@@ -298,14 +161,14 @@
             <h2 class="text-4xl md:text-6xl font-serif italic text-center mb-16">שריינו מקום</h2>
             <form onsubmit="sendToWhatsapp(event)" class="space-y-12">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div class="border-b py-4"><label class="text-[#D4AF37] text-xs font-bold uppercase">שם מלא</label><input type="text" id="name" required class="w-full bg-transparent text-xl outline-none" placeholder="איך קוראים לכם?"></div>
+                    <div class="border-b py-4"><label class="text-[#D4AF37] text-xs font-bold uppercase block">שם מלא</label><input type="text" id="name" required class="w-full bg-transparent text-xl outline-none" placeholder="איך קוראים לכם?"></div>
                     <div class="border-b py-4"><label class="text-[#D4AF37] text-xs font-bold uppercase block text-right">טלפון</label><input type="tel" id="phone" required class="w-full bg-transparent text-xl outline-none text-left" placeholder="050-0000000"></div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                    <div class="border-b">
-                        <label class="text-[#D4AF37] text-xs font-bold uppercase">סוג אירוע</label>
-                        <select id="eventType" required class="w-full bg-transparent py-4 outline-none text-lg">
+                    <div class="border-b py-4">
+                        <label class="text-[#D4AF37] text-xs font-bold uppercase block">סוג אירוע</label>
+                        <select id="eventType" required class="w-full bg-transparent py-2 outline-none text-lg">
                             <option value="" disabled selected>בחר סוג אירוע</option>
                             <option>חתונה</option>
                             <option>בר/בת מצווה</option>
@@ -314,22 +177,22 @@
                             <option>אחר</option>
                         </select>
                     </div>
-                    <div class="border-b">
-                        <label class="text-[#D4AF37] text-xs font-bold uppercase">מספר מוזמנים</label>
-                        <input type="number" id="guests" class="w-full bg-transparent py-4 outline-none text-lg" placeholder="כמות משוערת">
+                    <div class="border-b py-4">
+                        <label class="text-[#D4AF37] text-xs font-bold uppercase block">מספר מוזמנים</label>
+                        <input type="number" id="guests" class="w-full bg-transparent py-2 outline-none text-lg" placeholder="כמות משוערת">
                     </div>
-                    <div class="border-b">
-                        <label class="text-[#D4AF37] text-xs font-bold uppercase">תאריך האירוע</label>
+                    <div class="border-b py-4">
+                        <label class="text-[#D4AF37] text-xs font-bold uppercase block">תאריך האירוע</label>
                         <div class="flex gap-2">
-                            <select id="day" class="bg-transparent py-4 outline-none w-1/3 text-base"></select>
-                            <select id="month" class="bg-transparent py-4 outline-none w-1/3 text-base"></select>
-                            <select id="year" class="bg-transparent py-4 outline-none w-1/3 text-base"></select>
+                            <select id="day" class="bg-transparent py-2 outline-none w-1/3"></select>
+                            <select id="month" class="bg-transparent py-2 outline-none w-1/3"></select>
+                            <select id="year" class="bg-transparent py-2 outline-none w-1/3"></select>
                         </div>
                     </div>
                 </div>
 
                 <div class="border-b py-4">
-                    <label class="text-[#D4AF37] text-xs font-bold uppercase">הערות נוספות</label>
+                    <label class="text-[#D4AF37] text-xs font-bold uppercase block">הערות נוספות</label>
                     <textarea id="notes" rows="2" class="w-full bg-transparent text-lg outline-none resize-none" placeholder="ספרו לנו עוד..."></textarea>
                 </div>
 
@@ -338,38 +201,44 @@
         </div>
     </section>
 
+    <!-- רשתות חברתיות -->
+    <div class="flex justify-center gap-12 py-10">
+        <a href="https://www.instagram.com/snapbox_event.official?igsh=MWNlMHU1eXF4OXh6cA==" target="_blank" rel="noopener noreferrer" class="social-icon transition-all duration-300 transform hover:scale-125 hover:text-[#D4AF37] text-gray-400">
+            <i data-lucide="instagram" style="width: 40px; height: 40px;"></i>
+        </a>
+        <a href="https://www.facebook.com/share/18GcWQXLqA/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="social-icon transition-all duration-300 transform hover:scale-125 hover:text-[#D4AF37] text-gray-400">
+            <i data-lucide="facebook" style="width: 40px; height: 40px;"></i>
+        </a>
+    </div>
 
-    
-  <!-- Footer -->
-        <footer class="py-16 text-center border-t">
-            <div class="flex justify-center gap-12 mb-10">
-                <a href="https://www.instagram.com/snapbox_event.official" target="_blank" class="social-link">
-                    <i data-lucide="instagram" style="width: 32px; height: 32px;"></i>
-                </a>
-                <a href="https://www.facebook.com/share/18GcWQXLqA/" target="_blank" class="social-link">
-                    <i data-lucide="facebook" style="width: 32px; height: 32px;"></i>
-                </a>
-            </div>
-            <h3 class="text-2xl font-black tracking-[0.5em] mb-4 uppercase">SNAP BOX</h3>
-            <p class="text-[10px] text-gray-400">© 2026 כל הזכויות שמורות</p>
-        </footer>
+    <!-- Footer -->
+    <footer class="py-16 text-center border-t border-gray-100">
+        <h3 class="text-2xl font-black tracking-[0.5em] mb-4 uppercase">SNAP BOX</h3>
+        <p class="text-[12px] text-gray-400 font-bold">© 2026 כל הזכויות שמורות</p>
+    </footer>
+
     <script>
-       // אתחול אייקונים
-            lucide.createIcons();
+        // אתחול אייקונים
+        lucide.createIcons();
 
-        // מילוי תאריכים
+        // שכפול תוכן הגלריה ללופ אינסופי
+        const marquee = document.getElementById('marquee-inner');
+        marquee.innerHTML += marquee.innerHTML;
+
+        // מילוי תאריכים בטופס
         const daySel = document.getElementById('day'), monthSel = document.getElementById('month'), yearSel = document.getElementById('year');
         for(let i=1; i<=31; i++) daySel.options.add(new Option(i, i));
         for(let i=1; i<=12; i++) monthSel.options.add(new Option(i, i));
         const currYear = new Date().getFullYear();
         for(let i=currYear; i<=currYear+3; i++) yearSel.options.add(new Option(i, i));
 
-        // נגישות
+        // פונקציות נגישות
         function toggleAccMenu() { document.getElementById('accWrapper').classList.toggle('acc-menu-open'); }
         function toggleLargeText() { document.documentElement.classList.toggle('large-text-active'); }
         function toggleContrast() { document.body.classList.toggle('high-contrast-active'); }
         function toggleHighlight() { document.body.classList.toggle('highlight-active'); }
 
+        // שליחה לוואטסאפ
         function sendToWhatsapp(e) {
             e.preventDefault();
             const dateStr = `${daySel.value}/${monthSel.value}/${yearSel.value}`;
@@ -381,187 +250,6 @@
                         `📝 *הערות:* ${document.getElementById('notes').value || 'אין'}`;
             window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
         }
-    </script>
-</body>
-</html>
-
-    </style>
-</head>
-<body>
-
-    <!-- כפתור וואטסאפ צף -->
-    <a href="https://wa.me/972546056180?text=היי%20מה%20נשמע%20רציתי%20לשמוע%20יותר%20על%20החבילות%20שלכם%20של%20העמדת%20צילום?" 
-       class="whatsapp-float" 
-       style="background-color: #1A1A1A !important; color: #FFFFFF !important;"
-       target="_blank" 
-       rel="noopener noreferrer">
-        <i data-lucide="message-circle" style="width: 32px; height: 32px;"></i>
-    </a>
-
-    <!-- תפריט נגישות -->
-    <div id="accWrapper" class="fixed top-24 left-6 z-[300] flex flex-col items-center">
-        <button onclick="toggleAccMenu()" id="accMainBtn" class="w-14 h-14 rounded-full shadow-2xl bg-[#1A1A1A] text-white flex items-center justify-center transition-all duration-500 border border-white/20">
-            <i data-lucide="accessibility"></i>
-        </button>
-        <button onclick="toggleLargeText()" title="הגדלת טקסט" class="acc-option opt-1 bg-white text-black w-12 h-12 rounded-full shadow-xl flex items-center justify-center border border-gray-100 hover:bg-[#D4AF37] hover:text-white"><b>A+</b></button>
-        <button onclick="toggleContrast()" title="ניגודיות גבוהה" class="acc-option opt-2 bg-white text-black w-12 h-12 rounded-full shadow-xl flex items-center justify-center border border-gray-100 hover:bg-[#D4AF37] hover:text-white"><i data-lucide="contrast" size="18"></i></button>
-        <button onclick="toggleHighlight()" title="הדגשת קישורים" class="acc-option opt-3 bg-white text-black w-12 h-12 rounded-full shadow-xl flex items-center justify-center border border-gray-100 hover:bg-[#D4AF37] hover:text-white"><i data-lucide="eye" size="18"></i></button>
-    </div>
-
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-[150] px-4 py-6 md:px-12">
-        <nav class="max-w-7xl mx-auto flex justify-between items-center p-4 px-10 rounded-full bg-white/70 backdrop-blur-xl border border-gray-100 shadow-sm">
-            <div class="flex items-center gap-4">
-                <div class="text-[#D4AF37]">
-                    <svg viewBox="0 0 100 100" class="h-10 w-10" fill="none" stroke="currentColor"><path d="M50 45 L35 75 M50 45 L65 75 M42 75 L58 75" stroke-width="2.5" stroke-linecap="round"/><rect x="32" y="30" width="36" height="22" rx="3" stroke-width="2.5"/><circle cx="50" cy="41" r="6" stroke-width="2.5"/></svg>
-                </div>
-                <div class="flex flex-col">
-                    <span class="nav-brand-text font-black uppercase leading-none">Snap Box</span>
-                    <span class="text-[10px] font-bold tracking-[0.2em] uppercase mt-1 text-gray-500">פשוט רגעים יפים מעץ טבעי</span>
-                </div>
-            </div>
-            <button onclick="document.getElementById('contact-form').scrollIntoView({behavior:'smooth'})" class="bg-[#1A1A1A] text-white rounded-full font-black px-6 py-2 text-[11px] hover:bg-[#D4AF37] transition-all">שריינו תאריך</button>
-        </nav>
-    </header>
-
-    <!-- Hero -->
-    <section class="relative pt-64 pb-20 px-6 max-w-7xl mx-auto text-center animate-fade-in">
-        <div class="hero-tag-container flex items-center justify-center gap-4 mb-4">
-            <div class="h-[1px] w-12 bg-[#D4AF37]"></div>
-            <span class="hero-tag font-bold uppercase tracking-[0.4em] text-sm text-[#D4AF37]">בוטיק עמדות צילום</span>
-            <div class="h-[1px] w-12 bg-[#D4AF37]"></div>
-        </div>
-        <h1 class="text-6xl md:text-8xl italic font-serif leading-[1.1]">היופי שברגע <br /><span class="text-[#D4AF37] not-italic font-light">מעץ טבעי.</span></h1>
-    </section>
-
-    <!-- גלריה זזה - Marquee -->
-    <div class="marquee-container">
-        <div class="marquee-content">
-            <!-- קבוצה 1 -->
-            <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox 1">
-            <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox 2">
-            <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="SnapBox 3">
-            <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="SnapBox 4">
-            <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="SnapBox 5">
-            <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="SnapBox 6">
-            <!-- שכפול לקבלת לופ אינסופי -->
-            <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox 1">
-            <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox 2">
-            <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="SnapBox 3">
-            <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="SnapBox 4">
-            <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="SnapBox 5">
-            <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="SnapBox 6">
-        </div>
-    </div>
-
-    <!-- Form Section -->
-    <section id="contact-form" class="py-20 px-6 max-w-6xl mx-auto">
-        <div class="form-container bg-white p-8 md:p-20 rounded-[60px] shadow-2xl border border-gray-100/50">
-            <h2 class="text-4xl md:text-6xl font-serif italic text-center mb-16">שריינו מקום</h2>
-            <form onsubmit="sendToWhatsapp(event)" class="space-y-12">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div class="border-b py-4"><label class="text-[#D4AF37] text-xs font-bold uppercase">שם מלא</label><input type="text" id="name" required class="w-full bg-transparent text-xl outline-none" placeholder="איך קוראים לכם?"></div>
-                    <div class="border-b py-4"><label class="text-[#D4AF37] text-xs font-bold uppercase block text-right">טלפון</label><input type="tel" id="phone" required class="w-full bg-transparent text-xl outline-none text-left" placeholder="050-0000000"></div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                    <div class="border-b">
-                        <label class="text-[#D4AF37] text-xs font-bold uppercase">סוג אירוע</label>
-                        <select id="eventType" required class="w-full bg-transparent py-4 outline-none text-lg">
-                            <option value="" disabled selected>בחר סוג אירוע</option>
-                            <option>חתונה</option>
-                            <option>בר/בת מצווה</option>
-                            <option>יום הולדת</option>
-                            <option>אירוע עסקי</option>
-                            <option>אחר</option>
-                        </select>
-                    </div>
-                    <div class="border-b">
-                        <label class="text-[#D4AF37] text-xs font-bold uppercase">מספר מוזמנים</label>
-                        <input type="number" id="guests" class="w-full bg-transparent py-4 outline-none text-lg" placeholder="כמות משוערת">
-                    </div>
-                    <div class="border-b">
-                        <label class="text-[#D4AF37] text-xs font-bold uppercase">תאריך האירוע</label>
-                        <div class="flex gap-2">
-                            <select id="day" class="bg-transparent py-4 outline-none w-1/3 text-base"></select>
-                            <select id="month" class="bg-transparent py-4 outline-none w-1/3 text-base"></select>
-                            <select id="year" class="bg-transparent py-4 outline-none w-1/3 text-base"></select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border-b py-4">
-                    <label class="text-[#D4AF37] text-xs font-bold uppercase">הערות נוספות</label>
-                    <textarea id="notes" rows="2" class="w-full bg-transparent text-lg outline-none resize-none" placeholder="ספרו לנו עוד..."></textarea>
-                </div>
-
-                <button type="submit" class="w-full py-6 bg-[#1A1A1A] text-white rounded-2xl text-xl font-black hover:bg-[#D4AF37] transition-all shadow-xl">שלחו הודעה בוואטסאפ</button>
-            </form>
-        </div>
-    </section>
-
- <div class="flex justify-center gap-12 py-10">
-    <a href="https://www.instagram.com/snapbox_event.official" target="_blank" class="social-link">
-        <i data-lucide="instagram" style="width: 36px; height: 36px;"></i>
-    </a>
-    <a href="https://www.facebook.com/share/18GcWQXLqA/" target="_blank" class="social-link">
-        <i data-lucide="facebook" style="width: 36px; height: 36px;"></i>
-    </a>
-</div>
-  <!-- Footer -->
-        <footer class="py-16 text-center border-t">
-            <div class="flex justify-center gap-12 mb-10">
-                <a href="https://www.instagram.com/snapbox_event.official" target="_blank" class="social-link">
-                    <i data-lucide="instagram" style="width: 32px; height: 32px;"></i>
-                </a>
-                <a href="https://www.facebook.com/share/18GcWQXLqA/" target="_blank" class="social-link">
-                    <i data-lucide="facebook" style="width: 32px; height: 32px;"></i>
-                </a>
-            </div>
-            <h3 class="text-2xl font-black tracking-[0.5em] mb-4 uppercase">SNAP BOX</h3>
-            <p class="text-[10px] text-gray-400">© 2026 כל הזכויות שמורות</p>
-        </footer>
-    <script>
-     // אתחול אייקונים רק אחרי שהדף נטען במלואו
-    window.addEventListener('load', function() {
-        lucide.createIcons();
-    });
-
-    // מילוי תאריכים
-    const daySel = document.getElementById('day'), 
-          monthSel = document.getElementById('month'), 
-          yearSel = document.getElementById('year');
-    
-    if(daySel) { // בדיקת בטיחות שהאלמנט קיים
-        for(let i=1; i<=31; i++) daySel.options.add(new Option(i, i));
-        for(let i=1; i<=12; i++) monthSel.options.add(new Option(i, i));
-        const currYear = new Date().getFullYear();
-        for(let i=currYear; i<=currYear+3; i++) yearSel.options.add(new Option(i, i));
-    }
-
-    // נגישות
-    function toggleAccMenu() { document.getElementById('accWrapper').classList.toggle('acc-menu-open'); }
-    function toggleLargeText() { document.documentElement.classList.toggle('large-text-active'); }
-    function toggleContrast() { document.body.classList.toggle('high-contrast-active'); }
-    function toggleHighlight() { document.body.classList.toggle('highlight-active'); }
-
-    function sendToWhatsapp(e) {
-        e.preventDefault();
-        const dateStr = `${daySel.value}/${monthSel.value}/${yearSel.value}`;
-        const msg = `✨ *בקשה לסנאפבוקס* ✨\n\n` +
-                    `👤 *שם:* ${document.getElementById('name').value}\n` +
-                    `🎉 *אירוע:* ${document.getElementById('eventType').value}\n` +
-                    `👥 *מוזמנים:* ${document.getElementById('guests').value}\n` +
-                    `📅 *תאריך:* ${dateStr}\n` +
-                    `📝 *הערות:* ${document.getElementById('notes').value || 'אין'}`;
-        window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
-    }
     </script>
 </body>
 </html>
