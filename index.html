@@ -72,22 +72,7 @@
             transform: scale(1.1) rotate(5deg); 
             background-color: #D4AF37 !important; /* הופך לזהב במעבר עכבר */
         }
-/* אנימציית כניסה לתגובה חדשה */
-@keyframes review-fade {
-    0% { opacity: 0; transform: translateY(15px) scale(0.98); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
-}
 
-.review-active {
-    animation: review-fade 0.7s ease-out forwards;
-}
-
-#successMessage {
-    display: none;
-    color: #D4AF37;
-    font-weight: 800;
-    margin-top: 15px;
-}
     </style>
 </head>
 <body>
@@ -207,15 +192,16 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
         </a>
     </div>
+<!-- מקטע ביקורות Snap Box -->
 <section id="reviews-section" class="py-20 px-6 max-w-4xl mx-auto border-t border-gray-100">
     <div class="text-center mb-12">
         <h2 class="text-3xl md:text-5xl font-serif italic mb-4">מה אתם אומרים עלינו?</h2>
         <div class="gold-line mx-auto"></div>
     </div>
 
-    <!-- מקטע התגובות המתחלפות -->
-    <div id="reviewsDisplay" class="min-h-[140px] flex items-center justify-center text-center mb-16">
-        <p id="noReviews" class="text-gray-400 italic">היו הראשונים לכתוב תגובה...</p>
+    <!-- תצוגת תגובות מתחלפת -->
+    <div id="reviewsDisplay" class="min-h-[160px] flex items-center justify-center text-center mb-16">
+        <p id="noReviews" class="text-gray-400 italic">טוען תגובות...</p>
     </div>
 
     <!-- טופס הוספת תגובה -->
@@ -232,7 +218,7 @@
             <button type="submit" id="submitBtn" class="w-full py-5 bg-[#1A1A1A] text-white rounded-2xl font-black hover:bg-[#D4AF37] transition-all shadow-xl">
                 פרסמו תגובה
             </button>
-            <p id="successMessage" class="animate-bounce">התגובה שלך פורסמה בהצלחה! ✨</p>
+            <p id="successMessage" style="display:none;" class="text-[#D4AF37] font-bold text-center mt-4">התגובה שלך פורסמה בהצלחה! ✨</p>
         </form>
     </div>
 </section>
@@ -269,19 +255,25 @@
                         `📝 *הערות:* ${document.getElementById('notes').value || 'אין'}`;
             window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
         }
-
-        let reviews = []; // רשימה ריקה שתתמלא בתגובות חדשות
-let currentReviewIndex = 0;
-const display = document.getElementById('reviewsDisplay');
+// ניהול תגובות מותאם ל-GitHub Pages
+const reviewsDisplay = document.getElementById('reviewsDisplay');
 const commentForm = document.getElementById('commentForm');
-const successMsg = document.getElementById('successMessage');
+const successMessage = document.getElementById('successMessage');
+const submitBtn = document.getElementById('submitBtn');
 
-function updateReviewDisplay() {
-    if (reviews.length === 0) return;
+// טעינת תגובות מהזיכרון המקומי (כדי שיופיעו בגיטהוב מיד)
+let localReviews = JSON.parse(localStorage.getItem('snapbox_reviews')) || [];
+let currentIdx = 0;
 
-    const r = reviews[currentReviewIndex];
-    display.innerHTML = `
-        <div class="review-active">
+function updateDisplay() {
+    if (localReviews.length === 0) {
+        reviewsDisplay.innerHTML = '<p class="text-gray-400 italic">היו הראשונים לכתוב תגובה...</p>';
+        return;
+    }
+
+    const r = localReviews[currentIdx];
+    reviewsDisplay.innerHTML = `
+        <div class="animate-fade-in">
             <div class="text-[#D4AF37] text-xl mb-3">★★★★★</div>
             <p class="text-2xl md:text-3xl font-serif italic mb-4 text-[#1A1A1A]">"${r.text}"</p>
             <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">${r.name}</p>
@@ -289,40 +281,47 @@ function updateReviewDisplay() {
     `;
 }
 
-// החלפה אוטומטית כל 5 שניות רק אם יש תגובות
+// החלפה אוטומטית כל 5 שניות
 setInterval(() => {
-    if (reviews.length > 1) {
-        currentReviewIndex = (currentReviewIndex + 1) % reviews.length;
-        updateReviewDisplay();
+    if (localReviews.length > 1) {
+        currentIdx = (currentIdx + 1) % localReviews.length;
+        updateDisplay();
     }
 }, 5000);
 
+// טיפול בשליחת הטופס
 commentForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const name = document.getElementById('revName').value;
     const text = document.getElementById('revText').value;
 
-    // 1. שליחה ל-Formspree
-    const response = await fetch("https://formspree.io/f/mpwrobzk", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ "שם": name, "תגובה": text })
-    });
-
-    if (response.ok) {
-        // 2. הודעת הצלחה וניקוי
-        successMsg.style.display = "block";
-        document.getElementById('submitBtn').style.display = "none";
-        
-        // 3. הוספה לרשימה והצגה מיידית
-        reviews.unshift({ name, text });
-        currentReviewIndex = 0;
-        updateReviewDisplay();
-        
-        commentForm.reset();
+    // 1. שליחה ל-Formspree (הלינק שלך)
+    try {
+        await fetch("https://formspree.io/f/mpwrobzk", {
+            method: "POST",
+            headers: { "Accept": "application/json", "Content-Type": "application/json" },
+            body: JSON.stringify({ name: name, message: text })
+        });
+    } catch (error) {
+        console.error("Error sending to Formspree");
     }
+
+    // 2. שמירה מקומית והצגה (כדי שיעבוד בגיטהוב ללא שרת)
+    const newReview = { name, text };
+    localReviews.unshift(newReview);
+    localStorage.setItem('snapbox_reviews', JSON.stringify(localReviews));
+    
+    // 3. עדכון ממשק
+    successMessage.style.display = "block";
+    submitBtn.style.display = "none";
+    currentIdx = 0;
+    updateDisplay();
+    commentForm.reset();
 });
+
+// הפעלה ראשונית
+updateDisplay();
     </script>
 </body>
 </html>
