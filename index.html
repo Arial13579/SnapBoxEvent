@@ -9,8 +9,6 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
-    <!-- Font Awesome לאייקונים של רשתות חברתיות בצורה יציבה יותר -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
@@ -52,7 +50,7 @@
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             flex-shrink: 0;
-            background-color: #f3f3f3; /* פלייסולדר עד שהתמונה נטענת */
+            background-color: #f3f3f3;
         }
 
         @media (max-width: 768px) {
@@ -68,8 +66,7 @@
         /* נגישות */
         .large-text-active { --base-font-size: 20px; }
         .high-contrast-active { background-color: #000 !important; color: #fff !important; }
-        .high-contrast-active .bg-white, .high-contrast-active .form-container, .high-contrast-active .marquee-container { background-color: #1a1a1a !important; color: #fff !important; border-color: #fff !important; }
-        .highlight-active a, .highlight-active button { outline: 3px solid #D4AF37 !important; outline-offset: 4px !important; }
+        .high-contrast-active .bg-white, .high-contrast-active .form-container { background-color: #1a1a1a !important; color: #fff !important; }
 
         /* תפריט נגישות */
         .acc-menu-open #accMainBtn { transform: rotate(180deg); }
@@ -96,10 +93,11 @@
             color: white;
             transition: all 0.3s ease;
         }
-        .whatsapp-float:hover { transform: scale(1.1); }
 
         .animate-fade-in { animation: fade-in 1s ease-out forwards; }
         @keyframes fade-in { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .social-link:hover { color: #D4AF37; transform: scale(1.15); }
     </style>
 </head>
 <body>
@@ -107,7 +105,7 @@
     <!-- כפתור וואטסאפ -->
     <a href="https://wa.me/972546056180?text=היי%20מה%20נשמע%20רציתי%20לשמוע%20יותר%20על%20החבילות%20שלכם%20של%20העמדת%20צילום?" 
        class="whatsapp-float" target="_blank">
-        <i class="fab fa-whatsapp text-3xl"></i>
+        <i data-lucide="message-circle" size="32"></i>
     </a>
 
     <!-- נגישות -->
@@ -115,7 +113,7 @@
         <button onclick="toggleAccMenu()" id="accMainBtn" class="w-14 h-14 rounded-full bg-[#1A1A1A] text-white shadow-lg flex items-center justify-center border border-white/10">
             <i data-lucide="accessibility"></i>
         </button>
-        <button onclick="toggleLargeText()" class="acc-option opt-1 bg-white text-black w-12 h-12 rounded-full shadow-md flex items-center justify-center border border-gray-100"><b>A+</b></button>
+        <button onclick="toggleLargeText()" class="acc-option opt-1 bg-white text-black w-12 h-12 rounded-full shadow-md flex items-center justify-center border border-gray-100 font-bold text-lg">A+</button>
         <button onclick="toggleContrast()" class="acc-option opt-2 bg-white text-black w-12 h-12 rounded-full shadow-md flex items-center justify-center border border-gray-100"><i data-lucide="contrast" size="20"></i></button>
         <button onclick="toggleHighlight()" class="acc-option opt-3 bg-white text-black w-12 h-12 rounded-full shadow-md flex items-center justify-center border border-gray-100"><i data-lucide="eye" size="20"></i></button>
     </div>
@@ -145,7 +143,6 @@
     <!-- גלריה -->
     <div class="marquee-container">
         <div class="marquee-content" id="marquee-inner">
-            <!-- רשימת המדיה -->
             <img src="photo_5893407665646406938_y.jpg" class="gallery-item" alt="עמדת סלפי">
             <video src="video_2025-11-02_20-35-12%20(13).mp4" class="gallery-item" autoplay muted loop playsinline></video>
             <img src="photo_5893407665646406939_y.jpg" class="gallery-item" alt="עמדת סלפי">
@@ -188,20 +185,23 @@
         </div>
     </section>
 
-   <div class="flex justify-center gap-12 py-10">
-        <a href="https://www.instagram.com/snapbox_event.official?igsh=MWNlMHU1eXF4OXh6cA==" target="_blank" rel="noopener noreferrer" class="social-icon transition-all duration-300 transform hover:scale-125 hover:text-[#D4AF37] text-gray-400">
-            <i data-lucide="instagram" style="width: 40px; height: 40px;"></i>
+    <!-- רשתות חברתיות -->
+    <div class="flex justify-center items-center gap-12 py-16">
+        <a href="https://www.instagram.com/snapbox_event.official?igsh=MWNlMHU1eXF4OXh6cA==" target="_blank" rel="noopener noreferrer" class="social-link text-[#1A1A1A] transition-all duration-300">
+            <i data-lucide="instagram" style="width: 45px; height: 45px;"></i>
         </a>
-        <a href="https://www.facebook.com/share/18GcWQXLqA/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="social-icon transition-all duration-300 transform hover:scale-125 hover:text-[#D4AF37] text-gray-400">
-            <i data-lucide="facebook" style="width: 40px; height: 40px;"></i>
+        <a href="https://www.facebook.com/share/18GcWQXLqA/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="social-link text-[#1A1A1A] transition-all duration-300">
+            <i data-lucide="facebook" style="width: 45px; height: 45px;"></i>
         </a>
     </div>
+
     <!-- Footer -->
     <footer class="py-12 text-center border-t border-gray-100">
         <p class="text-sm text-gray-400 font-bold">© 2026 SNAP BOX - כל הזכויות שמורות</p>
     </footer>
 
     <script>
+        // אתחול אייקונים - וודא שהפונקציה רצה בסוף
         lucide.createIcons();
 
         // גלריה אינסופית
