@@ -32,17 +32,36 @@
     .marquee-content {
         animation: scroll-left 35s linear infinite;
     }
-    
-    
-        @keyframes scroll-left {
-            from { transform: translateX(0); }
-            to { transform: translateX(50%); }
-        }
-        
-        .gallery-item { width: 350px; height: 450px; border-radius: 24px; object-fit: cover; flex-shrink: 0; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 1px solid rgba(212, 175, 55, 0.2); }
+    /* עיצוב המכולה */
+    .marquee-container {
+        width: 100%;
+        overflow: hidden;
+        background: transparent;
+        padding: 20px 0;
+    }
 
-        /* תפריט נגישות */
-        .acc-menu-open #accMainBtn { transform: rotate(180deg); }
+    .marquee-content {
+        display: flex;
+        gap: 20px;
+        width: max-content;
+        animation: scroll-left 40s linear infinite;
+    }
+
+    /* הגדרות למראה מאוזן (Landscape) */
+    .gallery-item {
+        width: 550px; /* רוחב גדול יותר */
+        height: 350px; /* גובה קטן יותר */
+        object-fit: cover; /* מבטיח שהתוכן ימלא את המלבן בלי להתעוות */
+        border-radius: 20px;
+        flex-shrink: 0;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    /* אנימציית הגלילה */
+    @keyframes scroll-left {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
         .acc-option { position: absolute; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); opacity: 0; pointer-events: none; transform: scale(0); }
         .acc-menu-open .acc-option { opacity: 1; pointer-events: auto; transform: scale(1); }
         .acc-menu-open .opt-1 { transform: translate(0, 75px); }
@@ -106,46 +125,42 @@
         <h1 class="text-6xl md:text-8xl italic font-serif leading-[1.1]">היופי שברגע <br /><span class="text-[#D4AF37] not-italic font-light">מעץ טבעי.</span></h1>
     </section>
 
- <!-- גלריה מאוחדת: כל התמונות וכל הסרטונים -->
+ <!-- גלריה מאוזנת (Horizontal) - כל המדיה משולבת -->
 <div class="marquee-container">
     <div class="marquee-content">
-        <!-- בלוק מדיה מלא - 16 פריטים שונים -->
-        
-        <!-- סרטונים ותמונות מהסט החדש -->
+        <!-- בלוק מדיה 1 (16 פריטים) -->
         <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="SnapBox Event">
+        <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="SnapBox">
         <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox">
         <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-
-        <!-- תמונות וסרטונים מהסט הקודם -->
-        <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox 1">
+        <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox">
         <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox 2">
+        <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
         <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="SnapBox 3">
-        <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="SnapBox 4">
+        <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="SnapBox">
+        <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="SnapBox">
         <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="SnapBox 5">
-        <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="SnapBox 6">
+        <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="SnapBox">
+        <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="SnapBox">
 
-        <!-- שכפול מלא למען לופ חלק (חובה!) -->
+        <!-- בלוק מדיה 2 (שכפול ללופ אינסופי) -->
         <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
         <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="">
         <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
         <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="">
-        <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
         <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="">
+        <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
         <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
         <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="">
         <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="">
         <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
         <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="">
         <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="">
     </div>
