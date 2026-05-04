@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snap Box | בוטיק עמדות צילום</title>
     
-    <!-- לוגו בלשונית הדפדפן - וודא שהקובץ נמצא בתיקייה הראשית -->
     <link rel="icon" type="image/jpeg" href="logo.jpg">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,26 +14,27 @@
     <style>
         :root { --base-font-size: 16px; }
         html { font-size: var(--base-font-size); transition: font-size 0.3s ease; }
-        body { font-family: 'Assistant', sans-serif; overflow-x: hidden; scroll-behavior: smooth; background-color: #FCFBFA; color: #1A1A1A; transition: background 0.3s, color 0.3s; }
+        body { font-family: 'Assistant', sans-serif; overflow-x: hidden; scroll-behavior: smooth; background-color: #FCFBFA; color: #1A1A1A; }
         .font-serif { font-family: 'Playfair Display', serif; }
         
         /* נגישות */
         .large-text-active { --base-font-size: 20px; }
         .high-contrast-active { background-color: #000 !important; color: #fff !important; }
-        .high-contrast-active .bg-white, .high-contrast-active .form-container, .high-contrast-active .marquee-container { background-color: #1a1a1a !important; color: #fff !important; border-color: #fff !important; }
-        .high-contrast-active .text-gray-400, .high-contrast-active .text-gray-500 { color: #ccc !important; }
+        .high-contrast-active .bg-white, .high-contrast-active .form-container { background-color: #1a1a1a !important; color: #fff !important; border-color: #fff !important; }
         .highlight-active a, .highlight-active button:not(#accMainBtn) { outline: 3px solid #D4AF37 !important; outline-offset: 4px !important; }
 
         .hero-tag-container { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; }
         .gold-line { height: 1px; width: 45px; background: linear-gradient(90deg, transparent, #D4AF37, transparent); }
 
-        /* גלריה זזה */
+        /* גלריה זזה - מהירות מוגברת (15s) */
         .marquee-container { overflow: hidden; white-space: nowrap; padding: 3rem 0; background: #fff; margin: 2rem 0; }
-        .marquee-content { display: inline-flex; animation: scroll-left 40s linear infinite; gap: 2rem; }
+        .marquee-content { display: inline-flex; animation: scroll-left 15s linear infinite; gap: 2rem; }
+        
         @keyframes scroll-left {
             from { transform: translateX(0); }
             to { transform: translateX(50%); }
         }
+        
         .gallery-item { width: 350px; height: 450px; border-radius: 24px; object-fit: cover; flex-shrink: 0; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 1px solid rgba(212, 175, 55, 0.2); }
 
         /* תפריט נגישות */
@@ -50,17 +50,16 @@
 
         .whatsapp-float { 
             position: fixed; bottom: 30px; left: 30px; width: 60px; height: 60px; border-radius: 50px; 
-            text-align: center; font-size: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
             z-index: 400; display: flex; align-items: center; justify-content: center; 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
         .whatsapp-float:hover { transform: scale(1.1) rotate(5deg); background-color: #D4AF37 !important; }
     </style>
 </head>
 <body>
 
-    <!-- כפתור וואטסאפ צף -->
-    <a href="https://wa.me/972546056180?text=היי%20רציתי%20לשמוע%20יותר%20על%20החבילות%20שלכם" 
+    <!-- כפתור וואטסאפ צף עם הודעה מעודכנת -->
+    <a href="https://wa.me/972546056180?text=%D7%94%D7%99%D7%99%20%D7%9E%D7%94%20%D7%A0%D7%A9%D7%9E%D7%A2%20%D7%A8%D7%A6%D7%99%D7%AA%D7%99%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%99%D7%95%D7%AA%D7%A8%20%D7%A2%D7%9C%20%D7%94%D7%97%D7%91%D7%99%D7%9C%D7%95%D7%AA%20%D7%A9%D7%9C%D7%9B%D7%9D%20%D7%A9%D7%9C%20%D7%94%D7%A2%D7%9E%D7%93%D7%AA%20%D7%A6%D7%99%D7%9C%D7%95%D7%9D" 
        class="whatsapp-float" 
        style="background-color: #1A1A1A !important; color: #FFFFFF !important;"
        target="_blank" rel="noopener noreferrer">
@@ -103,21 +102,23 @@
         <h1 class="text-6xl md:text-8xl italic font-serif leading-[1.1]">היופי שברגע <br /><span class="text-[#D4AF37] not-italic font-light">מעץ טבעי.</span></h1>
     </section>
 
-    <!-- גלריה - וודא שכל שמות הקבצים תואמים בדיוק (כולל אותיות גדולות/קטנות) -->
+    <!-- גלריה מעודכנת עם הקבצים החדשים ומהירות גבוהה -->
     <div class="marquee-container">
         <div class="marquee-content">
-            <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox 1">
-            <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox 2">
-            <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="SnapBox 3">
-            <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="SnapBox 4">
-            <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="SnapBox 5">
-            <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="SnapBox 6">
+            <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="SnapBox 1">
+            <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            
             <!-- כפילות ליצירת לופ אינסופי חלק -->
-            <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="">
-            <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="">
+            <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
         </div>
     </div>
 
