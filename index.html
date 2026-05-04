@@ -255,73 +255,119 @@
                         `📝 *הערות:* ${document.getElementById('notes').value || 'אין'}`;
             window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
         }
-// ניהול תגובות מותאם ל-GitHub Pages
-const reviewsDisplay = document.getElementById('reviewsDisplay');
-const commentForm = document.getElementById('commentForm');
-const successMessage = document.getElementById('successMessage');
-const submitBtn = document.getElementById('submitBtn');
+<script>
+    lucide.createIcons();
 
-// טעינת תגובות מהזיכרון המקומי (כדי שיופיעו בגיטהוב מיד)
-let localReviews = JSON.parse(localStorage.getItem('snapbox_reviews')) || [];
-let currentIdx = 0;
-
-function updateDisplay() {
-    if (localReviews.length === 0) {
-        reviewsDisplay.innerHTML = '<p class="text-gray-400 italic">היו הראשונים לכתוב תגובה...</p>';
-        return;
+    // מילוי תאריכים בטופס
+    const daySel = document.getElementById('day'), monthSel = document.getElementById('month'), yearSel = document.getElementById('year');
+    if(daySel) {
+        for(let i=1; i<=31; i++) daySel.options.add(new Option(i, i));
+        for(let i=1; i<=12; i++) monthSel.options.add(new Option(i, i));
+        const currYear = new Date().getFullYear();
+        for(let i=currYear; i<=currYear+3; i++) yearSel.options.add(new Option(i, i));
     }
 
-    const r = localReviews[currentIdx];
-    reviewsDisplay.innerHTML = `
-        <div class="animate-fade-in">
-            <div class="text-[#D4AF37] text-xl mb-3">★★★★★</div>
-            <p class="text-2xl md:text-3xl font-serif italic mb-4 text-[#1A1A1A]">"${r.text}"</p>
-            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">${r.name}</p>
-        </div>
-    `;
-}
+    // נגישות
+    function toggleAccMenu() { document.getElementById('accWrapper').classList.toggle('acc-menu-open'); }
+    function toggleLargeText() { document.documentElement.classList.toggle('large-text-active'); }
+    function toggleContrast() { document.body.classList.toggle('high-contrast-active'); }
+    function toggleHighlight() { document.body.classList.toggle('highlight-active'); }
 
-// החלפה אוטומטית כל 5 שניות
-setInterval(() => {
-    if (localReviews.length > 1) {
-        currentIdx = (currentIdx + 1) % localReviews.length;
-        updateDisplay();
-    }
-}, 5000);
-
-// טיפול בשליחת הטופס
-commentForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const name = document.getElementById('revName').value;
-    const text = document.getElementById('revText').value;
-
-    // 1. שליחה ל-Formspree (הלינק שלך)
-    try {
-        await fetch("https://formspree.io/f/mpwrobzk", {
-            method: "POST",
-            headers: { "Accept": "application/json", "Content-Type": "application/json" },
-            body: JSON.stringify({ name: name, message: text })
-        });
-    } catch (error) {
-        console.error("Error sending to Formspree");
+    // שליחת טופס הזמנה לוואטסאפ
+    function sendToWhatsapp(e) {
+        e.preventDefault();
+        const dateStr = `${daySel.value}/${monthSel.value}/${yearSel.value}`;
+        const msg = `✨ *בקשה לסנאפבוקס* ✨\n\n` +
+                    `👤 *שם:* ${document.getElementById('name').value}\n` +
+                    `🎉 *אירוע:* ${document.getElementById('eventType').value}\n` +
+                    `👥 *מוזמנים:* ${document.getElementById('guests').value}\n` +
+                    `📅 *תאריך:* ${dateStr}\n` +
+                    `📝 *הערות:* ${document.getElementById('notes').value || 'אין'}`;
+        window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
-    // 2. שמירה מקומית והצגה (כדי שיעבוד בגיטהוב ללא שרת)
-    const newReview = { name, text };
-    localReviews.unshift(newReview);
-    localStorage.setItem('snapbox_reviews', JSON.stringify(localReviews));
-    
-    // 3. עדכון ממשק
-    successMessage.style.display = "block";
-    submitBtn.style.display = "none";
-    currentIdx = 0;
-    updateDisplay();
-    commentForm.reset();
-});
+    // --- ניהול תגובות מבוסס Google Sheets ---
+    const reviewsDisplay = document.getElementById('reviewsDisplay');
+    const commentForm = document.getElementById('commentForm');
+    const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTGHmePDyAlebGOz1Xi2DU7YhEvjYW6E--cwnv-JlFjT-zvpWDXDGH64d19Gi2YglHgFqUFxzTE39N-/pub?output=csv";
 
-// הפעלה ראשונית
-updateDisplay();
+    let allReviews = [];
+    let currentIdx = 0;
+
+    // משיכת נתונים מהגיליון
+    async function fetchReviews() {
+        try {
+            const response = await fetch(sheetURL);
+            const data = await response.text();
+            // פירוק ה-CSV לשורות ודילוג על הכותרת
+            const rows = data.split('\n').slice(1); 
+            
+            allReviews = rows.map(row => {
+                // פיצול לפי פסיק (שם, תגובה)
+                const parts = row.split(',');
+                return { 
+                    name: parts[0]?.trim(), 
+                    text: parts[1]?.trim() 
+                };
+            }).filter(r => r.name && r.text); // מציג רק שורות מלאות
+            
+            updateDisplay();
+        } catch (e) {
+            console.error("שגיאה בטעינת התגובות");
+            reviewsDisplay.innerHTML = '<p class="text-gray-400 italic">לא ניתן לטעון תגובות כרגע</p>';
+        }
+    }
+
+    function updateDisplay() {
+        if (allReviews.length === 0) {
+            reviewsDisplay.innerHTML = '<p class="text-gray-400 italic">היו הראשונים לכתוב תגובה...</p>';
+            return;
+        }
+        const r = allReviews[currentIdx];
+        reviewsDisplay.innerHTML = `
+            <div class="animate-fade-in text-center">
+                <div class="text-[#D4AF37] text-xl mb-3">★★★★★</div>
+                <p class="text-2xl md:text-3xl font-serif italic mb-4 text-[#1A1A1A]">"${r.text}"</p>
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">${r.name}</p>
+            </div>
+        `;
+    }
+
+    // החלפה אוטומטית כל 5 שניות[cite: 1]
+    setInterval(() => {
+        if (allReviews.length > 1) {
+            currentIdx = (currentIdx + 1) % allReviews.length;
+            updateDisplay();
+        }
+    }, 5000);
+
+    // שליחת תגובה חדשה ל-Formspree[cite: 1]
+    commentForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const name = document.getElementById('revName').value;
+        const text = document.getElementById('revText').value;
+
+        try {
+            await fetch("https://formspree.io/f/mpwrobzk", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({ name: name, message: text })
+            });
+            
+            document.getElementById('successMessage').style.display = "block";
+            document.getElementById('submitBtn').style.display = "none";
+            commentForm.reset();
+            
+            // תזכורת ידידותית למנהל
+            console.log("התגובה נשלחה למייל! אל תשכח להוסיף אותה ל-Google Sheet כדי שכולם יראו.");
+        } catch (error) {
+            alert("חלה שגיאה בשליחה.");
+        }
+    });
+
+    // הפעלה ראשונית
+    fetchReviews();
+</script>
     </script>
 </body>
 </html>
