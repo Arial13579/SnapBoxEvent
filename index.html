@@ -29,14 +29,21 @@
         white-space: nowrap;
     }
 
-    .marquee-content { 
-        display: inline-flex; 
-        gap: 1.5rem;
-        width: max-content;
-        /* מהירות גבוהה: 5s. אם אתה רוצה "טיסה" ממש - שנה ל-3s */
-        animation: scroll-left 5s linear infinite; 
-        will-change: transform;
-    }
+    marquee-content { 
+    display: inline-flex; 
+    gap: 2rem;
+    width: max-content;
+    /* שיניתי מ-10 שניות ל-5 שניות - זה ירוץ פי 2 יותר מהר */
+    animation: scroll-left 5s linear infinite; 
+    /* הוספת אופטימיזציה לביצועים כדי שלא יגמגם במהירות גבוהה */
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* בונוס: עוצר את הריצה כשעומדים על התמונה עם העכבר (מומלץ בגלריות מהירות) */
+.marquee-container:hover .marquee-content {
+    animation-play-state: paused;
+}
 
     /* אופטימיזציה לאנימציה חלקה */
     @keyframes scroll-left {
@@ -52,10 +59,7 @@
         box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
 
-    /* עצירה במעבר עכבר - נותן תחושת שליטה למשתמש */
-    .marquee-container:hover .marquee-content {
-        animation-play-state: paused;
-    }
+   
         /* מערכת נגישות */
         .large-text-active { --base-font-size: 20px; }
         .high-contrast-active { background-color: #000 !important; color: #fff !important; }
