@@ -16,37 +16,33 @@
         html { font-size: var(--base-font-size); transition: font-size 0.3s ease; }
         body { font-family: 'Assistant', sans-serif; overflow-x: hidden; scroll-behavior: smooth; background-color: #FCFBFA; color: #1A1A1A; }
         .font-serif { font-family: 'Playfair Display', serif; }
-
-        /* לופ אינסופי חלק באמת */
-        .marquee-container { 
-            overflow: hidden; 
-            width: 100%;
-            padding: 3rem 0; 
-            background: #fff; 
-            position: relative;
-            z-index: 10;
-        }
-        .marquee-content { 
-            display: flex; 
-            gap: 20px;
-            width: max-content;
-            animation: scroll-left 50s linear infinite; 
-            will-change: transform;
-        }
-        .gallery-item {
-            height: 450px;
-            width: 320px;
-            object-fit: cover;
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            flex-shrink: 0;
-            background-color: #f0f0f0;
-        }
-        
-        @keyframes scroll-left {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
+ .marquee-container { 
+        overflow: hidden; 
+        width: 100%;
+        padding: 3rem 0; 
+        background: #fff; 
+        position: relative;
+    }
+    .marquee-content { 
+        display: flex; 
+        gap: 20px;
+        width: max-content;
+        animation: scroll-left 50s linear infinite; 
+        will-change: transform;
+    }
+    .gallery-item {
+        height: 450px;
+        width: 320px;
+        object-fit: cover;
+        border-radius: 24px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        flex-shrink: 0;
+        background-color: #f0f0f0;
+    }
+    @keyframes scroll-left {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
 
         /* נגישות */
         .large-text-active { --base-font-size: 20px; }
@@ -126,33 +122,31 @@
         <h1 class="text-6xl md:text-8xl italic font-serif leading-[1.1]">היופי שברגע <br /><span class="text-[#D4AF37] not-italic font-light">מעץ טבעי.</span></h1>
     </section>
 
-    <!-- גלריה אינסופית -->
-    <div class="marquee-container">
-        <div class="marquee-content" id="marquee-inner">
-            <!-- סרטונים -->
-            <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_5893407665186412855.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_5893407665186412857.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_5893407665186412858.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_5893407665186412859.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_5893407665186412860.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="video_2025-11-02_20-35-12 (13).mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601680.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+   <div class="marquee-container">
+    <div class="marquee-content" id="marquee-inner">
+        <!-- סרטונים -->
+        <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_5893407665186412855.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_5893407665186412857.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_5893407665186412858.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_5893407665186412859.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_5893407665186412860.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="video_2025-11-02_20-35-12 (13).mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601680.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
 
-            <!-- תמונות -->
-            <img src="photo_5893407665646406936_y.jpg" class="gallery-item" alt="עמדה 1">
-            <img src="photo_5893407665646406937_y.jpg" class="gallery-item" alt="עמדה 2">
-            <img src="photo_5893407665646406938_y.jpg" class="gallery-item" alt="עמדה 3">
-            <img src="photo_5893407665646406939_y.jpg" class="gallery-item" alt="עמדה 4">
-            <img src="photo_5893407665646406940_y.jpg" class="gallery-item" alt="עמדה 5">
-            <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="עמדה 6">
-        </div>
+        <!-- תמונות -->
+        <img src="photo_5893407665646406936_y.jpg" class="gallery-item">
+        <img src="photo_5893407665646406937_y.jpg" class="gallery-item">
+        <img src="photo_5893407665646406938_y.jpg" class="gallery-item">
+        <img src="photo_5893407665646406939_y.jpg" class="gallery-item">
+        <img src="photo_5893407665646406940_y.jpg" class="gallery-item">
+        <img src="photo_6035350111371595162_y.jpg" class="gallery-item">
     </div>
-
+</div>
     <!-- Form Section -->
     <section id="contact-form" class="py-20 px-6 max-w-6xl mx-auto">
         <div class="form-container bg-white p-8 md:p-20 rounded-[60px] shadow-2xl border border-gray-100/50">
@@ -188,11 +182,12 @@
     </footer>
 
     <script>
-        lucide.createIcons();
-        
-        // מנגנון לופ אינסופי: משכפל את התוכן פעם אחת
-        const marqueeInner = document.getElementById('marquee-inner');
-        marqueeInner.innerHTML += marqueeInner.innerHTML;
+     // תיקון: מבצע את השכפול רק כשהדף מוכן לגמרי
+    window.addEventListener('DOMContentLoaded', () => {
+        const inner = document.getElementById('marquee-inner');
+        if (inner) {
+            inner.innerHTML += inner.innerHTML;
+        }
 
         const daySel = document.getElementById('day'), monthSel = document.getElementById('month'), yearSel = document.getElementById('year');
         for(let i=1; i<=31; i++) daySel.options.add(new Option(i, i));
