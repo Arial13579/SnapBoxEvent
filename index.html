@@ -20,45 +20,42 @@
         body { font-family: 'Assistant', sans-serif; overflow-x: hidden; scroll-behavior: smooth; background-color: #FCFBFA; color: #1A1A1A; transition: background 0.3s, color 0.3s; }
         .font-serif { font-family: 'Playfair Display', serif; }
 
-      .marquee-container { 
-        overflow: hidden; 
-        width: 100%;
-        padding: 2rem 0; 
-        background: #fff; 
-        margin: 1rem 0;
-        white-space: nowrap;
-    }
-
-    marquee-content { 
-    display: inline-flex; 
-    gap: 2rem;
-    width: max-content;
-    /* שיניתי מ-10 שניות ל-5 שניות - זה ירוץ פי 2 יותר מהר */
-    animation: scroll-left 5s linear infinite; 
-    /* הוספת אופטימיזציה לביצועים כדי שלא יגמגם במהירות גבוהה */
-    will-change: transform;
-    transform: translateZ(0);
+     /* גלריה אינסופית - לופ מושלם */
+.marquee-container { 
+    overflow: hidden; 
+    width: 100%;
+    padding: 2rem 0; 
+    background: #fff; 
+    white-space: nowrap;
+    position: relative;
 }
 
-/* בונוס: עוצר את הריצה כשעומדים על התמונה עם העכבר (מומלץ בגלריות מהירות) */
+.marquee-content { 
+    display: inline-flex; 
+    gap: 2rem; /* הרווח בין התמונות */
+    width: max-content;
+    /* מהירות: 15s היא מהירה מאוד לסט מלא. ככל שתוריד את המספר, זה יטוס */
+    animation: scroll-left 15s linear infinite; 
+    will-change: transform;
+}
+
+@keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* חייב להיות 50% כי שכפלנו את התוכן */
+}
+
+/* עצירה במעבר עכבר כדי שהגולש יוכל להסתכל על תמונה */
 .marquee-container:hover .marquee-content {
     animation-play-state: paused;
 }
 
-    /* אופטימיזציה לאנימציה חלקה */
-    @keyframes scroll-left {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-    }
-
-    .gallery-item {
-        height: 300px; /* הקטנתי מעט כדי שייכנסו יותר תמונות בפריים אחד */
-        width: auto;
-        border-radius: 20px;
-        object-fit: cover;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-
+.gallery-item {
+    height: 350px;
+    width: auto;
+    border-radius: 24px;
+    object-fit: cover;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
    
         /* מערכת נגישות */
         .large-text-active { --base-font-size: 20px; }
@@ -131,20 +128,25 @@
     </section>
 
     <!-- 3. Marquee Gallery -->
-    <div class="marquee-container">
-        <div class="marquee-content">
-            <!-- מדיה - וודא שהקבצים קיימים בתיקייה ב-GitHub -->
-            <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox 1">
-            <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox 2">
-            <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="SnapBox 3">
-            <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="SnapBox 4">
-            <!-- שכפול ללופ חלק -->
-            <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox 1">
-            <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        </div>
+   <div class="marquee-container">
+    <div class="marquee-content">
+        <!-- סט ראשון של תמונות וסרטונים -->
+        <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox 1">
+        <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox 2">
+        <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="SnapBox 3">
+        <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="SnapBox 4">
+
+        <!-- סט שני - העתק מדויק של הסט הראשון (זה מה שיוצר את הלופ) -->
+        <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox 1">
+        <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox 2">
+        <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="SnapBox 3">
+        <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="SnapBox 4">
     </div>
+</div>
 
     <!-- 5. Booking Form Section -->
     <section id="contact-form" class="py-20 px-6 max-w-6xl mx-auto">
