@@ -26,30 +26,29 @@
         .hero-tag-container { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; }
         .gold-line { height: 1px; width: 45px; background: linear-gradient(90deg, transparent, #D4AF37, transparent); }
 
-        /* גלריה זזה - עיצוב מאוזן (Landscape) */
+        /* גלריה זזה - פורמט לאורך (Portrait) */
         .marquee-container {
             width: 100%;
             overflow: hidden;
             background: transparent;
-            padding: 40px 0;
+            padding: 20px 0;
             margin: 2rem 0;
         }
 
         .marquee-content {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             width: max-content;
-            animation: scroll-left 45s linear infinite;
+            animation: scroll-left 50s linear infinite;
         }
 
         .gallery-item {
-            width: 550px; /* רוחב מאוזן */
-            height: 350px; /* גובה מותאם */
+            width: 280px; /* רוחב צר יותר למראה לאורך */
+            height: 500px; /* גובה משמעותי */
             object-fit: cover;
-            border-radius: 24px;
+            border-radius: 20px;
             flex-shrink: 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            background-color: #f0f0f0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
 
         @keyframes scroll-left {
@@ -61,31 +60,29 @@
             animation-play-state: paused;
         }
 
-        /* רכיבי נגישות צפים */
+        /* רכיבי נגישות */
         .acc-option { position: absolute; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); opacity: 0; pointer-events: none; transform: scale(0); }
         .acc-menu-open .acc-option { opacity: 1; pointer-events: auto; transform: scale(1); }
         .acc-menu-open .opt-1 { transform: translate(0, 75px); }
         .acc-menu-open .opt-2 { transform: translate(65px, 45px); }
         .acc-menu-open .opt-3 { transform: translate(75px, -20px); }
 
-        @keyframes fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-in { animation: fade-in 1.2s ease-out forwards; }
+        @keyframes fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .whatsapp-float { 
             position: fixed; bottom: 30px; left: 30px; width: 60px; height: 60px; border-radius: 50px; 
             z-index: 400; display: flex; align-items: center; justify-content: center; 
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            background-color: #1A1A1A !important; color: #FFFFFF !important;
         }
         .whatsapp-float:hover { transform: scale(1.1) rotate(5deg); background-color: #D4AF37 !important; }
     </style>
 </head>
 <body>
 
-    <!-- כפתור וואטסאפ צף -->
-    <a href="https://wa.me/972546056180?text=%D7%94%D7%99%D7%99%20%D7%9E%D7%94%20%D7%A0%D7%A9%D7%9E%D7%A2%20%D7%A8%D7%A6%D7%99%D7%AA%D7%99%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%99%D7%95%D7%AA%D7%A8%20%D7%A2%D7%9C%20%D7%94%D7%97%D7%91%D7%99%D7%9C%D7%95%D7%AA%20%D7%A9%D7%9C%D7%9B%D7%9D%20%D7%A9%D7%9C%20%D7%94%D7%A2%D7%9E%D7%93%D7%AA%20%D7%A6%D7%99%D7%9C%D7%95%D7%9D" 
-       class="whatsapp-float" 
-       style="background-color: #1A1A1A !important; color: #FFFFFF !important;"
-       target="_blank" rel="noopener noreferrer">
+    <!-- וואטסאפ צף -->
+    <a href="https://wa.me/972546056180?text=היי, אשמח לקבל פרטים נוספים על עמדות הצילום שלכם" class="whatsapp-float" target="_blank">
         <i data-lucide="message-circle" style="width: 32px; height: 32px;"></i>
     </a>
 
@@ -125,10 +122,10 @@
         <h1 class="text-6xl md:text-8xl italic font-serif leading-[1.1]">היופי שברגע <br /><span class="text-[#D4AF37] not-italic font-light">מעץ טבעי.</span></h1>
     </section>
 
-    <!-- גלריה מאוחדת ומאוזנת (Horizontal Marquee) -->
+    <!-- גלריה מונפשת - פורמט Portrait -->
     <div class="marquee-container">
         <div class="marquee-content">
-            <!-- בלוק מדיה 1 -->
+            <!-- רשימת המדיה המקורית שלך -->
             <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
             <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="SnapBox">
             <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
@@ -145,24 +142,13 @@
             <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
             <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="SnapBox">
             <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="SnapBox">
-
-            <!-- בלוק מדיה 2 (שכפול ללופ אינסופי חלק) -->
+            
+            <!-- שכפול ללופ אינסופי -->
             <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
             <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="">
             <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
             <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="">
             <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="">
-            <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="">
-            <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="">
-            <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="">
-            <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="">
         </div>
     </div>
 
@@ -212,17 +198,20 @@
     <!-- Footer -->
     <footer class="py-16 text-center border-t">
         <div class="flex justify-center gap-12 mb-10">
+
             <a href="https://www.instagram.com/snapbox_event.official" target="_blank" class="text-gray-400 hover:text-[#D4AF37] transition-all transform hover:scale-110"><i data-lucide="instagram" size="32"></i></a>
+
             <a href="https://www.facebook.com/share/18GcWQXLqA/" target="_blank" class="text-gray-400 hover:text-[#D4AF37] transition-all transform hover:scale-110"><i data-lucide="facebook" size="32"></i></a>
+
         </div>
-        <h3 class="text-2xl font-black tracking-[0.5em] mb-4">SNAP BOX</h3>
+        <h3 class="text-2xl font-black tracking-[0.5em] mb-4 uppercase">SNAP BOX</h3>
         <p class="text-[10px] text-gray-400">© 2026 כל הזכויות שמורות</p>
     </footer>
 
     <script>
         lucide.createIcons();
 
-        // מילוי תאריכים
+        // אתחול תאריכים
         const daySel = document.getElementById('day'), monthSel = document.getElementById('month'), yearSel = document.getElementById('year');
         for(let i=1; i<=31; i++) daySel.options.add(new Option(i, i));
         for(let i=1; i<=12; i++) monthSel.options.add(new Option(i, i));
