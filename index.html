@@ -6,10 +6,12 @@
     <title>Snap Box | בוטיק עמדות צילום</title>
     
     <!-- לוגו בלשונית הדפדפן -->
-<link rel="icon" type="image/jpeg" href="logo.jpg">
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+    
+    <!-- ספריית האייקונים - Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
@@ -29,12 +31,12 @@
         .hero-tag-container { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; }
         .gold-line { height: 1px; width: 45px; background: linear-gradient(90deg, transparent, #D4AF37, transparent); }
 
-        /* גלריה זזה חלקה */
+        /* גלריה זזה חלקה - המהירות שונתה ל-15 שניות כדי שתרוץ מהר יותר */
         .marquee-container { overflow: hidden; white-space: nowrap; padding: 3rem 0; background: #fff; margin: 2rem 0; }
-        .marquee-content { display: inline-flex; animation: scroll-left 25s linear infinite; gap: 2rem; }
+        .marquee-content { display: inline-flex; animation: scroll-left 15s linear infinite; gap: 2rem; }
         @keyframes scroll-left {
             from { transform: translateX(0); }
-            to { transform: translateX(50%); }
+            to { transform: translateX(-50%); }
         }
         .gallery-item { width: 350px; height: 450px; border-radius: 24px; object-fit: cover; flex-shrink: 0; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 1px solid rgba(212, 175, 55, 0.2); }
 
@@ -43,13 +45,13 @@
         .acc-option { position: absolute; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); opacity: 0; pointer-events: none; transform: scale(0); }
         .acc-menu-open .acc-option { opacity: 1; pointer-events: auto; transform: scale(1); }
         .acc-menu-open .opt-1 { transform: translate(0, 75px); }
-        .acc-menu-open .opt-2 { transform: translate(65px, 45px); }
-        .acc-menu-open .opt-3 { transform: translate(75px, -20px); }
+        .acc-menu-open .opt-2 { transform: translate(-65px, 45px); }
+        .acc-menu-open .opt-3 { transform: translate(-75px, -20px); }
 
         @keyframes fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-in { animation: fade-in 1.2s ease-out forwards; }
 
-        /* עיצוב בסיסי לכפתור וואטסאפ (הצבע נקבע ישירות ב-HTML למטה כדי למנוע דריסה) */
+        /* עיצוב כפתור וואטסאפ צף */
         .whatsapp-float { 
             position: fixed; 
             bottom: 30px; 
@@ -58,7 +60,6 @@
             height: 60px; 
             border-radius: 50px; 
             text-align: center; 
-            font-size: 30px; 
             box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
             z-index: 400; 
             display: flex; 
@@ -66,21 +67,22 @@
             justify-content: center; 
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             border: 1px solid rgba(255,255,255,0.1);
+            background-color: #1A1A1A !important;
+            color: #FFFFFF !important;
         }
 
         .whatsapp-float:hover { 
             transform: scale(1.1) rotate(5deg); 
-            background-color: #D4AF37 !important; /* הופך לזהב במעבר עכבר */
+            background-color: #D4AF37 !important;
         }
 
     </style>
 </head>
 <body>
 
-    <!-- כפתור וואטסאפ צף - הוספת צבע שחור ישיר (Inline Style) -->
+    <!-- כפתור וואטסאפ צף -->
     <a href="https://wa.me/972546056180?text=היי%20מה%20נשמע%20רציתי%20לשמוע%20יותר%20על%20החבילות%20שלכם%20של%20העמדת%20צילום?" 
        class="whatsapp-float" 
-       style="background-color: #1A1A1A !important; color: #FFFFFF !important;"
        target="_blank" 
        rel="noopener noreferrer">
         <i data-lucide="message-circle" style="width: 32px; height: 32px;"></i>
@@ -92,8 +94,8 @@
             <i data-lucide="accessibility"></i>
         </button>
         <button onclick="toggleLargeText()" title="הגדלת טקסט" class="acc-option opt-1 bg-white text-black w-12 h-12 rounded-full shadow-xl flex items-center justify-center border border-gray-100 hover:bg-[#D4AF37] hover:text-white"><b>A+</b></button>
-        <button onclick="toggleContrast()" title="ניגודיות גבוהה" class="acc-option opt-2 bg-white text-black w-12 h-12 rounded-full shadow-xl flex items-center justify-center border border-gray-100 hover:bg-[#D4AF37] hover:text-white"><i data-lucide="contrast" size="18"></i></button>
-        <button onclick="toggleHighlight()" title="הדגשת קישורים" class="acc-option opt-3 bg-white text-black w-12 h-12 rounded-full shadow-xl flex items-center justify-center border border-gray-100 hover:bg-[#D4AF37] hover:text-white"><i data-lucide="eye" size="18"></i></button>
+        <button onclick="toggleContrast()" title="ניגודיות גבוהה" class="acc-option opt-2 bg-white text-black w-12 h-12 rounded-full shadow-xl flex items-center justify-center border border-gray-100 hover:bg-[#D4AF37] hover:text-white"><i data-lucide="contrast" style="width: 18px; height: 18px;"></i></button>
+        <button onclick="toggleHighlight()" title="הדגשת קישורים" class="acc-option opt-3 bg-white text-black w-12 h-12 rounded-full shadow-xl flex items-center justify-center border border-gray-100 hover:bg-[#D4AF37] hover:text-white"><i data-lucide="eye" style="width: 18px; height: 18px;"></i></button>
     </div>
 
     <!-- Header -->
@@ -123,8 +125,9 @@
     </section>
 
     <!-- גלריה זזה - Marquee -->
-  <div class="marquee-container">
+    <div class="marquee-container">
         <div class="marquee-content">
+            <!-- שכפול של התמונות ליצירת לופ אינסופי חלק -->
             <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox 1">
             <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
             <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox 2">
@@ -132,8 +135,10 @@
             <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="SnapBox 3">
             <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="SnapBox 4">
             <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="SnapBox 5">
-            <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="SnapBox 6">
+            <!-- שכפול למניעת קפיצה בסוף האנימציה -->
+            <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox 1">
+            <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+            <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox 2">
         </div>
     </div>
 
@@ -183,13 +188,13 @@
         </div>
     </section>
 
-    <!-- רשתות חברתיות למטה -->
+    <!-- רשתות חברתיות -->
     <div class="flex justify-center gap-12 py-10">
-        <a href="https://www.instagram.com/snapbox_event.official?igsh=MWNlMHU1eXF4OXh6cA==" target="_blank" rel="noopener noreferrer" class="social-icon transition-all duration-300 transform hover:scale-125 hover:text-[#D4AF37] text-gray-400">
-            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+        <a href="https://www.instagram.com/snapbox_event.official" target="_blank" rel="noopener noreferrer" class="social-icon transition-all duration-300 transform hover:scale-125 hover:text-[#D4AF37] text-gray-400">
+            <i data-lucide="instagram" style="width: 36px; height: 36px;"></i>
         </a>
-        <a href="https://www.facebook.com/share/18GcWQXLqA/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="social-icon transition-all duration-300 transform hover:scale-125 hover:text-[#D4AF37] text-gray-400">
-            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        <a href="https://www.facebook.com/share/18GcWQXLqA" target="_blank" rel="noopener noreferrer" class="social-icon transition-all duration-300 transform hover:scale-125 hover:text-[#D4AF37] text-gray-400">
+            <i data-lucide="facebook" style="width: 36px; height: 36px;"></i>
         </a>
     </div>
 
@@ -200,21 +205,36 @@
     </footer>
 
     <script>
+        // אתחול האייקונים - תיקון הבעיה שהאייקונים לא הופיעו
         lucide.createIcons();
 
-        // מילוי תאריכים
-        const daySel = document.getElementById('day'), monthSel = document.getElementById('month'), yearSel = document.getElementById('year');
-        for(let i=1; i<=31; i++) daySel.options.add(new Option(i, i));
-        for(let i=1; i<=12; i++) monthSel.options.add(new Option(i, i));
-        const currYear = new Date().getFullYear();
-        for(let i=currYear; i<=currYear+3; i++) yearSel.options.add(new Option(i, i));
+        // מילוי תאריכים בטופס
+        const daySel = document.getElementById('day'), 
+              monthSel = document.getElementById('month'), 
+              yearSel = document.getElementById('year');
+        
+        if(daySel) {
+            for(let i=1; i<=31; i++) daySel.options.add(new Option(i, i));
+            for(let i=1; i<=12; i++) monthSel.options.add(new Option(i, i));
+            const currYear = new Date().getFullYear();
+            for(let i=currYear; i<=currYear+3; i++) yearSel.options.add(new Option(i, i));
+        }
 
-        // נגישות
-        function toggleAccMenu() { document.getElementById('accWrapper').classList.toggle('acc-menu-open'); }
-        function toggleLargeText() { document.documentElement.classList.toggle('large-text-active'); }
-        function toggleContrast() { document.body.classList.toggle('high-contrast-active'); }
-        function toggleHighlight() { document.body.classList.toggle('highlight-active'); }
+        // פונקציות נגישות - תיקון הבעיה שהן לא עבדו
+        function toggleAccMenu() { 
+            document.getElementById('accWrapper').classList.toggle('acc-menu-open'); 
+        }
+        function toggleLargeText() { 
+            document.documentElement.classList.toggle('large-text-active'); 
+        }
+        function toggleContrast() { 
+            document.body.classList.toggle('high-contrast-active'); 
+        }
+        function toggleHighlight() { 
+            document.body.classList.toggle('highlight-active'); 
+        }
 
+        // שליחת טופס לוואטסאפ
         function sendToWhatsapp(e) {
             e.preventDefault();
             const dateStr = `${daySel.value}/${monthSel.value}/${yearSel.value}`;
@@ -226,37 +246,6 @@
                         `📝 *הערות:* ${document.getElementById('notes').value || 'אין'}`;
             window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
         }
-
-    lucide.createIcons();
-
-    // מילוי תאריכים בטופס
-    const daySel = document.getElementById('day'), monthSel = document.getElementById('month'), yearSel = document.getElementById('year');
-    if(daySel) {
-        for(let i=1; i<=31; i++) daySel.options.add(new Option(i, i));
-        for(let i=1; i<=12; i++) monthSel.options.add(new Option(i, i));
-        const currYear = new Date().getFullYear();
-        for(let i=currYear; i<=currYear+3; i++) yearSel.options.add(new Option(i, i));
-    }
-
-    // נגישות
-    function toggleAccMenu() { document.getElementById('accWrapper').classList.toggle('acc-menu-open'); }
-    function toggleLargeText() { document.documentElement.classList.toggle('large-text-active'); }
-    function toggleContrast() { document.body.classList.toggle('high-contrast-active'); }
-    function toggleHighlight() { document.body.classList.toggle('highlight-active'); }
-
-    // שליחת טופס הזמנה לוואטסאפ
-    function sendToWhatsapp(e) {
-        e.preventDefault();
-        const dateStr = `${daySel.value}/${monthSel.value}/${yearSel.value}`;
-        const msg = `✨ *בקשה לסנאפבוקס* ✨\n\n` +
-                    `👤 *שם:* ${document.getElementById('name').value}\n` +
-                    `🎉 *אירוע:* ${document.getElementById('eventType').value}\n` +
-                    `👥 *מוזמנים:* ${document.getElementById('guests').value}\n` +
-                    `📅 *תאריך:* ${dateStr}\n` +
-                    `📝 *הערות:* ${document.getElementById('notes').value || 'אין'}`;
-        window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
     </script>
 </body>
 </html>
