@@ -17,7 +17,29 @@
         html { font-size: var(--base-font-size); transition: font-size 0.3s ease; }
         body { font-family: 'Assistant', sans-serif; overflow-x: hidden; scroll-behavior: smooth; background-color: #FCFBFA; color: #1A1A1A; transition: background 0.3s, color 0.3s; }
         .font-serif { font-family: 'Playfair Display', serif; }
-        
+
+
+        /* גלריה אינסופית מתוקנת */
+.marquee-container { 
+    overflow: hidden; 
+    width: 100%;
+    padding: 3rem 0; 
+    background: #fff; 
+    margin: 2rem 0;
+    white-space: nowrap;
+}
+
+.marquee-content { 
+    display: inline-flex; 
+    gap: 2rem;
+    width: max-content; /* גורם לתוכן לא להישבר */
+    animation: scroll-left 40s linear infinite; 
+}
+
+@keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* תנועה שמאלה ללופ חלק */
+}
         /* נגישות */
         .large-text-active { --base-font-size: 20px; }
         .high-contrast-active { background-color: #000 !important; color: #fff !important; }
@@ -25,18 +47,6 @@
         .high-contrast-active .text-gray-400, .high-contrast-active .text-gray-500 { color: #ccc !important; }
         .highlight-active a, .highlight-active button:not(#accMainBtn) { outline: 3px solid #D4AF37 !important; outline-offset: 4px !important; }
 
-        /* עיצוב ה-Tag עם פסי זהב */
-        .hero-tag-container { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; }
-        .gold-line { height: 1px; width: 45px; background: linear-gradient(90deg, transparent, #D4AF37, transparent); }
-
-        /* גלריה זזה חלקה */
-        .marquee-container { overflow: hidden; white-space: nowrap; padding: 3rem 0; background: #fff; margin: 2rem 0; }
-        .marquee-content { display: inline-flex; animation: scroll-left 25s linear infinite; gap: 2rem; }
-        @keyframes scroll-left {
-            from { transform: translateX(0); }
-            to { transform: translateX(50%); }
-        }
-        .gallery-item { width: 350px; height: 450px; border-radius: 24px; object-fit: cover; flex-shrink: 0; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 1px solid rgba(212, 175, 55, 0.2); }
 
         /* תפריט נגישות */
         .acc-menu-open #accMainBtn { transform: rotate(180deg); }
