@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snap Box | בוטיק עמדות צילום</title>
     
-    <!-- לוגו בלשונית הדפדפן -->
+    <!-- לוגו בלשונית הדפדפן - וודא שהקובץ קיים במאגר בשם זהה מדויק -->
     <link rel="icon" type="image/jpeg" href="logo.jpg">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -86,17 +86,19 @@
     <!-- Marquee Gallery -->
     <div class="marquee-container">
         <div class="marquee-content">
+            <!-- וודא שכל הקבצים האלו נמצאים ב-GitHub באותה תיקייה -->
             <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="1">
             <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
             <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="2">
             <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
             <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="3">
+            <!-- שכפול ללופ חלק -->
             <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="1">
             <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
         </div>
     </div>
 
-    <!-- Form Section -->
+    <!-- Form -->
     <section id="contact-form" class="py-20 px-6 max-w-4xl mx-auto">
         <div class="form-container bg-white p-10 md:p-16 rounded-[40px] shadow-xl border border-gray-50">
             <h2 class="text-4xl font-serif italic text-center mb-12">דברו איתנו</h2>
@@ -110,28 +112,14 @@
                     <option>חתונה</option>
                     <option>בר/בת מצווה</option>
                     <option>אירוע עסקי</option>
-                    <option>אחר</option>
                 </select>
-                <!-- שדה מלל חופשי -->
-<!-- שדה מלל חופשי חדש -->
-<textarea id="freeText" placeholder="ספרו לנו קצת על האירוע שלכם (תאריך, מיקום, בקשות מיוחדות...)" rows="3" class="w-full border-b py-3 outline-none focus:border-[#D4AF37] transition-colors resize-none"></textarea>                
-                <button type="submit" class="w-full py-5 bg-[#1A1A1A] text-white rounded-xl font-bold hover:bg-[#D4AF37] transition-all shadow-lg">שלחו הודעה לתיאום</button>
+                <button type="submit" class="w-full py-5 bg-[#1A1A1A] text-white rounded-xl font-bold hover:bg-[#D4AF37] transition-all">שלחו הודעה לתיאום</button>
             </form>
         </div>
     </section>
 
-    <!-- Footer עם רשתות חברתיות -->
-    <footer class="py-16 text-center border-t border-gray-100">
-        <div class="flex justify-center gap-8 mb-8">
-            <a href="https://www.instagram.com/snapbox_event.official" target="_blank" class="text-gray-400 hover:text-[#D4AF37] transition-all transform hover:scale-125">
-                <i data-lucide="instagram" size="32"></i>
-            </a>
-            <a href="https://www.facebook.com/share/18GcWQXLqA/" target="_blank" class="text-gray-400 hover:text-[#D4AF37] transition-all transform hover:scale-125">
-                <i data-lucide="facebook" size="32"></i>
-            </a>
-        </div>
-        <p class="text-xs text-gray-400 uppercase tracking-widest font-bold">SNAP BOX STUDIO</p>
-        <p class="text-[10px] text-gray-300 mt-2">© 2026 כל הזכויות שמורות</p>
+    <footer class="py-12 text-center border-t border-gray-100">
+        <p class="text-xs text-gray-400 uppercase tracking-widest">© 2026 Snap Box Studio</p>
     </footer>
 
     <script>
@@ -145,16 +133,8 @@
         function sendToWhatsapp(e) {
             e.preventDefault();
             const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
             const event = document.getElementById('eventType').value;
-            const freeText = document.getElementById('freeText').value;
-            
-            const msg = `✨ *פנייה חדשה מאתר SnapBox* ✨\n\n` +
-                        `👤 *שם:* ${name}\n` +
-                        `📞 *טלפון:* ${phone}\n` +
-                        `🎉 *אירוע:* ${event || 'לא צוין'}\n` +
-                        `📝 *הערות:* ${freeText || 'אין הערות נוספות'}`;
-                        
+            const msg = `היי, אני ${name}, אשמח לפרטים על עמדת צילום לאירוע מסוג ${event}`;
             window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
         }
     </script>
