@@ -28,8 +28,9 @@
 
         /* גלריה זזה - מהירות מוגברת (15s) */
         .marquee-container { overflow: hidden; white-space: nowrap; padding: 3rem 0; background: #fff; margin: 2rem 0; }
-        .marquee-content { display: inline-flex; animation: scroll-left 15s linear infinite; gap: 2rem; }
-        
+.marquee-content {
+        animation: scroll-left 25s linear infinite;
+    }        
         @keyframes scroll-left {
             from { transform: translateX(0); }
             to { transform: translateX(50%); }
@@ -103,24 +104,46 @@
     </section>
 
     <!-- גלריה מעודכנת עם הקבצים החדשים ומהירות גבוהה -->
-    <div class="marquee-container">
-        <div class="marquee-content">
-            <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="SnapBox 1">
-            <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            
-            <!-- כפילות ליצירת לופ אינסופי חלק -->
-            <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="">
-            <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        </div>
+ <!-- גלריה מאוחדת ומהירה - מותאם ל-GitHub -->
+<div class="marquee-container">
+    <div class="marquee-content">
+        <!-- בלוק מדיה 1: כל הקבצים משני הסטים -->
+        <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox">
+        <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="SnapBox">
+        <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox">
+        <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="SnapBox">
+        <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="SnapBox">
+        <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="SnapBox">
+        <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="SnapBox">
+
+        <!-- שכפול מלא (בלוק מדיה 2) - חובה ללופ אינסופי חלק -->
+        <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="">
+        <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="">
+        <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="">
+        <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="">
+        <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="">
+        <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="">
+        <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="">
     </div>
+</div>
 
     <!-- Form Section -->
     <section id="contact-form" class="py-20 px-6 max-w-6xl mx-auto">
