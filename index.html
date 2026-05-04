@@ -27,25 +27,54 @@
         .hero-tag-container { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; }
         .gold-line { height: 1px; width: 45px; background: linear-gradient(90deg, transparent, #D4AF37, transparent); }
 
-        /* גלריה זזה - מותאם לאורך (Portrait) */
-        .marquee-container { overflow: hidden; white-space: nowrap; padding: 3rem 0; background: transparent; margin: 2rem 0; }
-        .marquee-content { display: inline-flex; animation: scroll-left 40s linear infinite; gap: 20px; }
-        
-        @keyframes scroll-left {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); } /* תיקון כיוון האנימציה ללופ חלק */
-        }
-        
-        .gallery-item { 
-            width: 300px; /* רוחב צר */
-            height: 500px; /* גובה רב */
-            border-radius: 24px; 
-            object-fit: cover; 
-            flex-shrink: 0; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
-            border: 1px solid rgba(212, 175, 55, 0.2); 
-        }
+        /* קונטיינר הגלריה */
+.marquee-container { 
+    overflow: hidden; 
+    white-space: nowrap; 
+    padding: 4rem 0; 
+    background: transparent; 
+    margin: 2rem 0;
+    position: relative;
+}
 
+/* התוכן שזז */
+.marquee-content { 
+    display: inline-flex; 
+    animation: scroll-left 80s linear infinite; /* מהירות מתונה יותר בגלל כמות הקבצים */
+    gap: 25px; 
+}
+
+/* אנימציית הזזה */
+@keyframes scroll-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+/* עיצוב פריט בגלריה - מותאם לאורך (Portrait) */
+.gallery-item { 
+    width: 320px; 
+    height: 550px; 
+    border-radius: 30px; 
+    object-fit: cover; 
+    flex-shrink: 0; 
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12); 
+    border: 1px solid rgba(212, 175, 55, 0.2); 
+    transition: transform 0.5s ease;
+}
+
+/* אפקט קטן במעבר עכבר */
+.gallery-item:hover {
+    transform: scale(1.02);
+    border-color: #D4AF37;
+}
+
+/* התאמה לניידים */
+@media (max-width: 768px) {
+    .gallery-item {
+        width: 260px;
+        height: 450px;
+    }
+}
         /* תפריט נגישות */
         .acc-menu-open #accMainBtn { transform: rotate(180deg); }
         .acc-option { position: absolute; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); opacity: 0; pointer-events: none; transform: scale(0); }
@@ -118,37 +147,35 @@
 
     <!-- גלריה - Portrait -->
     <div class="marquee-container">
-        <div class="marquee-content">
-            <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox 1">
-            <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox 2">
-            <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="SnapBox 3">
-            <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="SnapBox 4">
-            <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="SnapBox 5">
-            <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="SnapBox 6">
-            <!-- כפילות ליצירת לופ אינסופי חלק -->
-            <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="">
-            <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="">
-            <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <!-- קבצים חדשים -->
-            <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="SnapBox New 1">
-            <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+    <div class="marquee-content">
+        <!-- קבוצה 1: כל הקבצים (ישנים + חדשים) -->
+        <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="SnapBox 1">
+        <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="SnapBox 2">
+        <video src="document_5990337496439856181.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_5949512990937779363_y.jpg" class="gallery-item" alt="SnapBox 3">
+        <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="SnapBox 4">
+        <video src="document_5990337496439856180.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="SnapBox 5">
+        <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="SnapBox 6">
+        
+        <!-- הקבצים החדשים שביקשת להוסיף -->
+        <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="SnapBox 7">
+        <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
 
-            <!-- כפילות ליצירת לופ אינסופי חלק (חשוב!) -->
-            <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-            <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="">
-        </div>
+        <!-- כפילות ליצירת לופ אינסופי חלק (חשוב מאוד!) -->
+        <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="">
+        <video src="document_5990337496439856182.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_5949512990937779362_y.jpg" class="gallery-item" alt="">
+        <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
+        <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="">
     </div>
+</div>
 
     <!-- Form Section -->
     <section id="contact-form" class="py-20 px-6 max-w-6xl mx-auto">
