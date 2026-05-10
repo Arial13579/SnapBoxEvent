@@ -498,191 +498,141 @@
         }
     </script>
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_PROJECT.firebaseapp.com",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_PROJECT.appspot.com",
-        messagingSenderId: "YOUR_SENDER_ID",
-        appId: "YOUR_APP_ID"
-    };
+// הנתונים ששלחת - מחוברים עכשיו רשמית
+const firebaseConfig = {
+  apiKey: "AIzaSyBTR6_WpHJv9bw7UtIF4yRpHcGydYFj9pk",
+  authDomain: "snapbox-reviews.firebaseapp.com",
+  projectId: "snapbox-reviews",
+  storageBucket: "snapbox-reviews.firebasestorage.app",
+  messagingSenderId: "665556822467",
+  appId: "1:665556822467:web:8bfbff09c668c77c76f576"
+};
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+// אתחול Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-    const track = document.getElementById('sb-reviews-track');
-    const form = document.getElementById('sb-new-review-form');
-    const successMsg = document.getElementById('sb-success-msg');
-    const btn = document.getElementById('sb-submit-btn');
-
-    // --- 1. משיכת תגובות וניהול סליידר (כל 5 שניות) ---
-    let reviewsCount = 0;
-    let currentIndex = 0;
-
-    onSnapshot(query(collection(db, "reviews"), orderBy("createdAt", "desc")), (snapshot) => {
-        let html = '';
-        reviewsCount = snapshot.size;
-        snapshot.forEach(doc => {
-            const data = doc.data();
-            html += `
-                <div class="sb-review-card">
-                    <p class="sb-review-author">${data.name}</p>
-                    <p class="sb-review-content">"${data.text}"</p>
-                    <div class="sb-review-stars">★★★★★</div>
-                </div>
-            `;
-        });
-        track.innerHTML = html || '<p style="text-align:center; width:100%;">עוד אין ביקורות...</p>';
-    });
-
-    // פונקציית סליידר
-    setInterval(() => {
-        if (reviewsCount <= 1) return;
-        currentIndex = (currentIndex + 1) % reviewsCount;
-        track.style.transform = `translateX(${currentIndex * 100}%)`;
-    }, 5000);
-
-    // --- 2. שליחת טופס (Firebase + Formspree) ---
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault(); // מונע רענון דף
-        
-        const email = document.getElementById('sb-form-email').value;
-        const name = document.getElementById('sb-form-name').value;
-        const text = document.getElementById('sb-form-text').value;
-
-        btn.disabled = true;
-        btn.innerText = 'שולח...';
-
-        try {
-            // שמירה ב-Firebase לתצוגה חיה
-            await addDoc(collection(db, "reviews"), {
-                name: name,
-                text: text,
-                email: email,
-                createdAt: serverTimestamp()
-            });
-
-            // שליחה ל-Formspree להתראה במייל
-            await fetch('https://formspree.io/f/mpwrobzk', {
-                method: 'POST',
-                body: new FormData(form),
-                headers: { 'Accept': 'application/json' }
-            });
-
-            // הצגת הודעת הצלחה מגניבה
-            form.style.display = 'none';
-            successMsg.classList.remove('sb-success-hidden');
-            successMsg.classList.add('sb-success-visible');
-
-        } catch (err) {
-            alert('אופס! הייתה שגיאה בשליחה.');
-            btn.disabled = false;
-            btn.innerText = 'שלח ביקורת';
-        }
-    });
-      (function() {
-    const ADMIN_PASSWORD = "1234"; // שנה כאן את הסיסמה שלך למחיקה
+(function() {
+    const ADMIN_PW = "1234"; // סיסמת המנהל שלך למחיקה
     const FORMSPREE_URL = "https://formspree.io/f/mpwrobzk";
     
-    let reviews = JSON.parse(localStorage.getItem('sb_reviews')) || [
-        { name: "דוגמה", text: "שירות מעולה ומקצועי!", stars: "★★★★★" }
-    ];
-    let submittedEmails = JSON.parse(localStorage.getItem('sb_submitted_emails')) || [];
-    let currentIndex = 0;
-    let isAdmin = false;
-
     const track = document.getElementById('sb-rev-track');
     const form = document.getElementById('sb-rev-form');
-    const successMsg = document.getElementById('sb-rev-success');
+    const successMsg = document.getElementById('sb-rev-success-line');
+    const btn = document.getElementById('sb-rev-submit-btn');
+    const adminDot = document.getElementById('sb-rev-admin-dot');
 
-    // פונקציית רינדור ביקורות
-    function renderReviews() {
-        track.innerHTML = reviews.map((rev, index) => `
+    let reviewsData = [];
+    let currentIndex = 0;
+    let isAdmin = false;
+    let submittedEmails = JSON.parse(localStorage.getItem('sb_voted_emails')) || [];
+
+    // משיכת נתונים מהענן בזמן אמת (Real-time)
+    const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
+    
+    onSnapshot(q, (snapshot) => {
+        reviewsData = [];
+        snapshot.forEach((doc) => {
+            reviewsData.push({ id: doc.id, ...doc.data() });
+        });
+        render();
+    });
+
+    function render() {
+        if (!track) return;
+        if (reviewsData.length === 0) {
+            track.innerHTML = '<div class="sb-rev-card"><p class="content">עוד אין ביקורות, מוזמנים לכתוב!</p></div>';
+            return;
+        }
+        track.innerHTML = reviewsData.map((rev) => `
             <div class="sb-rev-card">
                 <span class="author">${rev.name}</span>
                 <p class="content">"${rev.text}"</p>
                 <div class="stars">★★★★★</div>
-                ${isAdmin ? `<button class="sb-rev-admin-del" onclick="deleteSbReview(${index})">מחיקה</button>` : ''}
+                ${isAdmin ? `<button class="sb-admin-del" onclick="deleteReview('${rev.id}')" style="color:red; border:1px solid red; background:none; padding:5px; border-radius:5px; cursor:pointer; margin-top:10px;">מחיקה ✕</button>` : ''}
             </div>
         `).join('');
     }
 
-    // ניהול סליידר
-    function startSlider() {
-        setInterval(() => {
-            if (reviews.length <= 1) return;
-            currentIndex = (currentIndex + 1) % reviews.length;
-            track.style.transform = `translateX(${currentIndex * 100}%)`;
-        }, 4000);
-    }
+    // סליידר אוטומטי - החלפה כל 4 שניות
+    setInterval(() => {
+        if (reviewsData.length <= 1) return;
+        currentIndex = (currentIndex + 1) % reviewsData.length;
+        track.style.transform = `translateX(${currentIndex * 100}%)`;
+    }, 4000);
 
-    // אימות אימייל
-    function isValidEmail(email) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    }
+    // שליחת תגובה חדשה
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('sb-rev-name').value.trim();
+            const email = document.getElementById('sb-rev-email').value.trim().toLowerCase();
+            const text = document.getElementById('sb-rev-text').value.trim();
 
-    // שליחת טופס
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const name = document.getElementById('sb-rev-name').value;
-        const email = document.getElementById('sb-rev-email').value;
-        const text = document.getElementById('sb-rev-text').value;
+            if (submittedEmails.includes(email)) {
+                alert("כבר שלחת ביקורת עם המייל הזה.");
+                return;
+            }
 
-        if (!isValidEmail(email)) return alert("נא להזין אימייל תקין.");
-        if (submittedEmails.includes(email)) return alert("כבר שלחת ביקורת עם המייל הזה.");
+            btn.disabled = true;
+            btn.innerText = "שולח...";
 
-        const btn = document.getElementById('sb-rev-submit');
-        btn.disabled = true;
-        btn.innerText = "שולח...";
+            try {
+                // 1. שמירה ב-Firebase (יישאר לכל הגולשים)
+                await addDoc(collection(db, "reviews"), {
+                    name: name,
+                    text: text,
+                    email: email,
+                    createdAt: serverTimestamp()
+                });
 
-        try {
-            const response = await fetch(FORMSPREE_URL, {
-                method: 'POST',
-                body: new FormData(form),
-                headers: { 'Accept': 'application/json' }
-            });
+                // 2. שליחה ל-Formspree (התראה למייל שלך)
+                fetch(FORMSPREE_URL, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { 'Accept': 'application/json' }
+                });
 
-            if (response.ok) {
-                // שמירה מקומית
-                const newReview = { name, text, stars: "★★★★★" };
-                reviews.push(newReview);
                 submittedEmails.push(email);
-                
-                localStorage.setItem('sb_reviews', JSON.stringify(reviews));
-                localStorage.setItem('sb_submitted_emails', JSON.stringify(submittedEmails));
+                localStorage.setItem('sb_voted_emails', JSON.stringify(submittedEmails));
 
                 form.style.display = 'none';
-                successMsg.style.display = 'block';
-                renderReviews();
+                successMsg.style.display = 'block'; // מציג את הודעת ההצלחה
+                successMsg.classList.add('sb-rev-success-visible');
+            } catch (err) {
+                console.error(err);
+                alert("שגיאה בשליחה. וודא שפתחת את ה-Rules ב-Firebase ל-true.");
+                btn.disabled = false;
+                btn.innerText = "שלח ביקורת";
             }
-        } catch (error) {
-            alert("שגיאה בשליחה. נסה שוב.");
-            btn.disabled = false;
-        }
-    });
+        });
+    }
 
-    // פונקציית מחיקה (חשופה לחלון)
-    window.deleteSbReview = (index) => {
-        reviews.splice(index, 1);
-        localStorage.setItem('sb_reviews', JSON.stringify(reviews));
-        renderReviews();
+    // פונקציית מחיקה למנהל
+    window.deleteReview = async (id) => {
+        if (confirm("למחוק לצמיתות מהאתר?")) {
+            try {
+                await deleteDoc(doc(db, "reviews", id));
+            } catch (err) {
+                alert("שגיאה במחיקה: " + err.message);
+            }
+        }
     };
 
-    // טריגר אדמין (לחיצה על הנקודה הנסתרת)
-    document.getElementById('sb-rev-admin-trigger').addEventListener('click', () => {
-        const pw = prompt("סיסמת מנהל:");
-        if (pw === ADMIN_PASSWORD) {
-            isAdmin = true;
-            renderReviews();
-            alert("מצב מנהל פעיל. כפתורי מחיקה מופיעים בתוך הסליידר.");
-        }
-    });
-
-    renderReviews();
-    startSlider();
+    // כניסה למצב מנהל (לחיצה על הנקודה)
+    if (adminDot) {
+        adminDot.addEventListener('click', () => {
+            if (prompt("סיסמת מנהל:") === ADMIN_PW) {
+                isAdmin = true;
+                render();
+                alert("מצב מנהל פעיל");
+            }
+        });
+    }
 })();
 </script>
 </body>
