@@ -618,60 +618,62 @@
             return String(email).toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
         }
 
-        // --- שליחת הטופס ---
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const name = document.getElementById('sb-form-name').value.trim();
-            const email = document.getElementById('sb-form-email').value.trim().toLowerCase();
-            const text = document.getElementById('sb-form-text').value.trim();
+    // --- שליחת הטופס ---
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const name = document.getElementById('sb-form-name').value.trim();
+    const email = document.getElementById('sb-form-email').value.trim().toLowerCase();
+    const text = document.getElementById('sb-form-text').value.trim();
 
-            if (!validateEmail(email)) {
-                alert('נא להזין כתובת אימייל תקנית.');
-                return;
-            }
+    // בדיקת אימייל
+    if (!validateEmail(email)) {
+        alert('נא להזין כתובת אימייל תקנית.');
+        return;
+    }
 
-            if (submittedEmails.includes(email)) {
-                alert('כבר שלחת ביקורת עם המייל הזה.');
-                return;
-            }
+    // מניעת כפילויות
+    if (submittedEmails.includes(email)) {
+        alert('כבר שלחת ביקורת עם המייל הזה.');
+        return;
+    }
 
-            btn.disabled = true;
-            btn.innerText = 'מעבד...';
+    // שינוי מצב כפתור
+    btn.disabled = true;
+    btn.innerText = 'שולח תגובה...';
 
-            try {
-                // 1. שמירה ב-Firebase (לתצוגה באתר)
-                const firestoreTask = addDoc(collection(db, "reviews"), {
-                    name: name,
-                    text: text,
-                    email: email, // נשמר בבסיס הנתונים לזיהוי אך לא מוצג באתר
-                    createdAt: serverTimestamp()
-                });
-
-                // 2. שליחה ל-Formspree (להתראה במייל שלך)
-                const formspreeTask = fetch('https://formspree.io/f/mpwrobzk', {
-                    method: 'POST',
-                    body: new FormData(form),
-                    headers: { 'Accept': 'application/json' }
-                });
-
-                await Promise.all([firestoreTask, formspreeTask]);
-
-                // הצלחה
-                submittedEmails.push(email);
-                localStorage.setItem('sb_emails', JSON.stringify(submittedEmails));
-                
-                form.style.display = 'none';
-                successMsg.classList.add('sb-success-visible');
-
-            } catch (err) {
-                console.error(err);
-                alert('אירעה שגיאה. נסה שוב מאוחר יותר.');
-                btn.disabled = false;
-                btn.innerText = 'שלח ביקורת';
-            }
+    try {
+        // 1. שמירה ב-Firebase
+        await addDoc(collection(db, "reviews"), {
+            name: name,
+            text: text,
+            email: email,
+            createdAt: serverTimestamp()
         });
-    })();
+
+        // 2. שליחה ל-Formspree (אופציונלי - אם זה נכשל זה עדיין ימשיך)
+        fetch('https://formspree.io/f/mpwrobzk', {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+        }).catch(err => console.log("Formspree skip"));
+
+        // 3. הצלחה - עדכון ממשק
+        submittedEmails.push(email);
+        localStorage.setItem('sb_emails', JSON.stringify(submittedEmails));
+        
+        // כאן הקסם: מעלימים את הטופס ומראים את ההודעה
+        form.style.display = 'none'; 
+        successMsg.style.display = 'block'; // וודא שה-ID תואם ל-HTML
+        successMsg.classList.add('sb-success-visible');
+
+    } catch (err) {
+        console.error("Error details:", err);
+        alert('שגיאה בחיבור ל-Firebase. וודא שהגדרות ה-API תקינות.');
+        btn.disabled = false;
+        btn.innerText = 'שלח ביקורת';
+    }
+});
 </script>
 </body>
 </html>
