@@ -109,24 +109,23 @@
             transform: scale(1.1) rotate(5deg); 
             background-color: #D4AF37 !important; /* הופך לזהב במעבר עכבר */
         }
-
 .sb-reviews-container { padding: 80px 20px; background: #FCFBFA; direction: rtl; }
 .sb-reviews-wrapper { max-width: 900px; margin: 0 auto; }
-.sb-reviews-title { font-family: 'Playfair Display', serif; font-size: 3rem; text-align: center; margin-bottom: 50px; font-style: italic; color: #1A1A1A; }
-.sb-slider-viewport { overflow: hidden; position: relative; min-height: 200px; margin-bottom: 60px; background: #fff; border-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid rgba(212, 175, 55, 0.1); }
+.sb-reviews-title { font-family: 'Playfair Display', serif; font-size: 3rem; text-align: center; margin-bottom: 50px; font-style: italic; }
+.sb-slider-viewport { overflow: hidden; position: relative; min-height: 250px; margin-bottom: 60px; background: #fff; border-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid rgba(212, 175, 55, 0.1); }
 .sb-reviews-track { display: flex; transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
 .sb-review-card { min-width: 100%; padding: 40px; box-sizing: border-box; text-align: center; }
-.sb-review-content { font-size: 1.25rem; line-height: 1.8; color: #4A4A4A; font-style: italic; margin-bottom: 20px; }
-.sb-review-author { font-weight: 700; color: #D4AF37; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; }
-.sb-add-review-box { background: #fff; padding: 40px; border-radius: 40px; border: 1px solid #f0f0f0; position: relative; }
+.sb-review-stars { color: #D4AF37; margin-bottom: 15px; font-size: 1.2rem; }
+.sb-review-content { font-size: 1.25rem; line-height: 1.8; color: #4A4A4A; font-style: italic; margin-bottom: 15px; }
+.sb-review-author { font-weight: 700; color: #1A1A1A; text-transform: uppercase; font-size: 0.9rem; }
+.sb-add-review-box { background: #fff; padding: 40px; border-radius: 40px; border: 1px solid #f0f0f0; }
 .sb-form-grid { display: flex; flex-direction: column; gap: 15px; }
 .sb-input, .sb-textarea { width: 100%; padding: 15px 20px; border: 1px solid #eee; border-radius: 15px; background: #fdfdfd; font-family: inherit; }
 .sb-textarea { height: 100px; resize: none; }
-.sb-submit-btn { background: #1A1A1A; color: #fff; padding: 18px; border-radius: 15px; font-weight: 700; cursor: pointer; transition: all 0.3s; border: none; }
-.sb-submit-btn:disabled { background: #ccc; cursor: not-allowed; }
-.sb-success-hidden { display: none; text-align: center; font-weight: bold; color: #28a745; margin-top: 20px; font-size: 1.2rem; }
-.sb-success-visible { display: block; animation: fade-in 0.5s ease; }
-@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.sb-submit-btn { background: #1A1A1A; color: #fff; padding: 18px; border-radius: 15px; font-weight: 700; cursor: pointer; transition: 0.3s; border: none; }
+.sb-submit-btn:disabled { background: #ccc; }
+.sb-success-hidden { display: none; text-align: center; font-weight: bold; color: #D4AF37; margin-top: 20px; font-size: 1.2rem; }
+.sb-success-visible { display: block; }
     </style>
 </head>
 <body>
@@ -339,7 +338,7 @@
 </div>
 <section id="sb-reviews-section" class="sb-reviews-container">
     <div class="sb-reviews-wrapper">
-        <h2 class="sb-reviews-title">מה הלקוחות שלנו אומרים</h2>
+        <h2 class="sb-reviews-title">לקוחות מספרים</h2>
         
         <div class="sb-slider-viewport">
             <div id="sb-reviews-track" class="sb-reviews-track">
@@ -351,11 +350,11 @@
             <h3 class="sb-form-subtitle">הוספת ביקורת</h3>
             <form id="sb-new-review-form" class="sb-form-grid">
                 <input type="text" name="name" id="sb-form-name" placeholder="שם מלא" required class="sb-input">
-                <input type="email" name="email" id="sb-form-email" placeholder="אימייל (שימוש חד פעמי)" required class="sb-input">
+                <input type="email" name="email" id="sb-form-email" placeholder="אימייל אמיתי בלבד" required class="sb-input">
                 <textarea name="message" id="sb-form-text" placeholder="איך הייתה החוויה שלכם?" required class="sb-textarea"></textarea>
                 <button type="submit" id="sb-submit-btn" class="sb-submit-btn">שלח ביקורת</button>
             </form>
-            <div id="sb-success-msg" class="sb-success-hidden">התגובה נשלחה בהצלחה!</div>
+            <div id="sb-success-msg" class="sb-success-hidden">התגובה נשלחה בהצלחה! ✨</div>
         </div>
     </div>
 </section>
@@ -493,22 +492,26 @@
     const btn = document.getElementById('sb-submit-btn');
     const successMsg = document.getElementById('sb-success-msg');
     
-    // משיכת רשימת אימיילים שכבר הגיבו מהדפדפן
-    let submittedEmails = JSON.parse(localStorage.getItem('sb_submitted_emails')) || [];
-    // טעינת תגובות קיימות מהאחסון (כגיבוי ל-Formspree)
-    let reviews = JSON.parse(localStorage.getItem('sb_cached_reviews')) || [
-        {name: "לקוח מרוצה", text: "שירות מדהים ועמדה יפהפייה!"} // תגובת ברירת מחדל
+    let submittedEmails = JSON.parse(localStorage.getItem('sb_emails')) || [];
+    let reviews = JSON.parse(localStorage.getItem('sb_cache')) || [
+        {name: "אריאל מרב", text: "עמדת צילום מטורפת, האורחים לא הפסיקו להחמיא!"}
     ];
 
     function renderReviews() {
-        if (reviews.length === 0) return;
+        if (!track) return;
         track.innerHTML = reviews.map(rev => `
             <div class="sb-review-card">
+                <div class="sb-review-stars">★★★★★</div>
                 <p class="sb-review-content">"${rev.text}"</p>
                 <p class="sb-review-author">${rev.name}</p>
             </div>
         `).join('');
-        if(reviews.length > 1) track.innerHTML += track.innerHTML; 
+        if(reviews.length > 1) track.innerHTML += track.innerHTML;
+    }
+
+    // ולידציה של פורמט מייל
+    function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
     let currentIndex = 0;
@@ -530,11 +533,15 @@
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = document.getElementById('sb-form-email').value;
+        const emailInput = document.getElementById('sb-form-email').value;
 
-        // בדיקה אם האימייל כבר השתמש
-        if (submittedEmails.includes(email)) {
-            alert('ניתן לשלוח תגובה פעם אחת בלבד עם אימייל זה.');
+        if (!isValidEmail(emailInput)) {
+            alert('אנא הזן כתובת אימייל תקינה.');
+            return;
+        }
+
+        if (submittedEmails.includes(emailInput)) {
+            alert('כבר שלחת ביקורת עם המייל הזה.');
             return;
         }
 
@@ -551,30 +558,24 @@
             });
 
             if (response.ok) {
-                // עדכון לוקאלי
-                submittedEmails.push(email);
-                localStorage.setItem('sb_submitted_emails', JSON.stringify(submittedEmails));
+                submittedEmails.push(emailInput);
+                localStorage.setItem('sb_emails', JSON.stringify(submittedEmails));
                 
                 const newRev = {
                     name: document.getElementById('sb-form-name').value,
                     text: document.getElementById('sb-form-text').value
                 };
                 reviews.unshift(newRev);
-                localStorage.setItem('sb_cached_reviews', JSON.stringify(reviews));
+                localStorage.setItem('sb_cache', JSON.stringify(reviews));
 
-                // שינוי ויזואלי של הכפתור והטופס
                 form.style.display = 'none';
                 successMsg.classList.add('sb-success-visible');
-                
-                // עדכון הסליידר מיד
                 renderReviews();
             } else {
-                alert('הייתה שגיאה בשליחה. נסה שוב.');
+                alert('שגיאה בשליחה.');
                 btn.disabled = false;
-                btn.innerText = 'שלח ביקורת';
             }
         } catch (err) {
-            alert('שגיאת תקשורת.');
             btn.disabled = false;
         }
     });
