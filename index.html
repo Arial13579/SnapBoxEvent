@@ -343,6 +343,10 @@
                         <input type="number" id="guests" class="w-full bg-transparent py-4 outline-none text-lg" placeholder="כמות משוערת">
                     </div>
                     <div class="border-b">
+    <label class="text-[#D4AF37] text-xs font-bold uppercase">מיקום האירוע</label>
+    <input type="text" id="eventLocation" class="w-full bg-transparent py-4 outline-none text-lg text-white" placeholder="עיר / אולם">
+</div>
+                    <div class="border-b">
                         <label class="text-[#D4AF37] text-xs font-bold uppercase">תאריך האירוע</label>
                         <div class="flex gap-2">
                             <select id="day" class="bg-transparent py-4 outline-none w-1/3 text-base"></select>
@@ -443,18 +447,29 @@
         function toggleLargeText() { document.documentElement.classList.toggle('large-text-active'); }
         function toggleContrast() { document.body.classList.toggle('high-contrast-active'); }
         function toggleHighlight() { document.body.classList.toggle('highlight-active'); }
+function sendToWhatsapp(e) {
+    e.preventDefault();
+    
+    // משיכת הנתונים מהשדות
+    const name = document.getElementById('name').value;
+    const location = document.getElementById('eventLocation').value; // השדה החדש
+    const eventType = document.getElementById('eventType').value;
+    const guests = document.getElementById('guests').value;
+    const dateStr = `${document.getElementById('day').value}/${document.getElementById('month').value}/${document.getElementById('year').value}`;
+    const notes = document.getElementById('notes').value;
 
-        function sendToWhatsapp(e) {
-            e.preventDefault();
-            const dateStr = `${daySel.value}/${monthSel.value}/${yearSel.value}`;
-            const msg = `✨ *בקשה לסנאפ בוקס* ✨\n\n` +
-                        `👤 *שם:* ${document.getElementById('name').value}\n` +
-                        `🎉 *אירוע:* ${document.getElementById('eventType').value}\n` +
-                        `👥 *מוזמנים:* ${document.getElementById('guests').value}\n` +
-                        `📅 *תאריך:* ${dateStr}\n` +
-                        `📝 *הערות:* ${document.getElementById('notes').value || 'אין'}`;
-            window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
-        }
+    // בניית הודעה מעוצבת לוואטסאפ
+    const msg = `✨ *בקשה חדשה לסנאפ בוקס* ✨\n\n` +
+                `👤 *שם:* ${name}\n` +
+                `📍 *מיקום:* ${location}\n` + // הוספת המיקום להודעה
+                `🎉 *סוג אירוע:* ${eventType}\n` +
+                `👥 *כמות מוזמנים:* ${guests}\n` +
+                `📅 *תאריך:* ${dateStr}\n` +
+                `📝 *הערות:* ${notes}`;
+
+    // פתיחת וואטסאפ
+    window.open(`https://wa.me/972506490656?text=${encodeURIComponent(msg)}`, '_blank');
+}
 
     </script>
 
