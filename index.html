@@ -508,17 +508,14 @@
 <section id="sb-reviews-section" class="sb-reviews-container">
     <div class="sb-reviews-wrapper">
         <h2 class="sb-reviews-title">לקוחות מספרים</h2>
-        
         <div class="sb-slider-viewport">
             <div id="sb-reviews-track" class="sb-reviews-track">
                 </div>
         </div>
-
         <div class="sb-add-review-box">
-            <h3 class="sb-form-subtitle">הוספת ביקורת</h3>
             <form id="sb-new-review-form" class="sb-form-grid">
                 <input type="text" name="name" id="sb-form-name" placeholder="שם מלא" required class="sb-input">
-                <input type="email" name="email" id="sb-form-email" placeholder="אימייל לאימות" required class="sb-input">
+                <input type="email" name="email" id="sb-form-email" placeholder="אימייל" required class="sb-input">
                 <textarea name="message" id="sb-form-text" placeholder="איך הייתה החוויה שלכם?" required class="sb-textarea"></textarea>
                 <button type="submit" id="sb-submit-btn" class="sb-submit-btn">שלח ביקורת</button>
             </form>
@@ -662,20 +659,22 @@
     
     let submittedEmails = JSON.parse(localStorage.getItem('sb_emails')) || [];
 
-    // --- 1. משיכת נתונים מ-FIRESTORE (כדי שלא יימחק ברענון) ---
+    // --- 1. משיכת נתונים מ-FIRESTORE (זה מה שמונע מהם להיעלם ברענון) ---
     const reviewsRef = collection(db, "reviews");
     const reviewsQuery = query(reviewsRef, orderBy("createdAt", "desc"));
 
     onSnapshot(reviewsQuery, (snapshot) => {
         const reviewsData = [];
-        snapshot.forEach((doc) => reviewsData.push(doc.data()));
+        snapshot.forEach((doc) => {
+            const data = doc.data();
+            reviewsData.push(data);
+        });
         
         if (reviewsData.length === 0) {
-            track.innerHTML = '<div style="width:100%; text-align:center; padding:40px; color:#999;">עדיין אין ביקורות. היו הראשונים לכתוב!</div>';
+            track.innerHTML = '<div style="width:100%; text-align:center; padding:40px;">עדיין אין ביקורות.</div>';
             return;
         }
 
-        // בניית ה-HTML: שם -> מלל -> כוכבים
         track.innerHTML = reviewsData.map(rev => `
             <div class="sb-review-card">
                 <p class="sb-review-author">${rev.name}</p>
@@ -688,27 +687,7 @@
         initSlider(reviewsData.length);
     });
 
-    // --- 2. ניהול הסליידר ---
-    let sliderInterval;
-    let currentIndex = 0;
-    function initSlider(count) {
-        if (sliderInterval) clearInterval(sliderInterval);
-        if (count <= 1) return;
-        sliderInterval = setInterval(() => {
-            currentIndex++;
-            track.style.transition = 'transform 0.8s cubic-bezier(0.65, 0, 0.35, 1)';
-            track.style.transform = `translateX(${currentIndex * 100}%)`;
-            if (currentIndex >= count) {
-                setTimeout(() => {
-                    track.style.transition = 'none';
-                    currentIndex = 0;
-                    track.style.transform = `translateX(0)`;
-                }, 850);
-            }
-        }, 5000);
-    }
-
-    // --- 3. שליחת הטופס (גם ל-FORMSPREE וגם ל-FIRESTORE) ---
+    // --- 2. שליחת הטופס ל-FIRESTORE ול-FORMSPREE ---
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('sb-form-email').value.trim().toLowerCase();
@@ -724,7 +703,7 @@
         btn.innerText = 'שולח...';
 
         try {
-            // פעולה א': שמירה ב-Firestore (בשביל התצוגה באתר והמחיקה שלך)
+            // שמירה ב-Firestore (בשביל התצוגה הקבועה באתר)
             const firestoreTask = addDoc(collection(db, "reviews"), {
                 name: name,
                 text: text,
@@ -732,31 +711,46 @@
                 createdAt: serverTimestamp()
             });
 
-            // פעולה ב': שליחה ל-Formspree (בשביל ההתראות והטבלה שלך שם)
+            // שליחה ל-Formspree (בשביל הניהול וההתראות שלך)
             const formspreeTask = fetch('https://formspree.io/f/mpwrobzk', {
                 method: 'POST',
                 body: new FormData(form),
                 headers: { 'Accept': 'application/json' }
             });
 
-            // מחכים לשני הביצועים
             await Promise.all([firestoreTask, formspreeTask]);
 
-            // חסימה מקומית
             submittedEmails.push(email);
             localStorage.setItem('sb_emails', JSON.stringify(submittedEmails));
 
-            // הצלחה
             form.style.display = 'none';
             successMsg.classList.add('sb-success-visible');
 
         } catch (err) {
-            console.error("Error:", err);
-            alert('שגיאה בשליחה. נסה שוב.');
+            console.error(err);
+            alert('שגיאה בשליחה.');
             btn.disabled = false;
             btn.innerText = 'שלח ביקורת';
         }
     });
+
+    // פונקציית סליידר בסיסית
+    let currentIndex = 0;
+    function initSlider(count) {
+        if (count <= 1) return;
+        setInterval(() => {
+            currentIndex++;
+            track.style.transition = 'transform 0.8s ease';
+            track.style.transform = `translateX(${currentIndex * 100}%)`;
+            if (currentIndex >= count) {
+                setTimeout(() => {
+                    track.style.transition = 'none';
+                    currentIndex = 0;
+                    track.style.transform = `translateX(0)`;
+                }, 850);
+            }
+        }, 5000);
+    }
 })();
 </script>
 </body>
