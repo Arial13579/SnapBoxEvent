@@ -324,6 +324,38 @@
     </a>
 </div>
 
+    <section id="reviews-section" class="py-24 px-6 max-w-4xl mx-auto border-t border-gray-100">
+    <div class="text-center mb-16">
+        <h2 class="text-4xl font-serif italic text-[#1A1A1A]">ביקורות לקוחות</h2>
+        <div class="w-12 h-[1px] bg-[#D4AF37] mx-auto mt-4"></div>
+    </div>
+
+    <div id="auth-area" class="mb-16 text-center">
+        <div id="login-prompt">
+            <p class="text-gray-500 text-sm mb-6">כדי לשמור על אמינות הקהילה, יש להתחבר עם גוגל להשארת תגובה</p>
+            <button onclick="signInWithGoogle()" class="inline-flex items-center gap-3 px-8 py-3 bg-[#1A1A1A] text-white rounded-full hover:bg-gray-800 transition-all shadow-sm">
+                <span class="text-sm font-bold tracking-tight">התחברות עם Google</span>
+            </button>
+        </div>
+
+        <div id="review-form-container" class="hidden text-right bg-white p-10 rounded-[30px] shadow-sm border border-gray-50">
+            <form id="review-form" class="space-y-8">
+                <div class="border-b border-gray-100 pb-2">
+                    <label class="block text-[10px] uppercase tracking-widest text-[#D4AF37] font-bold mb-1">שם מלא</label>
+                    <input type="text" id="reviewer-name" name="name" readonly class="w-full bg-transparent text-lg outline-none text-gray-400 cursor-not-allowed">
+                </div>
+                <div class="border-b border-gray-100 pb-2">
+                    <label class="block text-[10px] uppercase tracking-widest text-[#D4AF37] font-bold mb-1">התגובה שלך</label>
+                    <textarea id="reviewer-text" name="message" rows="2" required class="w-full bg-transparent text-lg outline-none resize-none" placeholder="כתבו כאן את החוויה שלכם..."></textarea>
+                </div>
+                <button type="submit" class="w-full py-4 bg-[#1A1A1A] text-white rounded-xl font-bold uppercase tracking-widest hover:bg-[#D4AF37] transition-all">שלח תגובה</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="comments-display" class="space-y-8">
+        </div>
+</section>
     <!-- Footer -->
     <footer class="py-16 text-center border-t">
         <h3 class="text-2xl font-black tracking-[0.5em] mb-4">SNAP BOX</h3>
@@ -357,7 +389,102 @@
                         `📝 *הערות:* ${document.getElementById('notes').value || 'אין'}`;
             window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
         }
-    
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    // הגדרות ה-Firebase שלך (חובה להזין את הנתונים מהקונסול של Firebase)
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT.firebaseapp.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT.appspot.com",
+        messagingSenderId: "YOUR_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    // תיקון שגיאת ה-Scope: הפיכת הפונקציה לזמינה ל-HTML
+    window.signInWithGoogle = async () => {
+        try {
+            await signInWithPopup(auth, provider);
+        } catch (error) {
+            console.error("Login failed", error);
+        }
+    };
+
+    // ניהול מצב משתמש (הצגה/הסתרה של הטופס)
+    onAuthStateChanged(auth, (user) => {
+        const loginPrompt = document.getElementById('login-prompt');
+        const formCont = document.getElementById('review-form-container');
+        if (user) {
+            if(loginPrompt) loginPrompt.style.display = 'none';
+            if(formCont) {
+                formCont.classList.remove('hidden');
+                document.getElementById('reviewer-name').value = user.displayName;
+            }
+        }
+    });
+
+    // שליחת תגובה
+    const reviewForm = document.getElementById('review-form');
+    if (reviewForm) {
+        reviewForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const text = document.getElementById('reviewer-text').value;
+            const user = auth.currentUser;
+
+            if (user && text.trim()) {
+                // 1. שמירה ב-Firebase (לתצוגה באתר לכולם)
+                await addDoc(collection(db, "reviews"), {
+                    name: user.displayName,
+                    text: text,
+                    photo: user.photoURL,
+                    createdAt: serverTimestamp()
+                });
+
+                // 2. שליחה ל-Formspree (לקבלת התראה במייל)
+                fetch("https://formspree.io/f/mpwrobzk", {
+                    method: "POST",
+                    body: new FormData(reviewForm),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                document.getElementById('reviewer-text').value = '';
+                alert("תודה! התגובה פורסמה בהצלחה.");
+            }
+        });
+    }
+
+    // הצגת תגובות בזמן אמת
+    const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
+    onSnapshot(q, (snapshot) => {
+        const list = document.getElementById('comments-display');
+        if (!list) return;
+        list.innerHTML = '';
+        snapshot.forEach((doc) => {
+            const data = doc.data();
+            const div = document.createElement('div');
+            div.className = "bg-white p-8 rounded-[25px] border border-gray-50 shadow-sm transition-all hover:shadow-md";
+            div.innerHTML = `
+                <div class="flex items-center gap-4 mb-4">
+                    <img src="${data.photo || ''}" class="w-10 h-10 rounded-full grayscale border border-gray-100">
+                    <div>
+                        <h4 class="font-bold text-[13px] text-[#1A1A1A]">${data.name}</h4>
+                        <p class="text-[9px] text-[#D4AF37] font-bold uppercase tracking-widest">Verified Client</p>
+                    </div>
+                </div>
+                <p class="text-gray-600 leading-relaxed text-[16px]">"${data.text}"</p>
+            `;
+            list.appendChild(div);
+        });
+    });
+
     </script>
 </body>
 </html>
