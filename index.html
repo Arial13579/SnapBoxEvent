@@ -315,57 +315,66 @@
         </div>
     </div>
 </section>
-    <!-- Form Section -->
-    <section id="contact-form" class="py-20 px-6 max-w-6xl mx-auto">
-        <div class="form-container bg-white p-8 md:p-20 rounded-[60px] shadow-2xl border border-gray-100/50">
-            <h2 class="text-4xl md:text-6xl font-serif italic text-center mb-16">שריינו מקום</h2>
-<p class="text-xl md:text-3xl font-serif italic text-center mb-8">אל תחכה לדקה ה-90, שריינו תאריך עכשיו</p>
-            <form onsubmit="sendToWhatsapp(event)" class="space-y-12">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div class="border-b py-4"><label class="text-[#D4AF37] text-xs font-bold uppercase">שם מלא</label><input type="text" id="name" required class="w-full bg-transparent text-xl outline-none" placeholder="איך קוראים לכם?"></div>
-                    <div class="border-b py-4"><label class="text-[#D4AF37] text-xs font-bold uppercase block text-right">טלפון</label><input type="tel" id="phone" required class="w-full bg-transparent text-xl outline-none text-left" placeholder="050-0000000"></div>
+   <section id="contact-form" class="py-20 px-6 max-w-6xl mx-auto">
+    <div class="form-container bg-white p-8 md:p-20 rounded-[60px] shadow-2xl border border-gray-100/50">
+        <h2 class="text-4xl md:text-6xl font-serif italic text-center mb-6">שריינו מקום</h2>
+        <p class="text-xl md:text-2xl font-serif italic text-center mb-16 text-gray-600">אל תחכו לדקה ה-90, שריינו תאריך עכשיו</p>
+        
+        <form onsubmit="sendToWhatsapp(event)" class="space-y-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="border-b py-2">
+                    <label class="text-[#D4AF37] text-xs font-bold uppercase">שם מלא</label>
+                    <input type="text" id="name" required class="w-full bg-transparent text-xl outline-none py-2" placeholder="איך קוראים לכם?">
                 </div>
+                <div class="border-b py-2">
+                    <label class="text-[#D4AF37] text-xs font-bold uppercase">טלפון</label>
+                    <input type="tel" id="phone" required class="w-full bg-transparent text-xl outline-none py-2 text-left" placeholder="050-0000000">
+                </div>
+            </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                    <div class="border-b">
-                        <label class="text-[#D4AF37] text-xs font-bold uppercase">סוג אירוע</label>
-                        <select id="eventType" required class="w-full bg-transparent py-4 outline-none text-lg">
-                            <option value="" disabled selected>בחר סוג אירוע</option>
-                            <option>חתונה</option>
-                            <option>בר/בת מצווה</option>
-                            <option>יום הולדת</option>
-                            <option>אירוע עסקי</option>
-                            <option>אחר</option>
-                        </select>
-                    </div>
-                    <div class="border-b">
-                        <label class="text-[#D4AF37] text-xs font-bold uppercase">מספר מוזמנים</label>
-                        <input type="number" id="guests" class="w-full bg-transparent py-4 outline-none text-lg" placeholder="כמות משוערת">
-                    </div>
-                    <div class="border-b">
-    <label class="text-[#D4AF37] text-xs font-bold uppercase">מיקום האירוע</label>
-    <input type="text" id="eventLocation" class="w-full bg-transparent py-4 outline-none text-lg text-white" placeholder="עיר / אולם">
-</div>
-                    <div class="border-b">
-                        <label class="text-[#D4AF37] text-xs font-bold uppercase">תאריך האירוע</label>
-                        <div class="flex gap-2">
-                            <select id="day" class="bg-transparent py-4 outline-none w-1/3 text-base"></select>
-                            <select id="month" class="bg-transparent py-4 outline-none w-1/3 text-base"></select>
-                            <select id="year" class="bg-transparent py-4 outline-none w-1/3 text-base"></select>
-                        </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="border-b py-2">
+                    <label class="text-[#D4AF37] text-xs font-bold uppercase">סוג אירוע</label>
+                    <select id="eventType" required class="w-full bg-transparent py-2 outline-none text-lg cursor-pointer">
+                        <option value="" disabled selected>בחר סוג אירוע</option>
+                        <option>חתונה</option>
+                        <option>בר/בת מצווה</option>
+                        <option>יום הולדת</option>
+                        <option>אירוע עסקי</option>
+                        <option>אחר</option>
+                    </select>
+                </div>
+                <div class="border-b py-2">
+                    <label class="text-[#D4AF37] text-xs font-bold uppercase">מספר מוזמנים</label>
+                    <input type="number" id="guests" class="w-full bg-transparent py-2 outline-none text-lg" placeholder="כמות משוערת">
+                </div>
+                <div class="border-b py-2">
+                    <label class="text-[#D4AF37] text-xs font-bold uppercase">מיקום האירוע</label>
+                    <input type="text" id="eventLocation" class="w-full bg-transparent py-2 outline-none text-lg" placeholder="עיר / אולם">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="border-b py-2">
+                    <label class="text-[#D4AF37] text-xs font-bold uppercase">תאריך האירוע</label>
+                    <div class="flex gap-2">
+                        <select id="day" class="bg-transparent py-2 outline-none w-1/3 text-base"></select>
+                        <select id="month" class="bg-transparent py-2 outline-none w-1/3 text-base"></select>
+                        <select id="year" class="bg-transparent py-2 outline-none w-1/3 text-base"></select>
                     </div>
                 </div>
-
-                <div class="border-b py-4">
+                <div class="border-b py-2">
                     <label class="text-[#D4AF37] text-xs font-bold uppercase">הערות נוספות</label>
-                    <textarea id="notes" rows="2" class="w-full bg-transparent text-lg outline-none resize-none" placeholder="ספרו לנו עוד..."></textarea>
+                    <textarea id="notes" rows="1" class="w-full bg-transparent text-lg outline-none resize-none py-2" placeholder="ספרו לנו עוד..."></textarea>
                 </div>
+            </div>
 
-                <button type="submit" class="w-full py-6 bg-[#1A1A1A] text-white rounded-2xl text-xl font-black hover:bg-[#D4AF37] transition-all shadow-xl">שלחו הודעה בוואטסאפ</button>
-            </form>
-        </div>
-    </section>
-
+            <button type="submit" class="w-full py-6 bg-[#1A1A1A] text-white rounded-2xl text-xl font-black hover:bg-[#D4AF37] transition-all shadow-xl uppercase tracking-widest">
+                שלחו הודעה בוואטסאפ
+            </button>
+        </form>
+    </div>
+</section>
     <!-- רשתות חברתיות עם אפקט זוהר זהב -->
 <div class="flex justify-center gap-12 py-12">
     <!-- Instagram Button -->
