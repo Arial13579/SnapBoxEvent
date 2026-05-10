@@ -126,6 +126,28 @@
 .sb-submit-btn:disabled { background: #ccc; }
 .sb-success-hidden { display: none; text-align: center; font-weight: bold; color: #D4AF37; margin-top: 20px; font-size: 1.2rem; }
 .sb-success-visible { display: block; }
+
+        .sb-success-hidden { 
+    display: none; 
+    text-align: center; 
+    font-weight: 700; 
+    color: #2D6A4F; /* ירוק עמוק ויוקרתי */
+    margin-top: 25px; 
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    padding: 15px;
+    border-radius: 12px;
+    background-color: rgba(45, 106, 79, 0.05); /* רקע ירוק בהיר מאוד */
+}
+.sb-success-visible { 
+    display: block; 
+    animation: sbFadeIn 0.6s ease-out;
+}
+
+@keyframes sbFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
     </style>
 </head>
 <body>
@@ -354,8 +376,7 @@
                 <textarea name="message" id="sb-form-text" placeholder="איך הייתה החוויה שלכם?" required class="sb-textarea"></textarea>
                 <button type="submit" id="sb-submit-btn" class="sb-submit-btn">שלח ביקורת</button>
             </form>
-            <div id="sb-success-msg" class="sb-success-hidden">התגובה נשלחה בהצלחה! ✨</div>
-        </div>
+<div id="sb-success-msg" class="sb-success-hidden">התגובה נשלחה בהצלחה</div>      
     </div>
 </section>
     <!-- Footer -->
@@ -568,9 +589,10 @@
                 reviews.unshift(newRev);
                 localStorage.setItem('sb_cache', JSON.stringify(reviews));
 
-                form.style.display = 'none';
-                successMsg.classList.add('sb-success-visible');
-                renderReviews();
+              // בתוך ה-if (response.ok)
+form.style.display = 'none';
+successMsg.classList.add('sb-success-visible');
+renderReviews();
             } else {
                 alert('שגיאה בשליחה.');
                 btn.disabled = false;
