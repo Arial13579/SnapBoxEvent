@@ -324,37 +324,36 @@
     </a>
 </div>
 
-    <section id="reviews-section" class="py-24 px-6 max-w-4xl mx-auto border-t border-gray-100">
+ <section id="reviews" class="py-24 px-6 max-w-4xl mx-auto border-t border-gray-100/50">
     <div class="text-center mb-16">
-        <h2 class="text-4xl font-serif italic text-[#1A1A1A]">ביקורות לקוחות</h2>
-        <div class="w-12 h-[1px] bg-[#D4AF37] mx-auto mt-4"></div>
+        <span class="text-[#D4AF37] text-xs font-bold uppercase tracking-[0.3em]">Social Proof</span>
+        <h2 class="text-5xl font-serif italic mt-2">לקוחות מספרים</h2>
     </div>
 
-    <div id="auth-area" class="mb-16 text-center">
-        <div id="login-prompt">
-            <p class="text-gray-500 text-sm mb-6">כדי לשמור על אמינות הקהילה, יש להתחבר עם גוגל להשארת תגובה</p>
-            <button onclick="signInWithGoogle()" class="inline-flex items-center gap-3 px-8 py-3 bg-[#1A1A1A] text-white rounded-full hover:bg-gray-800 transition-all shadow-sm">
-                <span class="text-sm font-bold tracking-tight">התחברות עם Google</span>
-            </button>
-        </div>
-
-        <div id="review-form-container" class="hidden text-right bg-white p-10 rounded-[30px] shadow-sm border border-gray-50">
-            <form id="review-form" class="space-y-8">
-                <div class="border-b border-gray-100 pb-2">
-                    <label class="block text-[10px] uppercase tracking-widest text-[#D4AF37] font-bold mb-1">שם מלא</label>
-                    <input type="text" id="reviewer-name" name="name" readonly class="w-full bg-transparent text-lg outline-none text-gray-400 cursor-not-allowed">
-                </div>
-                <div class="border-b border-gray-100 pb-2">
-                    <label class="block text-[10px] uppercase tracking-widest text-[#D4AF37] font-bold mb-1">התגובה שלך</label>
-                    <textarea id="reviewer-text" name="message" rows="2" required class="w-full bg-transparent text-lg outline-none resize-none" placeholder="כתבו כאן את החוויה שלכם..."></textarea>
-                </div>
-                <button type="submit" class="w-full py-4 bg-[#1A1A1A] text-white rounded-xl font-bold uppercase tracking-widest hover:bg-[#D4AF37] transition-all">שלח תגובה</button>
-            </form>
-        </div>
+    <div id="auth-container" class="mb-12 text-center bg-white p-10 rounded-[40px] shadow-sm border border-gray-50">
+        <p class="text-gray-500 mb-6 text-sm">כדי לשמור על אמינות, יש להתחבר עם גוגל להשארת תגובה</p>
+        <button onclick="signInWithGoogle()" class="flex items-center gap-3 mx-auto px-8 py-3 bg-[#1A1A1A] text-white rounded-full hover:bg-[#D4AF37] transition-all group">
+            <i data-lucide="log-in" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+            <span class="font-bold text-sm">התחברות מהירה עם Google</span>
+        </button>
     </div>
 
-    <div id="comments-display" class="space-y-8">
-        </div>
+    <div id="comment-form-container" class="hidden mb-16 bg-white p-10 rounded-[40px] shadow-xl border border-gray-50">
+        <form id="review-form" class="space-y-8">
+            <div class="border-b border-gray-100 py-3">
+                <label class="text-[#D4AF37] text-[10px] font-bold uppercase tracking-widest">שם מלא</label>
+                <input type="text" id="reviewer-name" readonly class="w-full bg-transparent text-lg outline-none text-gray-400 cursor-not-allowed">
+            </div>
+            <div class="border-b border-gray-100 py-3">
+                <label class="text-[#D4AF37] text-[10px] font-bold uppercase tracking-widest">התגובה שלך (מלל חופשי)</label>
+                <textarea id="reviewer-text" rows="2" required class="w-full bg-transparent text-lg outline-none resize-none" placeholder="כתבו כאן את החוויה שלכם..."></textarea>
+            </div>
+            <input type="hidden" name="_replyto" id="user-email">
+            <button type="submit" class="w-full py-5 bg-[#1A1A1A] text-white rounded-2xl font-black uppercase tracking-widest hover:bg-[#D4AF37] transition-all shadow-lg">פרסום תגובה</button>
+        </form>
+    </div>
+
+    <div id="comments-list" class="grid gap-6"></div>
 </section>
     <!-- Footer -->
     <footer class="py-16 text-center border-t">
@@ -390,11 +389,12 @@
             window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
         }
   
+ <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    // הגדרות ה-Firebase שלך (חובה להזין את הנתונים מהקונסול של Firebase)
+    // הגדרות Firebase - חובה למלא מהקונסול של Firebase כדי שיעבוד
     const firebaseConfig = {
         apiKey: "YOUR_API_KEY",
         authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -409,7 +409,7 @@
     const db = getFirestore(app);
     const provider = new GoogleAuthProvider();
 
-    // תיקון שגיאת ה-Scope: הפיכת הפונקציה לזמינה ל-HTML
+    // הפיכת הפונקציה לגלובלית עבור הכפתור
     window.signInWithGoogle = async () => {
         try {
             await signInWithPopup(auth, provider);
@@ -418,73 +418,78 @@
         }
     };
 
-    // ניהול מצב משתמש (הצגה/הסתרה של הטופס)
+    // ניהול מצב משתמש
     onAuthStateChanged(auth, (user) => {
-        const loginPrompt = document.getElementById('login-prompt');
-        const formCont = document.getElementById('review-form-container');
-        if (user) {
-            if(loginPrompt) loginPrompt.style.display = 'none';
-            if(formCont) {
-                formCont.classList.remove('hidden');
-                document.getElementById('reviewer-name').value = user.displayName;
-            }
+        const authCont = document.getElementById('auth-container');
+        const formCont = document.getElementById('comment-form-container');
+        if (user && authCont && formCont) {
+            authCont.style.display = 'none';
+            formCont.classList.remove('hidden');
+            document.getElementById('reviewer-name').value = user.displayName;
+            document.getElementById('user-email').value = user.email;
         }
     });
 
-    // שליחת תגובה
-    const reviewForm = document.getElementById('review-form');
-    if (reviewForm) {
-        reviewForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const text = document.getElementById('reviewer-text').value;
-            const user = auth.currentUser;
+    // שליחת תגובה ל-Firebase ול-Formspree
+    document.getElementById('review-form')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const text = document.getElementById('reviewer-text').value;
+        const user = auth.currentUser;
 
-            if (user && text.trim()) {
-                // 1. שמירה ב-Firebase (לתצוגה באתר לכולם)
-                await addDoc(collection(db, "reviews"), {
-                    name: user.displayName,
-                    text: text,
-                    photo: user.photoURL,
-                    createdAt: serverTimestamp()
-                });
+        if (user && text.trim()) {
+            await addDoc(collection(db, "reviews"), {
+                name: user.displayName,
+                text: text,
+                photo: user.photoURL,
+                createdAt: serverTimestamp()
+            });
 
-                // 2. שליחה ל-Formspree (לקבלת התראה במייל)
-                fetch("https://formspree.io/f/mpwrobzk", {
-                    method: "POST",
-                    body: new FormData(reviewForm),
-                    headers: { 'Accept': 'application/json' }
-                });
+            fetch("https://formspree.io/f/mpwrobzk", {
+                method: "POST",
+                body: new FormData(e.target),
+                headers: { 'Accept': 'application/json' }
+            });
 
-                document.getElementById('reviewer-text').value = '';
-                alert("תודה! התגובה פורסמה בהצלחה.");
-            }
-        });
-    }
+            document.getElementById('reviewer-text').value = '';
+            alert("התגובה פורסמה בהצלחה!");
+        }
+    });
 
-    // הצגת תגובות בזמן אמת
+    // טעינת תגובות מהענן
     const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
     onSnapshot(q, (snapshot) => {
-        const list = document.getElementById('comments-display');
+        const list = document.getElementById('comments-list');
         if (!list) return;
         list.innerHTML = '';
         snapshot.forEach((doc) => {
             const data = doc.data();
             const div = document.createElement('div');
-            div.className = "bg-white p-8 rounded-[25px] border border-gray-50 shadow-sm transition-all hover:shadow-md";
+            div.className = "bg-white p-8 rounded-[30px] border border-gray-100 shadow-sm text-right";
             div.innerHTML = `
-                <div class="flex items-center gap-4 mb-4">
-                    <img src="${data.photo || ''}" class="w-10 h-10 rounded-full grayscale border border-gray-100">
+                <div class="flex items-center gap-4 mb-4" dir="rtl">
+                    <img src="${data.photo || ''}" class="w-12 h-12 rounded-full grayscale">
                     <div>
-                        <h4 class="font-bold text-[13px] text-[#1A1A1A]">${data.name}</h4>
-                        <p class="text-[9px] text-[#D4AF37] font-bold uppercase tracking-widest">Verified Client</p>
+                        <h4 class="font-bold text-sm text-[#1A1A1A]">${data.name}</h4>
+                        <span class="text-[9px] text-[#D4AF37] font-bold uppercase tracking-widest">Verified Client</span>
                     </div>
                 </div>
-                <p class="text-gray-600 leading-relaxed text-[16px]">"${data.text}"</p>
+                <p class="text-gray-600 italic text-lg leading-relaxed">"${data.text}"</p>
             `;
             list.appendChild(div);
         });
     });
 
-    </script>
+    /* לוגיקה קיימת של האתר (וואטסאפ ונגישות) */
+    lucide.createIcons();
+    window.toggleAccMenu = () => document.getElementById('accWrapper').classList.toggle('acc-menu-open');
+    window.toggleLargeText = () => document.documentElement.classList.toggle('large-text-active');
+    window.toggleContrast = () => document.body.classList.toggle('high-contrast-active');
+    window.toggleHighlight = () => document.body.classList.toggle('highlight-active');
+    window.sendToWhatsapp = (e) => {
+        e.preventDefault();
+        const msg = `✨ *בקשה לסנאפבוקס* ✨\n👤 שם: ${document.getElementById('name').value}`;
+        window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
+    };
+</script>
 </body>
 </html>
