@@ -362,40 +362,13 @@
     </footer>
 
     <script>
-        lucide.createIcons();
-
-        // מילוי תאריכים
-        const daySel = document.getElementById('day'), monthSel = document.getElementById('month'), yearSel = document.getElementById('year');
-        for(let i=1; i<=31; i++) daySel.options.add(new Option(i, i));
-        for(let i=1; i<=12; i++) monthSel.options.add(new Option(i, i));
-        const currYear = new Date().getFullYear();
-        for(let i=currYear; i<=currYear+3; i++) yearSel.options.add(new Option(i, i));
-
-        // נגישות
-        function toggleAccMenu() { document.getElementById('accWrapper').classList.toggle('acc-menu-open'); }
-        function toggleLargeText() { document.documentElement.classList.toggle('large-text-active'); }
-        function toggleContrast() { document.body.classList.toggle('high-contrast-active'); }
-        function toggleHighlight() { document.body.classList.toggle('highlight-active'); }
-
-        function sendToWhatsapp(e) {
-            e.preventDefault();
-            const dateStr = `${daySel.value}/${monthSel.value}/${yearSel.value}`;
-            const msg = `✨ *בקשה לסנאפ בוקס* ✨\n\n` +
-                        `👤 *שם:* ${document.getElementById('name').value}\n` +
-                        `🎉 *אירוע:* ${document.getElementById('eventType').value}\n` +
-                        `👥 *מוזמנים:* ${document.getElementById('guests').value}\n` +
-                        `📅 *תאריך:* ${dateStr}\n` +
-                        `📝 *הערות:* ${document.getElementById('notes').value || 'אין'}`;
-            window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-  
-<script type="module">
+     <script type="module">
     // 1. ייבוא ספריות Firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    // 2. הגדרות ה-Firebase שלך (חובה להחליף בנתונים שלך מהקונסול)
+    // 2. הגדרות Firebase - חובה להחליף בנתונים שלך מהקונסול של Firebase
     const firebaseConfig = {
         apiKey: "YOUR_API_KEY",
         authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -410,8 +383,9 @@
     const db = getFirestore(app);
     const provider = new GoogleAuthProvider();
 
-    // --- חשיפת פונקציות ל-HTML (פותר את בעיית הכפתור שלא עובד) ---
+    // --- חשיפת פונקציות ל-Window (כדי שהכפתורים ב-HTML יעבדו) ---
     
+    // התחברות גוגל
     window.signInWithGoogle = async () => {
         try {
             await signInWithPopup(auth, provider);
@@ -420,57 +394,86 @@
         }
     };
 
-    // לוגיקת נגישות (הועבר לכאן כדי שלא יתנגש)
-    window.toggleAccMenu = () => document.getElementById('accWrapper').classList.toggle('acc-menu-open');
+    // נגישות
+    window.toggleAccMenu = () => {
+        const wrapper = document.getElementById('accWrapper');
+        if (wrapper) wrapper.classList.toggle('acc-menu-open');
+    };
     window.toggleLargeText = () => document.documentElement.classList.toggle('large-text-active');
     window.toggleContrast = () => document.body.classList.toggle('high-contrast-active');
     window.toggleHighlight = () => document.body.classList.toggle('highlight-active');
 
-    // שליחת וואטסאפ
+    // שליחת וואטסאפ (עם כל הנתונים מהטופס)
     window.sendToWhatsapp = (e) => {
-        e.preventDefault();
-        const dateStr = `${document.getElementById('day').value}/${document.getElementById('month').value}/${document.getElementById('year').value}`;
-        const msg = `✨ *בקשה חדשה מ-SnapBox* ✨\n👤 שם: ${document.getElementById('name').value}\n📅 תאריך: ${dateStr}`;
+        if (e) e.preventDefault();
+        const day = document.getElementById('day')?.value;
+        const month = document.getElementById('month')?.value;
+        const year = document.getElementById('year')?.value;
+        const name = document.getElementById('name')?.value;
+        const event = document.getElementById('eventType')?.value;
+        const guests = document.getElementById('guests')?.value;
+        const notes = document.getElementById('notes')?.value || 'אין';
+
+        const dateStr = `${day}/${month}/${year}`;
+        const msg = `✨ *בקשה חדשה מ-SnapBox* ✨\n\n` +
+                    `👤 *שם:* ${name}\n` +
+                    `🎉 *אירוע:* ${event}\n` +
+                    `👥 *מוזמנים:* ${guests}\n` +
+                    `📅 *תאריך:* ${dateStr}\n` +
+                    `📝 *הערות:* ${notes}`;
+        
         window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
     };
 
-    // --- ניהול מערכת התגובות ---
+    // --- ניהול מערכת התגובות (Firebase) ---
 
     onAuthStateChanged(auth, (user) => {
         const authArea = document.getElementById('auth-container');
         const formArea = document.getElementById('comment-form-container');
         if (user) {
-            authArea.style.display = 'none';
-            formArea.classList.remove('hidden');
-            document.getElementById('reviewer-name').value = user.displayName;
-            document.getElementById('user-email').value = user.email;
+            if (authArea) authArea.style.display = 'none';
+            if (formArea) {
+                formArea.classList.remove('hidden');
+                const nameInput = document.getElementById('reviewer-name');
+                const emailInput = document.getElementById('user-email');
+                if (nameInput) nameInput.value = user.displayName;
+                if (emailInput) emailInput.value = user.email;
+            }
         }
     });
 
     document.getElementById('review-form')?.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const text = document.getElementById('reviewer-text').value;
+        const textInput = document.getElementById('reviewer-text');
+        const text = textInput?.value;
         const user = auth.currentUser;
 
-        if (user && text.trim()) {
-            await addDoc(collection(db, "reviews"), {
-                name: user.displayName,
-                text: text,
-                photo: user.photoURL,
-                createdAt: serverTimestamp()
-            });
+        if (user && text?.trim()) {
+            try {
+                // שמירה ב-Database
+                await addDoc(collection(db, "reviews"), {
+                    name: user.displayName,
+                    text: text,
+                    photo: user.photoURL,
+                    createdAt: serverTimestamp()
+                });
 
-            fetch("https://formspree.io/f/mpwrobzk", {
-                method: "POST",
-                body: new FormData(e.target),
-                headers: { 'Accept': 'application/json' }
-            });
+                // שליחה ל-Formspree לגיבוי והתראה
+                fetch("https://formspree.io/f/mpwrobzk", {
+                    method: "POST",
+                    body: new FormData(e.target),
+                    headers: { 'Accept': 'application/json' }
+                });
 
-            document.getElementById('reviewer-text').value = '';
-            alert("תודה! התגובה נוספה");
+                if (textInput) textInput.value = '';
+                alert("תודה! התגובה נוספה בהצלחה");
+            } catch (err) {
+                console.error("Error adding document: ", err);
+            }
         }
     });
 
+    // הצגת תגובות בזמן אמת
     const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
     onSnapshot(q, (snapshot) => {
         const list = document.getElementById('comments-list');
@@ -494,14 +497,25 @@
         });
     });
 
-    // אתחול אייקונים
-    lucide.createIcons();
+    // --- אתחול רכיבי הדף בטעינה ---
     
-    // מילוי תאריכים
-    const daySel = document.getElementById('day'), monthSel = document.getElementById('month'), yearSel = document.getElementById('year');
-    if(daySel) {
+    // אייקונים
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+    
+    // מילוי תאריכים בטופס
+    const daySel = document.getElementById('day'), 
+          monthSel = document.getElementById('month'), 
+          yearSel = document.getElementById('year');
+          
+    if(daySel && monthSel && yearSel) {
+        // ניקוי לפני מילוי
+        daySel.innerHTML = ''; monthSel.innerHTML = ''; yearSel.innerHTML = '';
+        
         for(let i=1; i<=31; i++) daySel.options.add(new Option(i, i));
         for(let i=1; i<=12; i++) monthSel.options.add(new Option(i, i));
+        
         const currYear = new Date().getFullYear();
         for(let i=currYear; i<=currYear+3; i++) yearSel.options.add(new Option(i, i));
     }
