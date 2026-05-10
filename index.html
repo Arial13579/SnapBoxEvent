@@ -362,13 +362,13 @@
     </footer>
 
     <script>
-     <script type="module">
+  <script type="module">
     // 1. ייבוא ספריות Firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    // 2. הגדרות Firebase - חובה להחליף בנתונים שלך מהקונסול של Firebase
+    // 2. הגדרות Firebase - חובה להזין כאן את הפרטים שלך מה-Console
     const firebaseConfig = {
         apiKey: "YOUR_API_KEY",
         authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -383,27 +383,26 @@
     const db = getFirestore(app);
     const provider = new GoogleAuthProvider();
 
-    // --- חשיפת פונקציות ל-Window (כדי שהכפתורים ב-HTML יעבדו) ---
+    // --- חשיפת פונקציות ל-Window (כדי שה-HTML יזהה אותן) ---
     
-    // התחברות גוגל
     window.signInWithGoogle = async () => {
         try {
             await signInWithPopup(auth, provider);
         } catch (error) {
             console.error("Login failed", error);
+            alert("ההתחברות נכשלה, נסה שנית");
         }
     };
 
-    // נגישות
     window.toggleAccMenu = () => {
         const wrapper = document.getElementById('accWrapper');
         if (wrapper) wrapper.classList.toggle('acc-menu-open');
     };
+
     window.toggleLargeText = () => document.documentElement.classList.toggle('large-text-active');
     window.toggleContrast = () => document.body.classList.toggle('high-contrast-active');
     window.toggleHighlight = () => document.body.classList.toggle('highlight-active');
 
-    // שליחת וואטסאפ (עם כל הנתונים מהטופס)
     window.sendToWhatsapp = (e) => {
         if (e) e.preventDefault();
         const day = document.getElementById('day')?.value;
@@ -425,8 +424,7 @@
         window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
     };
 
-    // --- ניהול מערכת התגובות (Firebase) ---
-
+    // --- מערכת תגובות ---
     onAuthStateChanged(auth, (user) => {
         const authArea = document.getElementById('auth-container');
         const formArea = document.getElementById('comment-form-container');
@@ -434,10 +432,8 @@
             if (authArea) authArea.style.display = 'none';
             if (formArea) {
                 formArea.classList.remove('hidden');
-                const nameInput = document.getElementById('reviewer-name');
-                const emailInput = document.getElementById('user-email');
-                if (nameInput) nameInput.value = user.displayName;
-                if (emailInput) emailInput.value = user.email;
+                document.getElementById('reviewer-name').value = user.displayName;
+                document.getElementById('user-email').value = user.email;
             }
         }
     });
@@ -445,35 +441,23 @@
     document.getElementById('review-form')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         const textInput = document.getElementById('reviewer-text');
-        const text = textInput?.value;
         const user = auth.currentUser;
 
-        if (user && text?.trim()) {
+        if (user && textInput.value.trim()) {
             try {
-                // שמירה ב-Database
                 await addDoc(collection(db, "reviews"), {
                     name: user.displayName,
-                    text: text,
+                    text: textInput.value,
                     photo: user.photoURL,
                     createdAt: serverTimestamp()
                 });
-
-                // שליחה ל-Formspree לגיבוי והתראה
-                fetch("https://formspree.io/f/mpwrobzk", {
-                    method: "POST",
-                    body: new FormData(e.target),
-                    headers: { 'Accept': 'application/json' }
-                });
-
-                if (textInput) textInput.value = '';
-                alert("תודה! התגובה נוספה בהצלחה");
-            } catch (err) {
-                console.error("Error adding document: ", err);
-            }
+                textInput.value = '';
+                alert("תודה! התגובה נוספה");
+            } catch (err) { console.error(err); }
         }
     });
 
-    // הצגת תגובות בזמן אמת
+    // טעינת תגובות
     const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
     onSnapshot(q, (snapshot) => {
         const list = document.getElementById('comments-list');
@@ -497,25 +481,16 @@
         });
     });
 
-    // --- אתחול רכיבי הדף בטעינה ---
+    // --- אתחול סופי ---
+    if (window.lucide) lucide.createIcons();
     
-    // אייקונים
-    if (window.lucide) {
-        lucide.createIcons();
-    }
-    
-    // מילוי תאריכים בטופס
     const daySel = document.getElementById('day'), 
           monthSel = document.getElementById('month'), 
           yearSel = document.getElementById('year');
           
     if(daySel && monthSel && yearSel) {
-        // ניקוי לפני מילוי
-        daySel.innerHTML = ''; monthSel.innerHTML = ''; yearSel.innerHTML = '';
-        
         for(let i=1; i<=31; i++) daySel.options.add(new Option(i, i));
         for(let i=1; i<=12; i++) monthSel.options.add(new Option(i, i));
-        
         const currYear = new Date().getFullYear();
         for(let i=currYear; i<=currYear+3; i++) yearSel.options.add(new Option(i, i));
     }
