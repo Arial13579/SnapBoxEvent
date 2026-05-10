@@ -112,42 +112,24 @@
 .sb-reviews-container { padding: 80px 20px; background: #FCFBFA; direction: rtl; }
 .sb-reviews-wrapper { max-width: 900px; margin: 0 auto; }
 .sb-reviews-title { font-family: 'Playfair Display', serif; font-size: 3rem; text-align: center; margin-bottom: 50px; font-style: italic; }
+
 .sb-slider-viewport { overflow: hidden; position: relative; min-height: 250px; margin-bottom: 60px; background: #fff; border-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid rgba(212, 175, 55, 0.1); }
 .sb-reviews-track { display: flex; transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
 .sb-review-card { min-width: 100%; padding: 40px; box-sizing: border-box; text-align: center; }
-.sb-review-stars { color: #D4AF37; margin-bottom: 15px; font-size: 1.2rem; }
-.sb-review-content { font-size: 1.25rem; line-height: 1.8; color: #4A4A4A; font-style: italic; margin-bottom: 15px; }
-.sb-review-author { font-weight: 700; color: #1A1A1A; text-transform: uppercase; font-size: 0.9rem; }
+.sb-review-author { font-weight: 700; color: #1A1A1A; font-size: 1.1rem; margin-bottom: 10px; }
+.sb-review-content { font-size: 1.25rem; line-height: 1.8; color: #4A4A4A; font-style: italic; }
+.sb-review-stars { color: #D4AF37; margin-top: 15px; font-size: 1.2rem; }
+
 .sb-add-review-box { background: #fff; padding: 40px; border-radius: 40px; border: 1px solid #f0f0f0; }
 .sb-form-grid { display: flex; flex-direction: column; gap: 15px; }
 .sb-input, .sb-textarea { width: 100%; padding: 15px 20px; border: 1px solid #eee; border-radius: 15px; background: #fdfdfd; font-family: inherit; }
 .sb-textarea { height: 100px; resize: none; }
 .sb-submit-btn { background: #1A1A1A; color: #fff; padding: 18px; border-radius: 15px; font-weight: 700; cursor: pointer; transition: 0.3s; border: none; }
-.sb-submit-btn:disabled { background: #ccc; }
-.sb-success-hidden { display: none; text-align: center; font-weight: bold; color: #D4AF37; margin-top: 20px; font-size: 1.2rem; }
-.sb-success-visible { display: block; }
+.sb-submit-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-        .sb-success-hidden { 
-    display: none; 
-    text-align: center; 
-    font-weight: 700; 
-    color: #2D6A4F; /* ירוק עמוק ויוקרתי */
-    margin-top: 25px; 
-    font-size: 1.1rem;
-    letter-spacing: 1px;
-    padding: 15px;
-    border-radius: 12px;
-    background-color: rgba(45, 106, 79, 0.05); /* רקע ירוק בהיר מאוד */
-}
-.sb-success-visible { 
-    display: block; 
-    animation: sbFadeIn 0.6s ease-out;
-}
-
-@keyframes sbFadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+.sb-success-hidden { display: none; text-align: center; font-weight: 700; color: #2D6A4F; margin-top: 25px; font-size: 1.1rem; padding: 15px; border-radius: 12px; background-color: rgba(45, 106, 79, 0.05); }
+.sb-success-visible { display: block; animation: sbFadeIn 0.6s ease-out; }
+@keyframes sbFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -364,19 +346,19 @@
         
         <div class="sb-slider-viewport">
             <div id="sb-reviews-track" class="sb-reviews-track">
-                <div class="sb-empty-msg">טוען ביקורות...</div>
-            </div>
+                </div>
         </div>
 
         <div class="sb-add-review-box">
             <h3 class="sb-form-subtitle">הוספת ביקורת</h3>
             <form id="sb-new-review-form" class="sb-form-grid">
                 <input type="text" name="name" id="sb-form-name" placeholder="שם מלא" required class="sb-input">
-                <input type="email" name="email" id="sb-form-email" placeholder="אימייל  " required class="sb-input">
+                <input type="email" name="email" id="sb-form-email" placeholder="אימייל לאימות" required class="sb-input">
                 <textarea name="message" id="sb-form-text" placeholder="איך הייתה החוויה שלכם?" required class="sb-textarea"></textarea>
                 <button type="submit" id="sb-submit-btn" class="sb-submit-btn">שלח ביקורת</button>
             </form>
-<div id="sb-success-msg" class="sb-success-hidden">התגובה נשלחה בהצלחה</div>      
+            <div id="sb-success-msg" class="sb-success-hidden">התגובה נשלחה בהצלחה</div>
+        </div>
     </div>
 </section>
     <!-- Footer -->
@@ -508,39 +490,13 @@
     });
 
 (function() {
-    // קישור לאלמנטים ב-HTML
     const track = document.getElementById('sb-reviews-track');
     const form = document.getElementById('sb-new-review-form');
     const btn = document.getElementById('sb-submit-btn');
     const successMsg = document.getElementById('sb-success-msg');
     
-    // רשימת דומיינים של מיילים זמניים לחסימה
-    const bannedDomains = ['mailinator.com', 'tempmail.com', '10minutemail.com', 'guerrillamail.com'];
-    let submittedEmails = JSON.parse(localStorage.getItem('sb_emails')) || [];
-
-    // פונקציה לרינדור הכרטיסיות
-    function renderReviews(reviewsData) {
-        if (!track) return;
-        if (reviewsData.length === 0) {
-            track.innerHTML = '<div class="sb-empty-msg">עדיין אין ביקורות. היו הראשונים לכתוב!</div>';
-            return;
-        }
-
-        track.innerHTML = reviewsData.map(rev => `
-            <div class="sb-review-card">
-                <p class="sb-review-author">${rev.name}</p>
-                <p class="sb-review-content">"${rev.text}"</p>
-                <div class="sb-review-stars" style="color: #D4AF37; margin-top: 10px; font-size: 1.2rem;">★★★★★</div>
-            </div>
-        `).join('');
-
-        // שכפול לטובת לופ אינסופי
-        if(reviewsData.length > 1) {
-            track.innerHTML += track.innerHTML;
-        }
-    }
-
-    // אימות פורמט מייל ואמינות דומיין
+    // אימות מייל (חסימת מיילים זמניים)
+    const bannedDomains = ['mailinator.com', 'tempmail.com', '10minutemail.com'];
     function isValidEmail(email) {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!regex.test(email)) return false;
@@ -548,32 +504,40 @@
         return !bannedDomains.includes(domain);
     }
 
-    // משיכת נתונים בזמן אמת מ-Firestore
-    // זה מבטיח שאם תמחק ב-Firebase, זה יימחק באתר מיד
+    // הצגת תגובות מ-Firestore בזמן אמת (מאפשר מחיקה שלך)
     const reviewsRef = collection(db, "reviews");
     const reviewsQuery = query(reviewsRef, orderBy("createdAt", "desc"));
 
     onSnapshot(reviewsQuery, (snapshot) => {
-        const currentReviews = [];
-        snapshot.forEach((doc) => {
-            currentReviews.push(doc.data());
-        });
-        renderReviews(currentReviews);
-        setupSlider(currentReviews.length);
+        const reviewsData = [];
+        snapshot.forEach((doc) => reviewsData.push(doc.data()));
+        
+        if (reviewsData.length === 0) {
+            track.innerHTML = '<div style="width:100%; text-align:center; padding:40px;">עדיין אין ביקורות. היו הראשונים לכתוב!</div>';
+            return;
+        }
+
+        track.innerHTML = reviewsData.map(rev => `
+            <div class="sb-review-card">
+                <p class="sb-review-author">${rev.name}</p>
+                <p class="sb-review-content">"${rev.text}"</p>
+                <div class="sb-review-stars">★★★★★</div>
+            </div>
+        `).join('');
+
+        if(reviewsData.length > 1) track.innerHTML += track.innerHTML;
+        initSlider(reviewsData.length);
     });
 
-    // ניהול הסליידר
-    let slideInterval;
+    let sliderInterval;
     let currentIndex = 0;
-    function setupSlider(count) {
-        if (slideInterval) clearInterval(slideInterval);
+    function initSlider(count) {
+        if (sliderInterval) clearInterval(sliderInterval);
         if (count <= 1) return;
-
-        slideInterval = setInterval(() => {
+        sliderInterval = setInterval(() => {
             currentIndex++;
             track.style.transition = 'transform 0.8s cubic-bezier(0.65, 0, 0.35, 1)';
             track.style.transform = `translateX(${currentIndex * 100}%)`;
-            
             if (currentIndex >= count) {
                 setTimeout(() => {
                     track.style.transition = 'none';
@@ -584,20 +548,14 @@
         }, 5000);
     }
 
-    // טיפול בשליחת הטופס
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        const email = document.getElementById('sb-form-email').value.trim();
         const name = document.getElementById('sb-form-name').value;
-        const email = document.getElementById('sb-form-email').value.toLowerCase().trim();
         const text = document.getElementById('sb-form-text').value;
 
         if (!isValidEmail(email)) {
-            alert('אנא הזן כתובת אימייל אמיתית ותקינה.');
-            return;
-        }
-
-        if (submittedEmails.includes(email)) {
-            alert('כבר שלחת ביקורת עם המייל הזה.');
+            alert('נא להזין מייל תקין');
             return;
         }
 
@@ -605,28 +563,26 @@
         btn.innerText = 'שולח...';
 
         try {
-            // כתיבה ל-Firestore במקום ל-Formspree
+            // 1. שליחה ל-Firestore (בשביל שיוצג באתר ותוכל למחוק)
             await addDoc(collection(db, "reviews"), {
                 name: name,
-                email: email,
                 text: text,
-                createdAt: serverTimestamp(),
-                stars: 5 // ברירת מחדל כפי שביקשת
+                email: email,
+                createdAt: serverTimestamp()
             });
 
-            // שמירה מקומית למניעת כפילויות
-            submittedEmails.push(email);
-            localStorage.setItem('sb_emails', JSON.stringify(submittedEmails));
+            // 2. שליחה ל-Formspree (לגיבוי וקבלת התראות)
+            await fetch('https://formspree.io/f/mpwrobzk', {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            });
 
-            // עדכון ויזואלי של הטופס
             form.style.display = 'none';
             successMsg.classList.add('sb-success-visible');
-
-        } catch (error) {
-            console.error("Error adding review: ", error);
-            alert('שגיאה בשמירת התגובה. נסה שוב מאוחר יותר.');
+        } catch (err) {
+            alert('שגיאה בשליחה');
             btn.disabled = false;
-            btn.innerText = 'שלח ביקורת';
         }
     });
 })();
