@@ -110,69 +110,118 @@
             background-color: #D4AF37 !important; /* הופך לזהב במעבר עכבר */
         }
 /* --- SnapBox Premium Review System --- */
-/* סליידר */
-.sb-slider-viewport {
-    overflow: hidden;
-    width: 100%;
-    position: relative;
-    background: #fff;
-    border-radius: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-    margin-bottom: 40px;
+:root {
+    --sb-gold: #D4AF37;
+    --sb-dark: #1A1A1A;
+    --sb-glass: rgba(255, 255, 255, 0.8);
 }
-.sb-reviews-track {
-    display: flex;
-    transition: transform 0.8s cubic-bezier(0.45, 0, 0.55, 1);
+
+.sb-rev-section {
+    padding: 60px 20px;
+    background: #fdfdfd;
+    direction: rtl;
+    font-family: sans-serif;
 }
-.sb-review-card {
-    min-width: 100%;
-    padding: 50px 20px;
+
+.sb-rev-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.sb-rev-title {
     text-align: center;
+    font-size: 2.5rem;
+    color: var(--sb-dark);
+    margin-bottom: 40px;
+    font-weight: 300;
+}
+
+/* Slider Styles */
+.sb-rev-slider-wrapper {
+    overflow: hidden;
+    position: relative;
+    min-height: 250px;
+    margin-bottom: 50px;
+    background: var(--sb-glass);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+}
+
+.sb-rev-track {
+    display: flex;
+    transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+    width: 100%;
+}
+
+.sb-rev-card {
+    min-width: 100%;
+    padding: 40px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.sb-rev-card .author { font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; display: block; }
+.sb-rev-card .content { font-style: italic; color: #555; line-height: 1.6; }
+.sb-rev-card .stars { color: var(--sb-gold); margin-top: 15px; font-size: 1.2rem; }
+
+/* Form Styles */
+.sb-rev-form-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid #eee;
+}
+
+.sb-rev-input, .sb-rev-textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    outline: none;
+    transition: 0.3s;
     box-sizing: border-box;
 }
 
-/* הודעת הצלחה מגניבה בירוק */
-.sb-success-hidden { display: none; }
-.sb-success-visible {
-    display: block;
-    animation: sbPopIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
+.sb-rev-input:focus, .sb-rev-textarea:focus { border-color: var(--sb-gold); }
+.sb-rev-textarea { height: 100px; resize: none; }
 
-.sb-success-line {
-    background: #E8F5E9;
-    border: 2px solid #2E7D32;
-    color: #1B5E20;
-    padding: 20px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    font-weight: 700;
+.sb-rev-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--sb-dark);
+    color: white;
+    border: none;
+    border-radius: 12px;
     font-size: 1.1rem;
-    box-shadow: 0 4px 15px rgba(46, 125, 50, 0.1);
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-.sb-icon {
-    animation: sbRotate 2s linear infinite;
-    color: #4CAF50;
+.sb-rev-btn:hover { background: var(--sb-gold); transform: translateY(-2px); }
+
+.sb-rev-success-msg {
+    display: none;
+    text-align: center;
+    color: #2D6A4F;
+    font-weight: bold;
+    padding: 20px;
+    background: #f0fff4;
+    border-radius: 12px;
 }
 
-@keyframes sbPopIn {
-    0% { opacity: 0; transform: scale(0.9); }
-    100% { opacity: 1; transform: scale(1); }
-}
-
-@keyframes sbRotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-/* שדות ב-3 שורות */
-.sb-form-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.sb-rev-admin-del {
+    color: red;
+    font-size: 0.8rem;
+    cursor: pointer;
+    background: none;
+    border: 1px solid red;
+    padding: 2px 8px;
+    border-radius: 5px;
+    margin-top: 10px;
 }
     </style>
 </head>
@@ -384,31 +433,34 @@
         </svg>
     </a>
 </div>
-<section id="sb-reviews-section" class="sb-reviews-container">
-    <div class="sb-reviews-wrapper">
-        <h2 class="sb-reviews-title">לקוחות מספרים</h2>
+<section id="sb-rev-root" class="sb-rev-section">
+    <div class="sb-rev-container">
+        <h2 class="sb-rev-title">לקוחות מספרים</h2>
         
-        <div class="sb-slider-viewport">
-            <div id="sb-reviews-track" class="sb-reviews-track">
+        <div class="sb-rev-slider-wrapper">
+            <div id="sb-rev-track" class="sb-rev-track">
                 </div>
         </div>
 
-        <div class="sb-add-review-box">
-            <form id="sb-new-review-form" class="sb-form-grid">
-                <input type="text" id="sb-form-name" name="name" placeholder="שם מלא" required class="sb-input">
-                <input type="email" id="sb-form-email" name="email" placeholder="כתובת אימייל (לאימות)" required class="sb-input">
-                <textarea id="sb-form-text" name="message" placeholder="ספרו לנו על החוויה שלכם..." required class="sb-textarea"></textarea>
-                <button type="submit" id="sb-submit-btn" class="sb-submit-btn">שלח ביקורת</button>
-            </form>
-
-            <div id="sb-success-msg" class="sb-success-hidden">
-                <div class="sb-success-line">
-                    <span class="sb-icon">✦</span>
-                    <span>תודה! התגובה שלך פורסמה בהצלחה</span>
-                    <span class="sb-icon">✦</span>
+        <div class="sb-rev-form-card">
+            <form id="sb-rev-form">
+                <div class="sb-rev-input-group">
+                    <input type="text" id="sb-rev-name" name="name" placeholder="שם מלא" required class="sb-rev-input">
                 </div>
+                <div class="sb-rev-input-group">
+                    <input type="email" id="sb-rev-email" name="email" placeholder="אימייל לאימות" required class="sb-rev-input">
+                </div>
+                <div class="sb-rev-input-group">
+                    <textarea id="sb-rev-text" name="message" placeholder="איך הייתה החוויה שלך?" required class="sb-rev-textarea"></textarea>
+                </div>
+                <button type="submit" id="sb-rev-submit" class="sb-rev-btn">שלח ביקורת</button>
+            </form>
+            <div id="sb-rev-success" class="sb-rev-success-msg">
+                התגובה נשלחה בהצלחה 🤍
             </div>
         </div>
+
+        <button id="sb-rev-admin-trigger" style="opacity: 0.05; background: none; border: none; cursor: default;">.</button>
     </div>
 </section>
     <!-- Footer -->
@@ -531,6 +583,107 @@
             btn.innerText = 'שלח ביקורת';
         }
     });
+      (function() {
+    const ADMIN_PASSWORD = "1234"; // שנה כאן את הסיסמה שלך למחיקה
+    const FORMSPREE_URL = "https://formspree.io/f/mpwrobzk";
+    
+    let reviews = JSON.parse(localStorage.getItem('sb_reviews')) || [
+        { name: "דוגמה", text: "שירות מעולה ומקצועי!", stars: "★★★★★" }
+    ];
+    let submittedEmails = JSON.parse(localStorage.getItem('sb_submitted_emails')) || [];
+    let currentIndex = 0;
+    let isAdmin = false;
+
+    const track = document.getElementById('sb-rev-track');
+    const form = document.getElementById('sb-rev-form');
+    const successMsg = document.getElementById('sb-rev-success');
+
+    // פונקציית רינדור ביקורות
+    function renderReviews() {
+        track.innerHTML = reviews.map((rev, index) => `
+            <div class="sb-rev-card">
+                <span class="author">${rev.name}</span>
+                <p class="content">"${rev.text}"</p>
+                <div class="stars">★★★★★</div>
+                ${isAdmin ? `<button class="sb-rev-admin-del" onclick="deleteSbReview(${index})">מחיקה</button>` : ''}
+            </div>
+        `).join('');
+    }
+
+    // ניהול סליידר
+    function startSlider() {
+        setInterval(() => {
+            if (reviews.length <= 1) return;
+            currentIndex = (currentIndex + 1) % reviews.length;
+            track.style.transform = `translateX(${currentIndex * 100}%)`;
+        }, 4000);
+    }
+
+    // אימות אימייל
+    function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    // שליחת טופס
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('sb-rev-name').value;
+        const email = document.getElementById('sb-rev-email').value;
+        const text = document.getElementById('sb-rev-text').value;
+
+        if (!isValidEmail(email)) return alert("נא להזין אימייל תקין.");
+        if (submittedEmails.includes(email)) return alert("כבר שלחת ביקורת עם המייל הזה.");
+
+        const btn = document.getElementById('sb-rev-submit');
+        btn.disabled = true;
+        btn.innerText = "שולח...";
+
+        try {
+            const response = await fetch(FORMSPREE_URL, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                // שמירה מקומית
+                const newReview = { name, text, stars: "★★★★★" };
+                reviews.push(newReview);
+                submittedEmails.push(email);
+                
+                localStorage.setItem('sb_reviews', JSON.stringify(reviews));
+                localStorage.setItem('sb_submitted_emails', JSON.stringify(submittedEmails));
+
+                form.style.display = 'none';
+                successMsg.style.display = 'block';
+                renderReviews();
+            }
+        } catch (error) {
+            alert("שגיאה בשליחה. נסה שוב.");
+            btn.disabled = false;
+        }
+    });
+
+    // פונקציית מחיקה (חשופה לחלון)
+    window.deleteSbReview = (index) => {
+        reviews.splice(index, 1);
+        localStorage.setItem('sb_reviews', JSON.stringify(reviews));
+        renderReviews();
+    };
+
+    // טריגר אדמין (לחיצה על הנקודה הנסתרת)
+    document.getElementById('sb-rev-admin-trigger').addEventListener('click', () => {
+        const pw = prompt("סיסמת מנהל:");
+        if (pw === ADMIN_PASSWORD) {
+            isAdmin = true;
+            renderReviews();
+            alert("מצב מנהל פעיל. כפתורי מחיקה מופיעים בתוך הסליידר.");
+        }
+    });
+
+    renderReviews();
+    startSlider();
+})();
 </script>
 </body>
 </html>
