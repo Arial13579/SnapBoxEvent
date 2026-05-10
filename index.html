@@ -109,116 +109,114 @@
             transform: scale(1.1) rotate(5deg); 
             background-color: #D4AF37 !important; /* הופך לזהב במעבר עכבר */
         }
+/* עיצוב מדור ביקורות - SnapBox Light */
+#reviews-section {
+    background-color: #ffffff;
+    padding: 80px 20px;
+    border-top: 1px solid #f0f0f0;
+}
 
- /* הגדרות כלליות למדור הביקורות */
-    #reviews {
-        background-color: #ffffff;
-        color: #000000;
-        border-top: 1px solid #f4f4f5;
-    }
+.sb-rev-divider {
+    width: 40px;
+    height: 1px;
+    background: #000;
+    margin: 15px auto 50px;
+    opacity: 0.2;
+}
 
-    .sb-divider {
-        width: 3rem;
-        height: 1px;
-        background-color: black;
-        margin: 1rem auto 0;
-        opacity: 0.1;
-    }
+.sb-rev-slider-bg {
+    background: #fcfcfc;
+    border: 1px solid #f0f0f0;
+    border-radius: 30px;
+    padding: 40px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+}
 
-    /* קופסת הסליידר */
-    .sb-reviews-slider-box {
-        background-color: #f9f9f9; /* רקע לבן-אפרפר עדין */
-        padding: 2.5rem;
-        border-radius: 2rem;
-        border: 1px solid #f4f4f5;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-    }
+.sb-rev-track {
+    display: flex;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-    .sb-track-container {
-        display: flex;
-        transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1);
-        height: 100%;
-    }
+.sb-rev-slide {
+    min-width: 100%;
+    text-align: center;
+    padding: 0 20px;
+}
 
-    .sb-review-item {
-        min-width: 100%;
-        text-align: center;
-        padding: 0 1rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
+.sb-rev-text {
+    font-size: 1.4rem;
+    font-weight: 300;
+    font-style: italic;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
 
-    /* קופסת הטופס */
-    .sb-form-container {
-        background-color: white;
-        padding: 2.5rem;
-        border-radius: 2rem;
-        border: 1px solid #f4f4f5;
-        position: relative;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    }
+.sb-rev-author {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #999;
+}
 
-    .sb-input-field {
-        width: 100%;
-        background-color: #f9f9f9;
-        border: 1px solid #e4e4e7;
-        border-radius: 0.8rem;
-        padding: 1rem 1.25rem;
-        color: black;
-        outline: none;
-        transition: all 0.3s ease;
-        margin-bottom: 1rem;
-    }
+.sb-rev-form-card {
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+}
 
-    .sb-input-field:focus {
-        border-color: #000000;
-        background-color: #ffffff;
-    }
+.sb-rev-input {
+    width: 100%;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    outline: none;
+    transition: 0.3s;
+}
 
-    /* כפתור שליחה שחור כמו באתר */
-    .sb-submit-button {
-        width: 100%;
-        padding: 1.1rem;
-        border-radius: 0.8rem;
-        background-color: #000000;
-        color: #ffffff;
-        font-weight: 700;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        font-size: 0.85rem;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
+.sb-rev-input:focus {
+    border-color: #000;
+    background: #fff;
+}
 
-    .sb-submit-button:hover {
-        background-color: #27272a;
-        transform: translateY(-2px);
-    }
+.sb-rev-submit {
+    width: 100%;
+    background: #000;
+    color: #fff;
+    padding: 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+}
 
-    .sb-submit-button:disabled {
-        background-color: #a1a1aa;
-        cursor: not-allowed;
-    }
+.sb-rev-submit:hover {
+    background: #333;
+    transform: translateY(-2px);
+}
 
-    /* אלמנטים נוספים */
-    .sb-admin-dot {
-        position: absolute;
-        bottom: 1rem;
-        left: 1rem;
-        width: 6px;
-        height: 6px;
-        background-color: #e4e4e7;
-        cursor: pointer;
-        border-radius: 50%;
-    }
+.sb-rev-admin-dot {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    width: 6px;
+    height: 6px;
+    background: #eee;
+    border-radius: 50%;
+    cursor: pointer;
+}
 
-    .sb-hidden { display: none; }
+.sb-rev-hidden { display: none !important; }
     </style>
 </head>
 <body>
@@ -429,37 +427,35 @@
         </svg>
     </a>
 </div>
-<section id="reviews" class="py-24 px-6">
+<section id="reviews-section">
     <div class="max-w-5xl mx-auto">
-        
-        <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-extralight tracking-widest uppercase">Reviews</h2>
-            <div class="sb-divider"></div>
+        <div class="text-center">
+            <h2 class="text-3xl md:text-4xl font-extralight tracking-widest uppercase">Reviews</h2>
+            <div class="sb-rev-divider"></div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-10 items-stretch">
-            
-            <div class="sb-reviews-slider-box">
-                <div class="overflow-hidden relative h-48">
-                    <div id="sb-main-track" class="sb-track-container">
+        <div class="grid md:grid-cols-2 gap-10">
+            <div class="sb-rev-slider-bg">
+                <div class="overflow-hidden w-full">
+                    <div id="sb-rev-track" class="sb-rev-track">
                         </div>
                 </div>
             </div>
 
-            <div class="sb-form-container">
-                <form id="sb-main-form">
-                    <input type="text" id="sb-input-name" placeholder="שם מלא" required class="sb-input-field">
-                    <input type="email" id="sb-input-email" placeholder="אימייל" required class="sb-input-field">
-                    <textarea id="sb-input-text" placeholder="איך הייתה החוויה שלכם?" required rows="3" class="sb-input-field resize-none"></textarea>
-                    <button type="submit" id="sb-submit-trigger" class="sb-submit-button">שלח ביקורת</button>
+            <div class="sb-rev-form-card relative">
+                <form id="sb-review-form">
+                    <input type="text" id="rev-name" placeholder="שם מלא" class="sb-rev-input" required>
+                    <input type="email" id="rev-email" placeholder="אימייל" class="sb-rev-input" required>
+                    <textarea id="rev-text" placeholder="איך הייתה החוויה שלכם?" class="sb-rev-input resize-none h-32" required></textarea>
+                    <button type="submit" id="rev-submit-btn" class="sb-rev-submit">שלח ביקורת</button>
                 </form>
-
-                <div id="sb-success-display" class="sb-hidden text-center py-12">
-                    <div class="text-4xl mb-4">✅</div>
-                    <p class="text-zinc-600 font-light text-lg">תודה! הביקורת שלך נוספה.</p>
+                
+                <div id="rev-success" class="sb-rev-hidden text-center py-20">
+                    <span class="text-4xl">✨</span>
+                    <p class="mt-4 text-zinc-500 font-light">תודה! הביקורת נוספה בהצלחה.</p>
                 </div>
 
-                <div id="sb-admin-lock" class="sb-admin-dot"></div>
+                <div id="rev-admin-trigger" class="sb-rev-admin-dot"></div>
             </div>
         </div>
     </div>
@@ -499,11 +495,10 @@
                         `📝 *הערות:* ${document.getElementById('notes').value || 'אין'}`;
             window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
         }
-    <script type="module">
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    // הגדרות Firebase שלך
     const firebaseConfig = {
         apiKey: "AIzaSyBTR6_WpHJv9bw7UtIF4yRpHcGydYFj9pk",
         authDomain: "snapbox-reviews.firebaseapp.com",
@@ -516,93 +511,81 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    const track = document.getElementById('sb-main-track');
-    const form = document.getElementById('sb-main-form');
-    const success = document.getElementById('sb-success-display');
-    const btn = document.getElementById('sb-submit-trigger');
-    const adminTrigger = document.getElementById('sb-admin-lock');
+    const revTrack = document.getElementById('sb-rev-track');
+    const revForm = document.getElementById('sb-review-form');
+    const revSuccess = document.getElementById('rev-success');
+    const revBtn = document.getElementById('rev-submit-btn');
+    const adminDot = document.getElementById('rev-admin-trigger');
 
-    let reviews = [];
-    let slideIndex = 0;
-    let isAdminMode = false;
+    let reviewsList = [];
+    let currentIdx = 0;
+    let isManagement = false;
 
-    // האזנה לביקורות בזמן אמת
+    // טעינת ביקורות
     onSnapshot(query(collection(db, "reviews"), orderBy("createdAt", "desc")), (snap) => {
-        reviews = [];
-        snap.forEach(d => reviews.push({ id: d.id, ...d.data() }));
-        renderReviews();
+        reviewsList = [];
+        snap.forEach(d => reviewsList.push({ id: d.id, ...d.data() }));
+        renderRevs();
     });
 
-    function renderReviews() {
-        if (!track) return;
-        if (reviews.length === 0) {
-            track.innerHTML = `
-                <div class="sb-review-item">
-                    <p class="text-zinc-400 italic font-light">עוד אין ביקורות... מוזמנים להיות הראשונים!</p>
-                </div>`;
+    function renderRevs() {
+        if (!revTrack) return;
+        if (reviewsList.length === 0) {
+            revTrack.innerHTML = `<div class="sb-rev-slide"><p class="text-zinc-400">עוד אין ביקורות...</p></div>`;
             return;
         }
-        track.innerHTML = reviews.map(r => `
-            <div class="sb-review-item">
-                <p class="text-xl md:text-2xl font-light italic text-zinc-800 leading-snug mb-4">"${r.text}"</p>
-                <span class="text-xs tracking-widest uppercase text-zinc-400">— ${r.name}</span>
-                ${isAdminMode ? `<button onclick="window.deleteItem('${r.id}')" style="color:red; margin-top:10px; font-size:10px; cursor:pointer; background:none; border:none; text-decoration:underline;">מחק</button>` : ''}
+        revTrack.innerHTML = reviewsList.map(r => `
+            <div class="sb-rev-slide">
+                <p class="sb-rev-text">"${r.text}"</p>
+                <span class="sb-rev-author">— ${r.name}</span>
+                ${isManagement ? `<br><button onclick="deleteReview('${r.id}')" style="color:red; font-size:10px; margin-top:10px; cursor:pointer;">[מחק]</button>` : ''}
             </div>
         `).join('');
     }
 
-    // סליידר אוטומטי
+    // סליידר
     setInterval(() => {
-        if (reviews.length <= 1) return;
-        slideIndex = (slideIndex + 1) % reviews.length;
-        track.style.transform = `translateX(${slideIndex * 100}%)`;
+        if (reviewsList.length <= 1) return;
+        currentIdx = (currentIdx + 1) % reviewsList.length;
+        revTrack.style.transform = `translateX(${currentIdx * 100}%)`;
     }, 5000);
 
     // שליחה
-    form.addEventListener('submit', async (e) => {
+    revForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const name = document.getElementById('sb-input-name').value.trim();
-        const email = document.getElementById('sb-input-email').value.trim().toLowerCase();
-        const text = document.getElementById('sb-input-text').value.trim();
+        const email = document.getElementById('rev-email').value.trim().toLowerCase();
+        
+        const localSent = JSON.parse(localStorage.getItem('sb_rev_done')) || [];
+        if (localSent.includes(email)) return alert("כבר שלחת ביקורת בעבר");
 
-        const localSent = JSON.parse(localStorage.getItem('sb_sent')) || [];
-        if (localSent.includes(email)) {
-            alert("כבר שלחת ביקורת עם המייל הזה בעבר.");
-            return;
-        }
-
-        btn.disabled = true;
-        btn.innerText = "שולח...";
+        revBtn.disabled = true;
+        revBtn.innerText = "...";
 
         try {
             await addDoc(collection(db, "reviews"), {
-                name, email, text, createdAt: serverTimestamp()
+                name: document.getElementById('rev-name').value,
+                email: email,
+                text: document.getElementById('rev-text').value,
+                createdAt: serverTimestamp()
             });
-
             localSent.push(email);
-            localStorage.setItem('sb_sent', JSON.stringify(localSent));
-            
-            form.classList.add('sb-hidden');
-            success.classList.remove('sb-hidden');
+            localStorage.setItem('sb_rev_done', JSON.stringify(localSent));
+            revForm.classList.add('sb-rev-hidden');
+            revSuccess.classList.remove('sb-rev-hidden');
         } catch (err) {
-            alert("חלה שגיאה בשליחה. נסה שוב מאוחר יותר.");
-            btn.disabled = false;
-            btn.innerText = "שלח ביקורת";
+            alert("שגיאה בשליחה");
+            revBtn.disabled = false;
         }
     });
 
-    // ניהול
-    window.deleteItem = async (id) => {
-        if (confirm("למחוק את הביקורת לצמיתות?")) {
-            await deleteDoc(doc(db, "reviews", id));
-        }
+    window.deleteReview = async (id) => {
+        if (confirm("למחוק?")) await deleteDoc(doc(db, "reviews", id));
     };
 
-    adminTrigger.addEventListener('click', () => {
+    adminDot.addEventListener('click', () => {
         if (prompt("סיסמה:") === "1234") {
-            isAdminMode = true;
-            renderReviews();
-            alert("מצב מנהל פעיל.");
+            isManagement = true;
+            renderRevs();
         }
     });
 </script>
