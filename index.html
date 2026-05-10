@@ -110,190 +110,69 @@
             background-color: #D4AF37 !important; /* הופך לזהב במעבר עכבר */
         }
 /* --- SnapBox Premium Review System --- */
-
-.sb-reviews-container {
-    padding: 100px 20px;
-    background: #FCFBFA; /* רקע בהיר ויוקרתי */
-    direction: rtl;
-    font-family: 'Assistant', sans-serif;
-}
-
-.sb-reviews-wrapper {
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.sb-reviews-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 3.5rem;
-    text-align: center;
-    margin-bottom: 60px;
-    font-style: italic;
-    color: #1A1A1A;
-    letter-spacing: -1px;
-}
-
-/* Slider Viewport - Glassmorphism Style */
+/* סליידר */
 .sb-slider-viewport {
     overflow: hidden;
+    width: 100%;
     position: relative;
-    min-height: 300px;
-    margin-bottom: 80px;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    border-radius: 50px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.04);
-    border: 1px solid rgba(212, 175, 55, 0.1);
-    display: flex;
-    align-items: center;
+    background: #fff;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    margin-bottom: 40px;
 }
-
 .sb-reviews-track {
     display: flex;
-    transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
-    width: 100%;
+    transition: transform 0.8s cubic-bezier(0.45, 0, 0.55, 1);
 }
-
-/* Review Card Styling */
 .sb-review-card {
     min-width: 100%;
-    padding: 60px 40px;
+    padding: 50px 20px;
+    text-align: center;
     box-sizing: border-box;
-    text-align: center;
+}
+
+/* הודעת הצלחה מגניבה בירוק */
+.sb-success-hidden { display: none; }
+.sb-success-visible {
+    display: block;
+    animation: sbPopIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.sb-success-line {
+    background: #E8F5E9;
+    border: 2px solid #2E7D32;
+    color: #1B5E20;
+    padding: 20px;
+    border-radius: 15px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    gap: 15px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px rgba(46, 125, 50, 0.1);
 }
 
-.sb-review-author {
-    font-weight: 800;
-    color: #1A1A1A;
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-    letter-spacing: 0.5px;
+.sb-icon {
+    animation: sbRotate 2s linear infinite;
+    color: #4CAF50;
 }
 
-.sb-review-content {
-    font-size: 1.3rem;
-    line-height: 1.7;
-    color: #4A4A4A;
-    font-style: italic;
-    max-width: 85%;
-    margin: 0 auto;
-    position: relative;
+@keyframes sbPopIn {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
 }
 
-.sb-review-stars {
-    color: #D4AF37; /* זהב יוקרתי */
-    margin-top: 25px;
-    font-size: 1.5rem;
-    letter-spacing: 5px;
-    filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.2));
+@keyframes sbRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
-/* Form Styling - Matte Black & Minimalist */
-.sb-add-review-box {
-    background: #ffffff;
-    padding: 50px;
-    border-radius: 40px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-    border: 1px solid #f0f0f0;
-}
-
-.sb-form-subtitle {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    margin-bottom: 30px;
-    text-align: center;
-    color: #1A1A1A;
-}
-
+/* שדות ב-3 שורות */
 .sb-form-grid {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.sb-input, .sb-textarea {
-    width: 100%;
-    padding: 18px 25px;
-    border: 1px solid #eee;
-    border-radius: 20px;
-    background: #F9F9F9;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    outline: none;
-}
-
-.sb-input:focus, .sb-textarea:focus {
-    border-color: #D4AF37;
-    background: #fff;
-    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.05);
-}
-
-.sb-textarea {
-    height: 120px;
-    resize: none;
-}
-
-.sb-submit-btn {
-    background: #1A1A1A;
-    color: #fff;
-    padding: 20px;
-    border-radius: 20px;
-    font-weight: 700;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: none;
-    margin-top: 10px;
-}
-
-.sb-submit-btn:hover {
-    background: #D4AF37;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
-}
-
-.sb-submit-btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* Success Message - Clean Green */
-.sb-success-hidden {
-    display: none;
-    text-align: center;
-    font-weight: 700;
-    color: #2D6A4F;
-    margin-top: 30px;
-    font-size: 1.2rem;
-    padding: 20px;
-    border-radius: 20px;
-    background: rgba(45, 106, 79, 0.05);
-    border: 1px solid rgba(45, 106, 79, 0.1);
-}
-
-.sb-success-visible {
-    display: block;
-    animation: sbSlideUp 0.6s ease-out forwards;
-}
-
-@keyframes sbSlideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    .sb-reviews-title { font-size: 2.5rem; }
-    .sb-review-card { padding: 40px 20px; }
-    .sb-review-content { font-size: 1.1rem; max-width: 95%; }
-    .sb-add-review-box { padding: 30px 20px; }
+    gap: 15px;
 }
     </style>
 </head>
@@ -508,18 +387,27 @@
 <section id="sb-reviews-section" class="sb-reviews-container">
     <div class="sb-reviews-wrapper">
         <h2 class="sb-reviews-title">לקוחות מספרים</h2>
+        
         <div class="sb-slider-viewport">
             <div id="sb-reviews-track" class="sb-reviews-track">
                 </div>
         </div>
+
         <div class="sb-add-review-box">
             <form id="sb-new-review-form" class="sb-form-grid">
-                <input type="text" name="name" id="sb-form-name" placeholder="שם מלא" required class="sb-input">
-                <input type="email" name="email" id="sb-form-email" placeholder="אימייל" required class="sb-input">
-                <textarea name="message" id="sb-form-text" placeholder="איך הייתה החוויה שלכם?" required class="sb-textarea"></textarea>
+                <input type="text" id="sb-form-name" name="name" placeholder="שם מלא" required class="sb-input">
+                <input type="email" id="sb-form-email" name="email" placeholder="כתובת אימייל (לאימות)" required class="sb-input">
+                <textarea id="sb-form-text" name="message" placeholder="ספרו לנו על החוויה שלכם..." required class="sb-textarea"></textarea>
                 <button type="submit" id="sb-submit-btn" class="sb-submit-btn">שלח ביקורת</button>
             </form>
-            <div id="sb-success-msg" class="sb-success-hidden">התגובה נשלחה בהצלחה</div>
+
+            <div id="sb-success-msg" class="sb-success-hidden">
+                <div class="sb-success-line">
+                    <span class="sb-icon">✦</span>
+                    <span>תודה! התגובה שלך פורסמה בהצלחה</span>
+                    <span class="sb-icon">✦</span>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -557,9 +445,9 @@
             window.open(`https://wa.me/972546056180?text=${encodeURIComponent(msg)}`, '_blank');
         }
     </script>
-   <script type="module">
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "YOUR_API_KEY",
@@ -573,107 +461,76 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // בדיקה אם המשתמש הוא מנהל (לצורך מחיקה)
-    const isAdmin = new URLSearchParams(window.location.search).get('admin') === 'true';
+    const track = document.getElementById('sb-reviews-track');
+    const form = document.getElementById('sb-new-review-form');
+    const successMsg = document.getElementById('sb-success-msg');
+    const btn = document.getElementById('sb-submit-btn');
 
-    (function() {
-        const track = document.getElementById('sb-reviews-track');
-        const form = document.getElementById('sb-new-review-form');
-        const btn = document.getElementById('sb-submit-btn');
-        const successMsg = document.getElementById('sb-success-msg');
-        
-        // משיכת רשימת מיילים ששלחו כבר מה-Local Storage למניעת ספאם מקומי
-        let submittedEmails = JSON.parse(localStorage.getItem('sb_emails')) || [];
+    // --- 1. משיכת תגובות וניהול סליידר (כל 5 שניות) ---
+    let reviewsCount = 0;
+    let currentIndex = 0;
 
-        // --- הצגת ביקורות בזמן אמת ---
-        const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
-        onSnapshot(q, (snapshot) => {
-            const reviewsData = [];
-            snapshot.forEach((d) => reviewsData.push({ id: d.id, ...d.data() }));
-
-            if (reviewsData.length === 0) {
-                track.innerHTML = '<div style="width:100%; text-align:center; padding:40px;">תהיו הראשונים לכתוב ביקורת!</div>';
-                return;
-            }
-
-            track.innerHTML = reviewsData.map(rev => `
+    onSnapshot(query(collection(db, "reviews"), orderBy("createdAt", "desc")), (snapshot) => {
+        let html = '';
+        reviewsCount = snapshot.size;
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            html += `
                 <div class="sb-review-card">
-                    ${isAdmin ? `<button onclick="deleteReview('${rev.id}')" style="color:red; cursor:pointer; background:none; border:none; margin-bottom:10px;">[מחק תגובה]</button>` : ''}
-                    <p class="sb-review-author">${rev.name}</p>
-                    <p class="sb-review-content">"${rev.text}"</p>
+                    <p class="sb-review-author">${data.name}</p>
+                    <p class="sb-review-content">"${data.text}"</p>
                     <div class="sb-review-stars">★★★★★</div>
                 </div>
-            `).join('');
-
-            // פונקציית מחיקה (חשופה לגלובל)
-            window.deleteReview = async (id) => {
-                if(confirm('למחוק את התגובה לצמיתות?')) {
-                    await deleteDoc(doc(db, "reviews", id));
-                }
-            };
+            `;
         });
+        track.innerHTML = html || '<p style="text-align:center; width:100%;">עוד אין ביקורות...</p>';
+    });
 
-        // --- אימות מייל אמיתי ---
-        function validateEmail(email) {
-            return String(email).toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
-        }
+    // פונקציית סליידר
+    setInterval(() => {
+        if (reviewsCount <= 1) return;
+        currentIndex = (currentIndex + 1) % reviewsCount;
+        track.style.transform = `translateX(${currentIndex * 100}%)`;
+    }, 5000);
 
-    // --- שליחת הטופס ---
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const name = document.getElementById('sb-form-name').value.trim();
-    const email = document.getElementById('sb-form-email').value.trim().toLowerCase();
-    const text = document.getElementById('sb-form-text').value.trim();
-
-    // בדיקת אימייל
-    if (!validateEmail(email)) {
-        alert('נא להזין כתובת אימייל תקנית.');
-        return;
-    }
-
-    // מניעת כפילויות
-    if (submittedEmails.includes(email)) {
-        alert('כבר שלחת ביקורת עם המייל הזה.');
-        return;
-    }
-
-    // שינוי מצב כפתור
-    btn.disabled = true;
-    btn.innerText = 'שולח תגובה...';
-
-    try {
-        // 1. שמירה ב-Firebase
-        await addDoc(collection(db, "reviews"), {
-            name: name,
-            text: text,
-            email: email,
-            createdAt: serverTimestamp()
-        });
-
-        // 2. שליחה ל-Formspree (אופציונלי - אם זה נכשל זה עדיין ימשיך)
-        fetch('https://formspree.io/f/mpwrobzk', {
-            method: 'POST',
-            body: new FormData(form),
-            headers: { 'Accept': 'application/json' }
-        }).catch(err => console.log("Formspree skip"));
-
-        // 3. הצלחה - עדכון ממשק
-        submittedEmails.push(email);
-        localStorage.setItem('sb_emails', JSON.stringify(submittedEmails));
+    // --- 2. שליחת טופס (Firebase + Formspree) ---
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // מונע רענון דף
         
-        // כאן הקסם: מעלימים את הטופס ומראים את ההודעה
-        form.style.display = 'none'; 
-        successMsg.style.display = 'block'; // וודא שה-ID תואם ל-HTML
-        successMsg.classList.add('sb-success-visible');
+        const email = document.getElementById('sb-form-email').value;
+        const name = document.getElementById('sb-form-name').value;
+        const text = document.getElementById('sb-form-text').value;
 
-    } catch (err) {
-        console.error("Error details:", err);
-        alert('שגיאה בחיבור ל-Firebase. וודא שהגדרות ה-API תקינות.');
-        btn.disabled = false;
-        btn.innerText = 'שלח ביקורת';
-    }
-});
+        btn.disabled = true;
+        btn.innerText = 'שולח...';
+
+        try {
+            // שמירה ב-Firebase לתצוגה חיה
+            await addDoc(collection(db, "reviews"), {
+                name: name,
+                text: text,
+                email: email,
+                createdAt: serverTimestamp()
+            });
+
+            // שליחה ל-Formspree להתראה במייל
+            await fetch('https://formspree.io/f/mpwrobzk', {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            });
+
+            // הצגת הודעת הצלחה מגניבה
+            form.style.display = 'none';
+            successMsg.classList.remove('sb-success-hidden');
+            successMsg.classList.add('sb-success-visible');
+
+        } catch (err) {
+            alert('אופס! הייתה שגיאה בשליחה.');
+            btn.disabled = false;
+            btn.innerText = 'שלח ביקורת';
+        }
+    });
 </script>
 </body>
 </html>
