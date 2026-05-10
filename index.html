@@ -109,27 +109,192 @@
             transform: scale(1.1) rotate(5deg); 
             background-color: #D4AF37 !important; /* הופך לזהב במעבר עכבר */
         }
-.sb-reviews-container { padding: 80px 20px; background: #FCFBFA; direction: rtl; }
-.sb-reviews-wrapper { max-width: 900px; margin: 0 auto; }
-.sb-reviews-title { font-family: 'Playfair Display', serif; font-size: 3rem; text-align: center; margin-bottom: 50px; font-style: italic; }
+/* --- SnapBox Premium Review System --- */
 
-.sb-slider-viewport { overflow: hidden; position: relative; min-height: 250px; margin-bottom: 60px; background: #fff; border-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid rgba(212, 175, 55, 0.1); }
-.sb-reviews-track { display: flex; transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
-.sb-review-card { min-width: 100%; padding: 40px; box-sizing: border-box; text-align: center; }
-.sb-review-author { font-weight: 700; color: #1A1A1A; font-size: 1.1rem; margin-bottom: 10px; }
-.sb-review-content { font-size: 1.25rem; line-height: 1.8; color: #4A4A4A; font-style: italic; }
-.sb-review-stars { color: #D4AF37; margin-top: 15px; font-size: 1.2rem; }
+.sb-reviews-container {
+    padding: 100px 20px;
+    background: #FCFBFA; /* רקע בהיר ויוקרתי */
+    direction: rtl;
+    font-family: 'Assistant', sans-serif;
+}
 
-.sb-add-review-box { background: #fff; padding: 40px; border-radius: 40px; border: 1px solid #f0f0f0; }
-.sb-form-grid { display: flex; flex-direction: column; gap: 15px; }
-.sb-input, .sb-textarea { width: 100%; padding: 15px 20px; border: 1px solid #eee; border-radius: 15px; background: #fdfdfd; font-family: inherit; }
-.sb-textarea { height: 100px; resize: none; }
-.sb-submit-btn { background: #1A1A1A; color: #fff; padding: 18px; border-radius: 15px; font-weight: 700; cursor: pointer; transition: 0.3s; border: none; }
-.sb-submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+.sb-reviews-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+}
 
-.sb-success-hidden { display: none; text-align: center; font-weight: 700; color: #2D6A4F; margin-top: 25px; font-size: 1.1rem; padding: 15px; border-radius: 12px; background-color: rgba(45, 106, 79, 0.05); }
-.sb-success-visible { display: block; animation: sbFadeIn 0.6s ease-out; }
-@keyframes sbFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.sb-reviews-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    text-align: center;
+    margin-bottom: 60px;
+    font-style: italic;
+    color: #1A1A1A;
+    letter-spacing: -1px;
+}
+
+/* Slider Viewport - Glassmorphism Style */
+.sb-slider-viewport {
+    overflow: hidden;
+    position: relative;
+    min-height: 300px;
+    margin-bottom: 80px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 50px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    display: flex;
+    align-items: center;
+}
+
+.sb-reviews-track {
+    display: flex;
+    transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+    width: 100%;
+}
+
+/* Review Card Styling */
+.sb-review-card {
+    min-width: 100%;
+    padding: 60px 40px;
+    box-sizing: border-box;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sb-review-author {
+    font-weight: 800;
+    color: #1A1A1A;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+.sb-review-content {
+    font-size: 1.3rem;
+    line-height: 1.7;
+    color: #4A4A4A;
+    font-style: italic;
+    max-width: 85%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.sb-review-stars {
+    color: #D4AF37; /* זהב יוקרתי */
+    margin-top: 25px;
+    font-size: 1.5rem;
+    letter-spacing: 5px;
+    filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.2));
+}
+
+/* Form Styling - Matte Black & Minimalist */
+.sb-add-review-box {
+    background: #ffffff;
+    padding: 50px;
+    border-radius: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+    border: 1px solid #f0f0f0;
+}
+
+.sb-form-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #1A1A1A;
+}
+
+.sb-form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.sb-input, .sb-textarea {
+    width: 100%;
+    padding: 18px 25px;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    background: #F9F9F9;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.sb-input:focus, .sb-textarea:focus {
+    border-color: #D4AF37;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.05);
+}
+
+.sb-textarea {
+    height: 120px;
+    resize: none;
+}
+
+.sb-submit-btn {
+    background: #1A1A1A;
+    color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: none;
+    margin-top: 10px;
+}
+
+.sb-submit-btn:hover {
+    background: #D4AF37;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+}
+
+.sb-submit-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Success Message - Clean Green */
+.sb-success-hidden {
+    display: none;
+    text-align: center;
+    font-weight: 700;
+    color: #2D6A4F;
+    margin-top: 30px;
+    font-size: 1.2rem;
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(45, 106, 79, 0.05);
+    border: 1px solid rgba(45, 106, 79, 0.1);
+}
+
+.sb-success-visible {
+    display: block;
+    animation: sbSlideUp 0.6s ease-out forwards;
+}
+
+@keyframes sbSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .sb-reviews-title { font-size: 2.5rem; }
+    .sb-review-card { padding: 40px 20px; }
+    .sb-review-content { font-size: 1.1rem; max-width: 95%; }
+    .sb-add-review-box { padding: 30px 20px; }
+}
     </style>
 </head>
 <body>
@@ -495,16 +660,9 @@
     const btn = document.getElementById('sb-submit-btn');
     const successMsg = document.getElementById('sb-success-msg');
     
-    // אימות מייל (חסימת מיילים זמניים)
-    const bannedDomains = ['mailinator.com', 'tempmail.com', '10minutemail.com'];
-    function isValidEmail(email) {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!regex.test(email)) return false;
-        const domain = email.split('@')[1].toLowerCase();
-        return !bannedDomains.includes(domain);
-    }
+    let submittedEmails = JSON.parse(localStorage.getItem('sb_emails')) || [];
 
-    // הצגת תגובות מ-Firestore בזמן אמת (מאפשר מחיקה שלך)
+    // --- 1. משיכת נתונים מ-FIRESTORE (כדי שלא יימחק ברענון) ---
     const reviewsRef = collection(db, "reviews");
     const reviewsQuery = query(reviewsRef, orderBy("createdAt", "desc"));
 
@@ -513,10 +671,11 @@
         snapshot.forEach((doc) => reviewsData.push(doc.data()));
         
         if (reviewsData.length === 0) {
-            track.innerHTML = '<div style="width:100%; text-align:center; padding:40px;">עדיין אין ביקורות. היו הראשונים לכתוב!</div>';
+            track.innerHTML = '<div style="width:100%; text-align:center; padding:40px; color:#999;">עדיין אין ביקורות. היו הראשונים לכתוב!</div>';
             return;
         }
 
+        // בניית ה-HTML: שם -> מלל -> כוכבים
         track.innerHTML = reviewsData.map(rev => `
             <div class="sb-review-card">
                 <p class="sb-review-author">${rev.name}</p>
@@ -529,6 +688,7 @@
         initSlider(reviewsData.length);
     });
 
+    // --- 2. ניהול הסליידר ---
     let sliderInterval;
     let currentIndex = 0;
     function initSlider(count) {
@@ -548,14 +708,15 @@
         }, 5000);
     }
 
+    // --- 3. שליחת הטופס (גם ל-FORMSPREE וגם ל-FIRESTORE) ---
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = document.getElementById('sb-form-email').value.trim();
-        const name = document.getElementById('sb-form-name').value;
-        const text = document.getElementById('sb-form-text').value;
+        const email = document.getElementById('sb-form-email').value.trim().toLowerCase();
+        const name = document.getElementById('sb-form-name').value.trim();
+        const text = document.getElementById('sb-form-text').value.trim();
 
-        if (!isValidEmail(email)) {
-            alert('נא להזין מייל תקין');
+        if (submittedEmails.includes(email)) {
+            alert('כבר שלחת ביקורת עם המייל הזה.');
             return;
         }
 
@@ -563,26 +724,37 @@
         btn.innerText = 'שולח...';
 
         try {
-            // 1. שליחה ל-Firestore (בשביל שיוצג באתר ותוכל למחוק)
-            await addDoc(collection(db, "reviews"), {
+            // פעולה א': שמירה ב-Firestore (בשביל התצוגה באתר והמחיקה שלך)
+            const firestoreTask = addDoc(collection(db, "reviews"), {
                 name: name,
                 text: text,
                 email: email,
                 createdAt: serverTimestamp()
             });
 
-            // 2. שליחה ל-Formspree (לגיבוי וקבלת התראות)
-            await fetch('https://formspree.io/f/mpwrobzk', {
+            // פעולה ב': שליחה ל-Formspree (בשביל ההתראות והטבלה שלך שם)
+            const formspreeTask = fetch('https://formspree.io/f/mpwrobzk', {
                 method: 'POST',
                 body: new FormData(form),
                 headers: { 'Accept': 'application/json' }
             });
 
+            // מחכים לשני הביצועים
+            await Promise.all([firestoreTask, formspreeTask]);
+
+            // חסימה מקומית
+            submittedEmails.push(email);
+            localStorage.setItem('sb_emails', JSON.stringify(submittedEmails));
+
+            // הצלחה
             form.style.display = 'none';
             successMsg.classList.add('sb-success-visible');
+
         } catch (err) {
-            alert('שגיאה בשליחה');
+            console.error("Error:", err);
+            alert('שגיאה בשליחה. נסה שוב.');
             btn.disabled = false;
+            btn.innerText = 'שלח ביקורת';
         }
     });
 })();
