@@ -111,33 +111,62 @@
         }
 
         /* Reviews Section Styles - Prevent Override */
+/* Reviews Section Styles - Optimized for All Screens */
 .sb-reviews-display-box {
     background-color: #f9f9f9;
-    padding: 3rem;
+    padding: 2.5rem 1.5rem; /* פדינג דינמי */
     border-radius: 2rem;
     border: 1px solid #f4f4f5;
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-height: 350px; /* מבטיח שהתיבה לא תהיה קטנה מדי */
+    overflow: hidden;
 }
+
+@media (min-width: 768px) {
+    .sb-reviews-display-box {
+        padding: 4rem;
+        min-height: 450px; /* גובה מרשים יותר למסכים גדולים */
+    }
+}
+
 .sb-track-container {
     display: flex;
     transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
     width: 100%;
+    align-items: center;
 }
+
 .sb-review-item {
     min-width: 100%;
     text-align: center;
     padding: 0 1rem;
+    box-sizing: border-box;
 }
+
+.sb-review-quote {
+    font-size: 1.25rem; /* גודל לנייד */
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .sb-review-quote {
+        font-size: 2rem; /* גודל למחשב */
+    }
+}
+
 .sb-form-card {
     background: white;
     padding: 2rem;
     border-radius: 2rem;
     border: 1px solid #f4f4f5;
     box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+    height: 100%;
 }
+
 .sb-field {
     width: 100%;
     background: #f9f9f9;
@@ -147,14 +176,17 @@
     margin-bottom: 12px;
     outline: none;
     transition: 0.3s;
+    font-family: inherit;
 }
+
 .sb-field:focus {
-    border-color: #000;
+    border-color: #D4AF37;
     background: #fff;
 }
+
 .sb-submit-button {
     width: 100%;
-    background: #000;
+    background: #1A1A1A;
     color: #fff;
     padding: 16px;
     border-radius: 12px;
@@ -162,21 +194,24 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: 0.3s;
+    cursor: pointer;
 }
+
 .sb-submit-button:hover {
-    background: #27272a;
+    background: #D4AF37;
     transform: translateY(-2px);
 }
+
 .sb-admin-dot {
     position: absolute;
-    bottom: 12px;
-    left: 12px;
-    width: 6px;
-    height: 6px;
+    bottom: 15px;
+    left: 15px;
+    width: 8px;
+    height: 8px;
     background: #e4e4e7;
     border-radius: 50%;
     cursor: pointer;
-    opacity: 0.4;
+    opacity: 0.3;
 }
     </style>
 </head>
@@ -401,16 +436,17 @@
         </svg>
     </a>
 </div>
-<section id="reviews" class="py-24 px-6 bg-white">
+<section id="reviews" class="py-20 px-6 bg-white overflow-hidden">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-16">
-            <h2 class="text-4xl font-serif italic text-[#D4AF37]">תגובות  </h2>
-            <p class="text-zinc-400 uppercase tracking-widest text-xs mt-2">מה הלקוחות שלנו אומרים</p>
+            <h2 class="text-4xl md:text-6xl font-serif italic text-[#D4AF37]">תגובות🤍</h2>
+            <p class="text-zinc-400 uppercase tracking-widest text-[10px] md:text-xs mt-2">מה הלקוחות שלנו אומרים</p>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-12 items-stretch">
-            <div class="sb-reviews-display-box">
-                <div class="overflow-hidden relative h-48 flex items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
+            
+            <div class="sb-reviews-display-box order-2 lg:order-1">
+                <div class="overflow-hidden relative w-full flex items-center">
                     <div id="sb-reviews-track" class="sb-track-container">
                         <div class="sb-review-item">
                             <p class="text-xl italic text-zinc-500">טוען ביקורות...</p>
@@ -420,18 +456,21 @@
                 <div id="sb-admin-trigger" class="sb-admin-dot"></div>
             </div>
 
-            <div class="sb-form-card">
+            <div class="sb-form-card order-1 lg:order-2">
                 <form id="sb-review-form">
-                    <input type="text" id="sb-input-name" placeholder="שם מלא" class="sb-field" required>
-                    <input type="email" id="sb-input-email" placeholder="אימייל" class="sb-field" required>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="text" id="sb-input-name" placeholder="שם מלא" class="sb-field" required>
+                        <input type="email" id="sb-input-email" placeholder="אימייל" class="sb-field" required>
+                    </div>
                     <textarea id="sb-input-text" placeholder="איך הייתה החוויה שלכם?" rows="3" class="sb-field resize-none" required></textarea>
                     <button type="submit" id="sb-submit-btn" class="sb-submit-button">שלח ביקורת</button>
                 </form>
                 <div id="sb-success-msg" class="hidden text-center py-10">
-                    <i data-lucide="check-circle" class="mx-auto text-green-500 mb-4" size="40"></i>
-                    <p class="font-bold text-lg">תודה! הביקורת התקבלה.</p>
+                    <i data-lucide="check-circle" class="mx-auto text-green-500 mb-4" style="width: 48px; height: 48px;"></i>
+                    <p class="font-bold text-lg text-zinc-800">תודה! הביקורת התקבלה.</p>
                 </div>
             </div>
+            
         </div>
     </div>
 </section>
@@ -482,11 +521,10 @@ function sendToWhatsapp(e) {
 
     </script>
 
-    <script type="module">
+   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    // Firebase Configuration based on your project
     const firebaseConfig = {
         apiKey: "AIzaSyBTR6_WpHJv9bw7UtIF4yRpHcGydYFj9pk",
         authDomain: "snapbox-reviews.firebaseapp.com",
@@ -505,7 +543,7 @@ function sendToWhatsapp(e) {
     const successMsg = document.getElementById('sb-success-msg');
     let isAdminMode = false;
 
-    // Real-time listener for reviews
+    // האזנה לביקורות בזמן אמת
     onSnapshot(query(reviewsCol, orderBy("createdAt", "desc")), (snapshot) => {
         track.innerHTML = '';
         if (snapshot.empty) {
@@ -517,24 +555,33 @@ function sendToWhatsapp(e) {
             const div = document.createElement('div');
             div.className = 'sb-review-item';
             div.innerHTML = `
-                <p class="text-2xl font-light italic mb-4 text-zinc-800">"${data.text}"</p>
-                <span class="font-bold text-[#D4AF37] uppercase tracking-widest text-xs">— ${data.name}</span>
-                ${isAdminMode ? `<br><button onclick="window.deleteReview('${docSnap.id}')" class="text-red-500 text-[10px] mt-2 underline">מחק</button>` : ''}
+                <p class="sb-review-quote font-light italic text-zinc-800">"${data.text}"</p>
+                <span class="font-bold text-[#D4AF37] uppercase tracking-widest text-[10px] md:text-xs">— ${data.name}</span>
+                ${isAdminMode ? `<br><button onclick="window.deleteReview('${docSnap.id}')" class="text-red-500 text-[10px] mt-2 underline cursor-pointer">מחק ביקורת</button>` : ''}
             `;
             track.appendChild(div);
         });
+        currentIndex = 0; // איפוס המיקום בעת עדכון
+        updateSlider();
     });
 
-    // Auto-sliding logic
+    // לוגיקת סליידר אוטומטי
     let currentIndex = 0;
+    function updateSlider() {
+        const items = document.querySelectorAll('.sb-review-item');
+        if (items.length > 0) {
+            track.style.transform = `translateX(${currentIndex * 100}%)`;
+        }
+    }
+
     setInterval(() => {
         const items = document.querySelectorAll('.sb-review-item');
         if (items.length <= 1) return;
         currentIndex = (currentIndex + 1) % items.length;
-        track.style.transform = `translateX(${currentIndex * 100}%)`;
+        updateSlider();
     }, 5000);
 
-    // Form submission
+    // שליחת טופס
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const btn = document.getElementById('sb-submit-btn');
@@ -554,6 +601,7 @@ function sendToWhatsapp(e) {
             });
             form.classList.add('hidden');
             successMsg.classList.remove('hidden');
+            lucide.createIcons(); // טעינת האייקון של ה-V
         } catch (err) {
             console.error(err);
             alert("שגיאה בשליחת הביקורת.");
@@ -562,17 +610,17 @@ function sendToWhatsapp(e) {
         }
     });
 
-    // Admin Mode (Hidden Trigger)
+    // מצב ניהול
     document.getElementById('sb-admin-trigger').addEventListener('click', () => {
         if (prompt("סיסמת מנהל:") === "1234") {
             isAdminMode = true;
-            alert("מצב מחיקה פעיל.");
-            location.reload(); // Refresh to show delete buttons
+            alert("מצב מחיקה פעיל. הדף יתרענן.");
+            location.reload();
         }
     });
 
     window.deleteReview = async (id) => {
-        if (confirm("למחוק ביקורת זו?")) {
+        if (confirm("למחוק ביקורת זו לצמיתות?")) {
             await deleteDoc(doc(db, "reviews", id));
         }
     };
