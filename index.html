@@ -4,13 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snap Box | בוטיק עמדות צילום</title>
-    
+    <meta name="description" content="Snap Box - בוטיק עמדות צילום לאירועים מעץ טבעי. חתונות, בר/בת מצווה ואירועים עסקיים, בכל רחבי הארץ.">
+
     <!-- לוגו בלשונית הדפדפן -->
     <link rel="icon" type="image/jpeg" href="https://files.oaiusercontent.com/file-m06i8L3qAnQe6qQ2FndVpW?se=2026-05-03T15%3A17%3A50Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D4585c54c-811c-43f1-9c3f-c1f0b0051e7f.webp&sig=q4yq/R5Zf74/e0S7A7oE5V7aF8Y9U6l8X6n3g3o3z8E%3D">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- מידע מובנה על העסק (פרטי עסק אמיתיים) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Snap Box",
+      "description": "בוטיק עמדות צילום לאירועים מעץ טבעי",
+      "telephone": "+972546056180",
+      "email": "snapboxevent.official@gmail.com",
+      "areaServed": "IL",
+      "taxID": "212938385",
+      "sameAs": [
+        "https://www.instagram.com/snapbox_event.official",
+        "https://www.facebook.com/share/18GcWQXLqA/"
+      ]
+    }
+    </script>
 
     <style>
         :root { --base-font-size: 16px; }
@@ -213,22 +232,67 @@
     cursor: pointer;
     opacity: 0.3;
 }
+
+/* באנר עוגיות */
+#cookieBanner {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 500;
+    background: #1A1A1A;
+    color: #fff;
+    padding: 18px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.15);
+}
+#cookieBanner p { margin: 0; font-size: 13px; max-width: 560px; }
+#cookieBanner a { color: #D4AF37; text-decoration: underline; }
+#cookieBanner button {
+    background: #D4AF37;
+    color: #1A1A1A;
+    font-weight: 800;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 26px;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* תיבת הסכמה בטפסים */
+.sb-consent-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12.5px;
+    color: #6b7280;
+    text-align: right;
+}
+.sb-consent-row input { margin-top: 3px; flex-shrink: 0; }
+.sb-consent-row a { color: #D4AF37; font-weight: 700; text-decoration: underline; }
     </style>
 </head>
 <body>
 
     <!-- כפתור וואטסאפ צף - הוספת צבע שחור ישיר (Inline Style) -->
-    <a href="https://wa.me/972546056180?text=היי%20מה%20נשמע%20רציתי%20לשמוע%20יותר%20על%20החבילות%20שלכם%20של%20העמדת%20צילום" 
-       class="whatsapp-float" 
+    <a href="https://wa.me/972546056180?text=היי%20מה%20נשמע%20רציתי%20לשמוע%20יותר%20על%20החבילות%20שלכם%20של%20העמדת%20צילום"
+       class="whatsapp-float"
        style="background-color: #1A1A1A !important; color: #FFFFFF !important;"
-       target="_blank" 
+       target="_blank"
+       aria-label="פתיחת שיחת WhatsApp עם Snap Box"
        rel="noopener noreferrer">
         <i data-lucide="message-circle" style="width: 32px; height: 32px;"></i>
     </a>
 
     <!-- תפריט נגישות -->
     <div id="accWrapper" class="fixed top-24 left-6 z-[300] flex flex-col items-center">
-        <button onclick="toggleAccMenu()" id="accMainBtn" class="w-14 h-14 rounded-full shadow-2xl bg-[#1A1A1A] text-white flex items-center justify-center transition-all duration-500 border border-white/20">
+        <button onclick="toggleAccMenu()" id="accMainBtn" aria-label="תפריט נגישות" class="w-14 h-14 rounded-full shadow-2xl bg-[#1A1A1A] text-white flex items-center justify-center transition-all duration-500 border border-white/20">
             <i data-lucide="accessibility"></i>
         </button>
         <button onclick="toggleLargeText()" title="הגדלת טקסט" class="acc-option opt-1 bg-white text-black w-12 h-12 rounded-full shadow-xl flex items-center justify-center border border-gray-100 hover:bg-[#D4AF37] hover:text-white"><b>A+</b></button>
@@ -267,32 +331,32 @@
 <div class="marquee-container">
     <!-- סט ראשון -->
     <div class="marquee-content">
-        <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="Gallery Image">
-        <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="Gallery Image">
-        <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="Gallery Image">
-        <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="Gallery Image">
-        <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="Gallery Image">
+        <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box"></video>
+        <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="תמונה מגלריית עמדת הצילום של Snap Box מאירוע לקוחות">
+        <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box"></video>
+        <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box"></video>
+        <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="תמונה מגלריית עמדת הצילום של Snap Box מאירוע לקוחות">
+        <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box"></video>
+        <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="תמונה מגלריית עמדת הצילום של Snap Box מאירוע לקוחות">
+        <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box"></video>
+        <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="תמונה מגלריית עמדת הצילום של Snap Box מאירוע לקוחות">
+        <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box"></video>
+        <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="תמונה מגלריית עמדת הצילום של Snap Box מאירוע לקוחות">
     </div>
     
     <!-- סט שני (העתק מדויק ליצירת לופ אינסופי) -->
     <div class="marquee-content" aria-hidden="true">
-        <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="Gallery Image">
-        <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="Gallery Image">
-        <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="Gallery Image">
-        <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="Gallery Image">
-        <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline></video>
-        <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="Gallery Image">
+        <video src="document_6035350110911601691.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box"></video>
+        <img src="photo_5990337496899849480_y.jpg" class="gallery-item" alt="תמונה מגלריית עמדת הצילום של Snap Box מאירוע לקוחות">
+        <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box"></video>
+        <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box"></video>
+        <img src="photo_6035350111371595162_y.jpg" class="gallery-item" alt="תמונה מגלריית עמדת הצילום של Snap Box מאירוע לקוחות">
+        <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box"></video>
+        <img src="photo_5990337496899849481_y.jpg" class="gallery-item" alt="תמונה מגלריית עמדת הצילום של Snap Box מאירוע לקוחות">
+        <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box"></video>
+        <img src="photo_5990337496899849478_y.jpg" class="gallery-item" alt="תמונה מגלריית עמדת הצילום של Snap Box מאירוע לקוחות">
+        <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box"></video>
+        <img src="photo_5949512990937779361_y.jpg" class="gallery-item" alt="תמונה מגלריית עמדת הצילום של Snap Box מאירוע לקוחות">
     </div>
 </div>
 <!-- חבילת פרימיום - גרסה מינימליסטית -->
@@ -404,6 +468,11 @@
                 </div>
             </div>
 
+            <label class="sb-consent-row">
+                <input type="checkbox" id="consentContact" required>
+                <span>קראתי ואני מסכים/ה ל<a href="terms.html" target="_blank">תקנון</a> ול<a href="privacy.html" target="_blank">מדיניות הפרטיות</a> של Snap Box</span>
+            </label>
+
             <button type="submit" class="w-full py-6 bg-[#1A1A1A] text-white rounded-2xl text-xl font-black hover:bg-[#D4AF37] transition-all shadow-xl uppercase tracking-widest">
                 שלחו הודעה בוואטסאפ
             </button>
@@ -463,6 +532,10 @@
                         <input type="email" id="sb-input-email" placeholder="אימייל" class="sb-field" required>
                     </div>
                     <textarea id="sb-input-text" placeholder="איך הייתה החוויה שלכם?" rows="3" class="sb-field resize-none" required></textarea>
+                    <label class="sb-consent-row" style="margin-bottom:14px;">
+                        <input type="checkbox" id="consentReview" required>
+                        <span>קראתי ואני מסכים/ה ל<a href="terms.html" target="_blank">תקנון</a> ול<a href="privacy.html" target="_blank">מדיניות הפרטיות</a> — הביקורת שלי אמיתית ותוצג בפומבי באתר</span>
+                    </label>
                     <button type="submit" id="sb-submit-btn" class="sb-submit-button">שלח ביקורת</button>
                 </form>
                 <div id="sb-success-msg" class="hidden text-center py-10">
@@ -477,8 +550,21 @@
     <!-- Footer -->
     <footer class="py-16 text-center border-t">
         <h3 class="text-2xl font-black tracking-[0.5em] mb-4">SNAP BOX</h3>
-        <p class="text-[10px] text-gray-400">© 2026 כל הזכויות שמורות</p>
+        <p class="text-[10px] text-gray-400">© 2026 כל הזכויות שמורות · עוסק מורשה/פטור 212938385</p>
+        <p class="text-[10px] text-gray-400 mt-2 flex flex-wrap gap-x-3 gap-y-1 justify-center">
+            <a href="terms.html" class="hover:text-[#D4AF37] underline underline-offset-4">תקנון ותנאי שימוש</a>
+            <a href="privacy.html" class="hover:text-[#D4AF37] underline underline-offset-4">מדיניות פרטיות</a>
+            <a href="refund-policy.html" class="hover:text-[#D4AF37] underline underline-offset-4">מדיניות ביטולים והחזרים</a>
+            <a href="delivery-policy.html" class="hover:text-[#D4AF37] underline underline-offset-4">מדיניות אספקת שירות</a>
+            <a href="accessibility.html" class="hover:text-[#D4AF37] underline underline-offset-4">הצהרת נגישות</a>
+        </p>
     </footer>
+
+    <!-- באנר עוגיות -->
+    <div id="cookieBanner" style="display:none;">
+        <p>האתר משתמש באחסון מקומי (Local Storage) לזכירת העדפות נגישות ואישור זה בלבד — ללא עוגיות פרסומיות. פרטים ב<a href="privacy.html">מדיניות הפרטיות</a>.</p>
+        <button onclick="acceptCookies()">הבנתי, אישרתי</button>
+    </div>
 
     <script>
         lucide.createIcons();
@@ -489,6 +575,17 @@
         for(let i=1; i<=12; i++) monthSel.options.add(new Option(i, i));
         const currYear = new Date().getFullYear();
         for(let i=currYear; i<=currYear+3; i++) yearSel.options.add(new Option(i, i));
+
+        // באנר עוגיות
+        try {
+            if (!localStorage.getItem('sbCookieConsent')) {
+                document.getElementById('cookieBanner').style.display = 'flex';
+            }
+        } catch (e) {}
+        function acceptCookies() {
+            try { localStorage.setItem('sbCookieConsent', '1'); } catch (e) {}
+            document.getElementById('cookieBanner').style.display = 'none';
+        }
 
         // נגישות
         function toggleAccMenu() { document.getElementById('accWrapper').classList.toggle('acc-menu-open'); }
