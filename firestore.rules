@@ -1,0 +1,34 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ביקורות: כל אחד יכול לקרוא ולהוסיף ביקורת (שם וטקסט בלבד).
+    // אי אפשר לערוך או למחוק מהאתר. מחיקה נעשית רק מתוך קונסולת Firebase.
+    match /reviews/{id} {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasOnly(['name', 'text', 'createdAt'])
+                    && request.resource.data.name is string
+                    && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 60
+                    && request.resource.data.text is string
+                    && request.resource.data.text.size() >= 5 && request.resource.data.text.size() <= 600
+                    && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
+
+    // אימיילים של כותבי ביקורות: אפשר רק להוסיף. אף אחד לא יכול לקרוא אותם מהאתר.
+    match /review_contacts/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['reviewId', 'email', 'createdAt'])
+                    && request.resource.data.email is string
+                    && request.resource.data.email.size() <= 120
+                    && request.resource.data.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')
+                    && request.resource.data.reviewId is string
+                    && request.resource.data.createdAt == request.time;
+      allow read, update, delete: if false;
+    }
+
+    // כל השאר חסום
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

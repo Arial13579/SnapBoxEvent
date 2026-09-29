@@ -8,7 +8,8 @@
     <meta name="description" content="Snap Box - בוטיק עמדות צילום לאירועים מעץ טבעי. חתונות, בר/בת מצווה ואירועים עסקיים, בכל רחבי הארץ.">
 
     <!-- לוגו בלשונית הדפדפן -->
-    <link rel="icon" type="image/jpeg" href="https://files.oaiusercontent.com/file-m06i8L3qAnQe6qQ2FndVpW?se=2026-05-03T15%3A17%3A50Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D4585c54c-811c-43f1-9c3f-c1f0b0051e7f.webp&sig=q4yq/R5Zf74/e0S7A7oE5V7aF8Y9U6l8X6n3g3o3z8E%3D">
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
+    <link rel="apple-touch-icon" href="logo.jpg">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
@@ -937,6 +938,8 @@ footer .text-gray-400 { color: rgba(243,239,228,.7) !important; }
 .sb-js .sb-reveal { transition-duration: 1.2s !important; transition-timing-function: cubic-bezier(.16,1,.3,1) !important; }
 .sb-tilt { transition: transform .6s cubic-bezier(.16,1,.3,1); }
 
+
+
 /* === שקיפות 25% וכפתור סגירה === */
 :root { --sb-glass: rgba(255,255,255,.75); --sb-glass-inner: rgba(255,255,255,.6); --sb-glass-line: rgba(255,255,255,.55); }
 .max-w-5xl, .sb-try-grid, #contact-form .form-container, #reviews > .max-w-6xl, .sb-faq > .max-w-4xl {
@@ -1621,13 +1624,13 @@ header nav { background: rgba(255,255,255,.75) !important; -webkit-backdrop-filt
                     <textarea id="sb-input-text" placeholder="איך הייתה החוויה שלכם?" rows="3" class="sb-field resize-none" required minlength="5" maxlength="600"></textarea>
                     <label class="sb-consent-row" style="margin-bottom:14px;">
                         <input type="checkbox" id="consentReview" required>
-                        <span>קראתי ואני מסכים/ה ל<a href="terms.html" target="_blank">תקנון</a> ול<a href="privacy.html" target="_blank">מדיניות הפרטיות</a> — הביקורת שלי אמיתית, ולאחר אישור תוצג בפומבי באתר (ללא כתובת האימייל)</span>
+                        <span>קראתי ואני מסכים/ה ל<a href="terms.html" target="_blank">תקנון</a> ול<a href="privacy.html" target="_blank">מדיניות הפרטיות</a> — הביקורת שלי אמיתית ותוצג בפומבי באתר (ללא כתובת האימייל)</span>
                     </label>
                     <button type="submit" id="sb-submit-btn" class="sb-submit-button">שלח ביקורת</button>
                 </form>
                 <div id="sb-success-msg" class="hidden text-center py-10">
                     <i data-lucide="check-circle" class="mx-auto text-green-500 mb-4" style="width: 48px; height: 48px;"></i>
-                    <p class="font-bold text-lg text-zinc-800">תודה! הביקורת התקבלה ותפורסם לאחר אישור.</p>
+                    <p class="font-bold text-lg text-zinc-800">תודה! הביקורת התקבלה.</p>
                 </div>
             </div>
             
@@ -1709,7 +1712,7 @@ header nav { background: rgba(255,255,255,.75) !important; -webkit-backdrop-filt
     <!-- Footer -->
     <footer class="py-16 text-center border-t">
         <h3 class="text-2xl font-black tracking-[0.5em] mb-4">SNAP BOX</h3>
-        <p class="text-[10px] text-gray-400">© 2026 כל הזכויות שמורות </p>
+        <p class="text-[10px] text-gray-400">© 2026 כל הזכויות שמורות · עוסק מורשה/פטור 212938385</p>
         <p class="text-[10px] text-gray-400 mt-2 flex flex-wrap gap-x-3 gap-y-1 justify-center">
             <a href="terms.html" class="hover:text-[#D4AF37] underline underline-offset-4">תקנון ותנאי שימוש</a>
             <a href="privacy.html" class="hover:text-[#D4AF37] underline underline-offset-4">מדיניות פרטיות</a>
@@ -1781,7 +1784,7 @@ function sendToWhatsapp(e) {
 
    <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyBTR6_WpHJv9bw7UtIF4yRpHcGydYFj9pk",
@@ -1812,13 +1815,11 @@ function sendToWhatsapp(e) {
         track.appendChild(div);
     }
 
-    // הצגת ביקורות מאושרות בלבד. הטקסט מוכנס כטקסט רגיל ולא כקוד
-    async function loadReviews() {
-        try {
-            const snap = await getDocs(query(reviewsCol, where("approved", "==", true)));
+    // האזנה לביקורות בזמן אמת, כמו קודם. הטקסט מוכנס כטקסט רגיל ולא כקוד
+    function loadReviews() {
+        onSnapshot(query(reviewsCol, orderBy("createdAt", "desc")), (snap) => {
             const items = snap.docs.map((d) => d.data())
-                .filter((d) => typeof d.text === 'string' && typeof d.name === 'string')
-                .sort((a, b) => ((b.createdAt && b.createdAt.seconds) || 0) - ((a.createdAt && a.createdAt.seconds) || 0));
+                .filter((d) => typeof d.text === 'string' && typeof d.name === 'string');
             if (!items.length) { renderMessage('עוד אין ביקורות. תהיו הראשונים?'); return; }
             track.innerHTML = '';
             items.forEach((data) => {
@@ -1835,10 +1836,10 @@ function sendToWhatsapp(e) {
             });
             currentIndex = 0;
             updateSlider();
-        } catch (err) {
+        }, (err) => {
             console.error(err);
             renderMessage('לא הצלחנו לטעון ביקורות כרגע.');
-        }
+        });
     }
 
     let currentIndex = 0;
@@ -1853,7 +1854,7 @@ function sendToWhatsapp(e) {
     }, 5000);
     loadReviews();
 
-    // שליחת ביקורת: נשמרת כ"ממתינה לאישור"; האימייל נשמר בנפרד ולא מוצג
+    // שליחת ביקורת: מתפרסמת מיד; האימייל נשמר בנפרד ולא מוצג
     let lastSubmit = 0;
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -1867,7 +1868,7 @@ function sendToWhatsapp(e) {
         btn.disabled = true;
         btn.innerText = "שולח...";
         try {
-            const ref = await addDoc(reviewsCol, { name, text, approved: false, createdAt: serverTimestamp() });
+            const ref = await addDoc(reviewsCol, { name, text, createdAt: serverTimestamp() });
             await addDoc(contactsCol, { reviewId: ref.id, email, createdAt: serverTimestamp() });
             lastSubmit = Date.now();
             form.classList.add('hidden');
