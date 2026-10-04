@@ -1,0 +1,34 @@
+# בונה מחדש את styles.css בכל פעם ש-index.html משתנה,
+# כדי שכל עיצוב חדש שנוסף לאתר יופיע בלי לעשות כלום ידנית.
+name: Build CSS
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'tailwind.config.js'
+      - 'tailwind.input.css'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npx --yes tailwindcss@3.4.19 -c tailwind.config.js -i tailwind.input.css -o styles.css --minify
+      - name: Commit styles.css if it changed
+        run: |
+          if ! git diff --quiet styles.css; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add styles.css
+            git commit -m "Rebuild styles.css"
+            git push
+          fi
