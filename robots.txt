@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://arial13579.github.io/SnapBoxEvent/sitemap.xml
+Sitemap: https://snapbox.co.il/sitemap.xml
