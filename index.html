@@ -1014,9 +1014,6 @@ header nav { background: rgba(255,255,255,.75) !important; -webkit-backdrop-filt
 .sb-legal a:hover svg, .sb-legal a:focus-visible svg { color: #1A1A1A; }
 .high-contrast-active .sb-legal a { background: #000; color: #fff; border-color: #fff; }
 
-/* פאנל זכוכית לסקשן האירועים, כמו שאר הסקשנים */
-.sb-events-panel { border-radius: 40px; padding: 3.5rem 3rem; }
-@media (max-width: 767px) { .sb-events-panel { padding: 2.5rem 1.25rem; border-radius: 28px; } }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <!-- הפעלת אנימציות הגלילה (אם הסקריפט לא עולה, הכל מוצג כרגיל) -->
@@ -1066,7 +1063,6 @@ header nav { background: rgba(255,255,255,.75) !important; -webkit-backdrop-filt
             </a>
             <ul class="hidden lg:flex items-center gap-7 text-sm font-bold">
                 <li><a href="#package" class="hover:text-[#D4AF37] transition-colors">החבילה</a></li>
-                <li><a href="#events" class="hover:text-[#D4AF37] transition-colors">אירועים</a></li>
                 <li><a href="#try-booth" class="hover:text-[#D4AF37] transition-colors">נסו את העמדה</a></li>
                 <li><a href="#reviews" class="hover:text-[#D4AF37] transition-colors">ביקורות</a></li>
                 <li><a href="#faq" class="hover:text-[#D4AF37] transition-colors">שאלות נפוצות</a></li>
@@ -1079,7 +1075,6 @@ header nav { background: rgba(255,255,255,.75) !important; -webkit-backdrop-filt
         <div id="sbMobileMenu" class="hidden lg:hidden max-w-7xl mx-auto mt-3 rounded-3xl bg-white/95 backdrop-blur-xl border border-gray-100 shadow-xl p-3">
             <ul class="flex flex-col text-lg font-bold">
                 <li><a href="#package" class="block px-4 py-3 rounded-2xl hover:bg-[#F3EFE4]">החבילה</a></li>
-                <li><a href="#events" class="block px-4 py-3 rounded-2xl hover:bg-[#F3EFE4]">אירועים</a></li>
                 <li><a href="#try-booth" class="block px-4 py-3 rounded-2xl hover:bg-[#F3EFE4]">נסו את העמדה</a></li>
                 <li><a href="#contact-form" class="block px-4 py-3 rounded-2xl hover:bg-[#F3EFE4]">שריון תאריך</a></li>
                 <li><a href="#reviews" class="block px-4 py-3 rounded-2xl hover:bg-[#F3EFE4]">ביקורות</a></li>
@@ -1112,6 +1107,10 @@ header nav { background: rgba(255,255,255,.75) !important; -webkit-backdrop-filt
         </div>
         <h1 class="text-6xl md:text-8xl italic font-serif leading-[1.1]">היופי שברגע <br /><span class="text-[#D4AF37] not-italic font-light">מעץ טבעי.</span></h1>
         <p class="sb-hero-sub mt-8 text-lg md:text-2xl font-light max-w-2xl mx-auto">עמדת צילום ומגנטים לאירועים – חתונות, בר/בת מצווה, ימי הולדת ואירועים עסקיים, בכל רחבי הארץ.</p>
+        <div class="mt-10 flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <a href="#contact-form" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#D4AF37] text-[#1A1A1A] rounded-full font-black px-8 py-4 shadow-[0_15px_35px_-12px_rgba(212,175,55,0.8)] hover:-translate-y-1 hover:bg-white transition-all"><i data-lucide="calendar-check" style="width:20px;height:20px;"></i> בדקו זמינות לתאריך</a>
+            <a href="https://wa.me/972546056180?text=%D7%94%D7%99%D7%99%21%20%D7%A8%D7%A6%D7%99%D7%AA%D7%99%20%D7%9C%D7%91%D7%93%D7%95%D7%A7%20%D7%96%D7%9E%D7%99%D7%A0%D7%95%D7%AA%20%D7%A9%D7%9C%20%D7%A2%D7%9E%D7%93%D7%AA%20%D7%94%D7%A6%D7%99%D7%9C%D7%95%D7%9D%20%D7%9C%D7%AA%D7%90%D7%A8%D7%99%D7%9A%20%D7%A9%D7%9C%D7%A0%D7%95%20%F0%9F%93%B8" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-white/70 text-white rounded-full font-bold px-8 py-4 backdrop-blur-md bg-white/10 hover:bg-white hover:text-[#1A1A1A] hover:-translate-y-1 transition-all"><i data-lucide="message-circle" style="width:20px;height:20px;"></i> דברו איתנו בוואטסאפ</a>
+        </div>
     </section>
 
     <!-- מרווח מתחת לכותרת, עם סימן גלילה -->
@@ -1129,10 +1128,12 @@ header nav { background: rgba(255,255,255,.75) !important; -webkit-backdrop-filt
         <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box באירוע"></video>
         <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box באירוע"></video>
         <img src="guests-at-snap-box-photo-booth.jpg" class="gallery-item" alt="אורחים מצטלמים בעמדת הצילום של Snap Box על השטיח האדום" decoding="async">
+        <img src="photo-booth-printed-strips-2x6.jpg" class="gallery-item" alt="סטריפים מודפסים 2×6 מעמדת הצילום Snap Box ביד של אורחת" decoding="async">
         <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box באירוע"></video>
         <img src="photo-booth-outdoor-event.jpg" class="gallery-item" alt="עמדת צילום מעץ עם שטיח אדום ועמודי תחימה מוזהבים באירוע בחוץ" decoding="async">
         <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box באירוע"></video>
         <img src="wooden-photo-booth-ring-light.jpg" class="gallery-item" alt="עמדת הצילום מעץ של Snap Box עם טבעת אור באולם אירועים" decoding="async">
+        <img src="photo-booth-birthday-party.jpg" class="gallery-item" alt="עמדת צילום ביום הולדת עם סטריפים מודפסים על השולחן" decoding="async">
         <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box באירוע"></video>
         <img src="photo-booth-red-carpet-event-hall.jpg" class="gallery-item" alt="עמדת צילום עם שטיח אדום וחבלי קטיפה באולם אירועים" decoding="async">
     </div>
@@ -1144,10 +1145,12 @@ header nav { background: rgba(255,255,255,.75) !important; -webkit-backdrop-filt
         <video src="document_6035350110911601692.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box באירוע"></video>
         <video src="document_6035350110911601687.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box באירוע"></video>
         <img src="guests-at-snap-box-photo-booth.jpg" class="gallery-item" alt="אורחים מצטלמים בעמדת הצילום של Snap Box על השטיח האדום" decoding="async">
+        <img src="photo-booth-printed-strips-2x6.jpg" class="gallery-item" alt="סטריפים מודפסים 2×6 מעמדת הצילום Snap Box ביד של אורחת" decoding="async">
         <video src="document_6035350110911601688.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box באירוע"></video>
         <img src="photo-booth-outdoor-event.jpg" class="gallery-item" alt="עמדת צילום מעץ עם שטיח אדום ועמודי תחימה מוזהבים באירוע בחוץ" decoding="async">
         <video src="document_6035350110911601689.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box באירוע"></video>
         <img src="wooden-photo-booth-ring-light.jpg" class="gallery-item" alt="עמדת הצילום מעץ של Snap Box עם טבעת אור באולם אירועים" decoding="async">
+        <img src="photo-booth-birthday-party.jpg" class="gallery-item" alt="עמדת צילום ביום הולדת עם סטריפים מודפסים על השולחן" decoding="async">
         <video src="document_6035350110911601690.mp4" class="gallery-item" autoplay muted loop playsinline aria-label="סרטון מעמדת הצילום Snap Box באירוע"></video>
         <img src="photo-booth-red-carpet-event-hall.jpg" class="gallery-item" alt="עמדת צילום עם שטיח אדום וחבלי קטיפה באולם אירועים" decoding="async">
     </div>
@@ -1204,51 +1207,6 @@ header nav { background: rgba(255,255,255,.75) !important; -webkit-backdrop-filt
         
         <div class="mt-16 text-center">
             <p class="text-xs text-gray-400 uppercase tracking-[0.2em] underline underline-offset-8 decoration-[#D4AF37]">כולל עיצוב ממשק אישי לאייפד </p>
-        </div>
-    </div>
-</section>
-
-<!-- ===== עמוד לכל סוג אירוע ===== -->
-<section id="events" class="py-20 px-6">
-    <div class="max-w-5xl mx-auto sb-events-panel">
-        <div class="text-center mb-12">
-            <p class="text-[#D4AF37] font-bold tracking-[0.3em] uppercase text-xs mb-3">Every Celebration</p>
-            <h2 class="text-4xl md:text-6xl font-serif italic">עמדת צילום לכל אירוע</h2>
-            <p class="text-gray-500 font-light mt-4 max-w-xl mx-auto">בחרו את סוג האירוע שלכם וגלו איך Snap Box הופכת אותו לבלתי נשכח.</p>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <a href="wedding-photo-booth.html" class="group block rounded-3xl overflow-hidden bg-white/70 border border-white/60 shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
-                <img src="photo-booth-outdoor-event.jpg" alt="עמדת צילום מעץ עם שטיח אדום באירוע בחוץ" loading="lazy" decoding="async" class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
-                <div class="p-6">
-                    <h3 class="font-bold text-xl">עמדת צילום לחתונה</h3>
-                    <p class="text-gray-500 text-sm mt-2 leading-relaxed">מגנטים וסטריפים עם השמות והתאריך שלכם – מזכרת שכל אורח לוקח הביתה.</p>
-                    <span class="inline-flex items-center gap-1 mt-4 text-sm font-bold text-[#D4AF37]">לכל הפרטים <span aria-hidden="true" class="transition-transform group-hover:-translate-x-1">←</span></span>
-                </div>
-            </a>
-            <a href="bar-mitzvah-photo-booth.html" class="group block rounded-3xl overflow-hidden bg-white/70 border border-white/60 shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
-                <img src="guests-at-snap-box-photo-booth.jpg" alt="אורחים מצטלמים בעמדת הצילום של Snap Box" loading="lazy" decoding="async" class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
-                <div class="p-6">
-                    <h3 class="font-bold text-xl">עמדת צילום לבר ובת מצווה</h3>
-                    <p class="text-gray-500 text-sm mt-2 leading-relaxed">החברים, המשפחה והרחבה – כולם מצטלמים ומקבלים תמונה ביד תוך שניות.</p>
-                    <span class="inline-flex items-center gap-1 mt-4 text-sm font-bold text-[#D4AF37]">לכל הפרטים <span aria-hidden="true" class="transition-transform group-hover:-translate-x-1">←</span></span>
-                </div>
-            </a>
-            <a href="corporate-event-photo-booth.html" class="group block rounded-3xl overflow-hidden bg-white/70 border border-white/60 shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
-                <img src="wooden-photo-booth-ring-light.jpg" alt="עמדת צילום מעץ עם טבעת אור באולם" loading="lazy" decoding="async" class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
-                <div class="p-6">
-                    <h3 class="font-bold text-xl">עמדת צילום לאירועים עסקיים</h3>
-                    <p class="text-gray-500 text-sm mt-2 leading-relaxed">כנסים, ימי גיבוש ואירועי חברה – עם עיצוב שמתאים לאירוע שלכם.</p>
-                    <span class="inline-flex items-center gap-1 mt-4 text-sm font-bold text-[#D4AF37]">לכל הפרטים <span aria-hidden="true" class="transition-transform group-hover:-translate-x-1">←</span></span>
-                </div>
-            </a>
-            <a href="birthday-photo-booth.html" class="group block rounded-3xl overflow-hidden bg-white/70 border border-white/60 shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
-                <img src="photo-booth-birthday-party.jpg" alt="עמדת צילום ביום הולדת עם סטריפים מודפסים" loading="lazy" decoding="async" class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
-                <div class="p-6">
-                    <h3 class="font-bold text-xl">עמדת צילום ליום הולדת</h3>
-                    <p class="text-gray-500 text-sm mt-2 leading-relaxed">יום הולדת או מסיבה פרטית – כל חגיגה הופכת לזיכרון מודפס.</p>
-                    <span class="inline-flex items-center gap-1 mt-4 text-sm font-bold text-[#D4AF37]">לכל הפרטים <span aria-hidden="true" class="transition-transform group-hover:-translate-x-1">←</span></span>
-                </div>
-            </a>
         </div>
     </div>
 </section>
@@ -1781,7 +1739,7 @@ header nav { background: rgba(255,255,255,.75) !important; -webkit-backdrop-filt
             </div>
             <div class="sb-faq-item sb-reveal">
                 <button class="sb-faq-q" aria-expanded="false"><span class="sb-faq-num">04</span><h3 class="flex-grow">לאילו אירועים מתאימה העמדה?</h3><span class="sb-faq-icon" aria-hidden="true">+</span></button>
-                <div class="sb-faq-a"><div><p>חתונות, בר ובת מצווה, ימי הולדת, אירועים עסקיים וכל חגיגה שרוצים להפוך לבלתי נשכחת.</p></div></div>
+                <div class="sb-faq-a"><div><p><a href="wedding-photo-booth.html">חתונות</a>, <a href="bar-mitzvah-photo-booth.html">בר ובת מצווה</a>, <a href="birthday-photo-booth.html">ימי הולדת</a>, <a href="corporate-event-photo-booth.html">אירועים עסקיים</a> וכל חגיגה שרוצים להפוך לבלתי נשכחת.</p></div></div>
             </div>
             <div class="sb-faq-item sb-reveal">
                 <button class="sb-faq-q" aria-expanded="false"><span class="sb-faq-num">05</span><h3 class="flex-grow">לאן אתם מגיעים?</h3><span class="sb-faq-icon" aria-hidden="true">+</span></button>
