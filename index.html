@@ -233,13 +233,15 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    transition: 0.3s;
+    transition: background 0.3s, color 0.3s, transform 0.3s;
     cursor: pointer;
 }
 
 .sb-submit-button:hover {
     background: #D4AF37;
-    transform: translateY(-2px);
+}
+@media (hover: hover) and (pointer: fine) {
+    .sb-submit-button:hover:not(:disabled) { transform: translateY(-2px); }
 }
 
 .sb-admin-dot {
@@ -1017,6 +1019,27 @@ header nav { background: rgba(255,255,255,.75) !important; -webkit-backdrop-filt
 .sb-legal a:hover svg, .sb-legal a:focus-visible svg { color: #1A1A1A; }
 .high-contrast-active .sb-legal a { background: #000; color: #fff; border-color: #fff; }
 
+/* תנועה ברגעים הפונקציונליים: תפריט, כפתורים, הודעת הצלחה, באנר עוגיות, הגדלת תמונה */
+:root { --sb-ease-out: cubic-bezier(0.23, 1, 0.32, 1); --sb-ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); }
+#sbMobileMenu { transform-origin: top left; transition: opacity 200ms var(--sb-ease-out), transform 200ms var(--sb-ease-out); }
+#sbMobileMenu.sb-menu-closed { opacity: 0; transform: translateY(-8px) scale(.97); }
+#sbMobileMenu.sb-menu-leaving { transition-duration: 150ms; transition-timing-function: ease-out; }
+.sb-press:active, .sb-submit-button:active:not(:disabled) { transform: scale(.97); transition: transform 160ms var(--sb-ease-out); }
+#sb-success-msg.sb-pop-in, #sb-success-msg.sb-pop-in svg { animation: sbSuccessIn 300ms var(--sb-ease-out) both; }
+#sb-success-msg.sb-pop-in svg { animation-delay: 80ms; }
+@keyframes sbSuccessIn { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
+#cookieBanner { transition: transform 300ms var(--sb-ease-drawer); }
+#cookieBanner.sb-cookie-out { transform: translateY(100%); }
+#cookieBanner.sb-cookie-leaving { transition: transform 200ms ease-out; }
+.sbx-lightbox.sb-leaving { opacity: 0; transition: opacity 150ms ease-out; }
+@media (prefers-reduced-motion: reduce) {
+    #sbMobileMenu.sb-menu-closed { transform: none; }
+    #sb-success-msg.sb-pop-in, #sb-success-msg.sb-pop-in svg { animation-name: sbSuccessFade; }
+    #cookieBanner, #cookieBanner.sb-cookie-leaving { transition: opacity 200ms ease-out; }
+    #cookieBanner.sb-cookie-out { transform: none; opacity: 0; }
+}
+@keyframes sbSuccessFade { from { opacity: 0; } to { opacity: 1; } }
+
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <!-- הפעלת אנימציות הגלילה (אם הסקריפט לא עולה, הכל מוצג כרגיל) -->
@@ -1071,7 +1094,7 @@ header nav { background: rgba(255,255,255,.75) !important; -webkit-backdrop-filt
                 <li><a href="#faq" class="hover:text-[#D4AF37] transition-colors">שאלות נפוצות</a></li>
             </ul>
             <div class="flex items-center gap-2">
-                <a href="#contact-form" class="bg-[#1A1A1A] text-white rounded-full font-black px-4 md:px-6 py-2 text-[11px] whitespace-nowrap hover:bg-[#D4AF37] transition-all">שריינו תאריך</a>
+                <a href="#contact-form" class="sb-press bg-[#1A1A1A] text-white rounded-full font-black px-4 md:px-6 py-2 text-[11px] whitespace-nowrap hover:bg-[#D4AF37] transition-all">שריינו תאריך</a>
                 <button type="button" id="sbMenuBtn" aria-controls="sbMobileMenu" aria-expanded="false" aria-label="פתיחת תפריט" class="lg:hidden w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center"><i data-lucide="menu" style="width:20px;height:20px;"></i></button>
             </div>
         </nav>
@@ -1645,7 +1668,7 @@ header nav { background: rgba(255,255,255,.75) !important; -webkit-backdrop-filt
                 <span>קראתי ואני מסכים/ה ל<a href="terms.html" target="_blank" rel="noopener">תקנון</a> ול<a href="privacy.html" target="_blank" rel="noopener">מדיניות הפרטיות</a> של Snap Box</span>
             </label>
 
-            <button type="submit" class="w-full py-6 bg-[#1A1A1A] text-white rounded-2xl text-xl font-black hover:bg-[#D4AF37] transition-all shadow-xl uppercase tracking-widest">
+            <button type="submit" class="sb-press w-full py-6 bg-[#1A1A1A] text-white rounded-2xl text-xl font-black hover:bg-[#D4AF37] transition-all shadow-xl uppercase tracking-widest">
                 שלחו הודעה בוואטסאפ
             </button>
         </form>
@@ -1825,14 +1848,19 @@ header nav { background: rgba(255,255,255,.75) !important; -webkit-backdrop-filt
         // באנר עוגיות
         try {
             if (!localStorage.getItem('sbCookieConsent')) {
-                document.getElementById('cookieBanner').style.display = 'flex';
+                const cb = document.getElementById('cookieBanner');
+                cb.classList.add('sb-cookie-out');
+                cb.style.display = 'flex';
                 document.body.classList.add('cookie-banner-active');
+                void cb.offsetHeight;
+                cb.classList.remove('sb-cookie-out');
             }
         } catch (e) {}
         function acceptCookies() {
             try { localStorage.setItem('sbCookieConsent', '1'); } catch (e) {}
-            document.getElementById('cookieBanner').style.display = 'none';
-            document.body.classList.remove('cookie-banner-active');
+            const cb = document.getElementById('cookieBanner');
+            cb.classList.add('sb-cookie-leaving', 'sb-cookie-out');
+            setTimeout(() => { cb.style.display = 'none'; document.body.classList.remove('cookie-banner-active'); }, 200);
         }
 
         // נגישות
@@ -1847,17 +1875,32 @@ header nav { background: rgba(255,255,255,.75) !important; -webkit-backdrop-filt
         (function () {
             const menuBtn = document.getElementById('sbMenuBtn');
             const menu = document.getElementById('sbMobileMenu');
+            let isOpen = false, hideTimer = null;
             const setOpen = (open) => {
-                menu.classList.toggle('hidden', !open);
+                if (open === isOpen) return;
+                isOpen = open;
+                clearTimeout(hideTimer);
+                if (open) {
+                    // נכנס מכיוון הכפתור: מתחיל שקוף וקטן מעט ונפתח
+                    menu.classList.remove('sb-menu-leaving');
+                    menu.classList.add('sb-menu-closed');
+                    menu.classList.remove('hidden');
+                    void menu.offsetHeight;
+                    menu.classList.remove('sb-menu-closed');
+                } else {
+                    // יוצא באותו מסלול, מהר יותר, ורק אז מוסתר
+                    menu.classList.add('sb-menu-leaving', 'sb-menu-closed');
+                    hideTimer = setTimeout(() => { menu.classList.add('hidden'); menu.classList.remove('sb-menu-leaving'); }, 150);
+                }
                 menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
                 menuBtn.setAttribute('aria-label', open ? 'סגירת תפריט' : 'פתיחת תפריט');
                 document.getElementById('accWrapper').style.visibility = open ? 'hidden' : '';
             };
-            menuBtn.addEventListener('click', () => setOpen(menu.classList.contains('hidden')));
+            menuBtn.addEventListener('click', () => setOpen(!isOpen));
             menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
             document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
             document.addEventListener('click', (e) => {
-                if (!menu.classList.contains('hidden') && !menu.contains(e.target) && !menuBtn.contains(e.target)) setOpen(false);
+                if (isOpen && !menu.contains(e.target) && !menuBtn.contains(e.target)) setOpen(false);
             });
         })();
 
@@ -1990,6 +2033,7 @@ function sendToWhatsapp(e) {
             form.classList.add('hidden');
             successMsg.classList.remove('hidden');
             try { lucide.createIcons(); } catch (e2) {}
+            successMsg.classList.add('sb-pop-in');
         } catch (err) {
             console.error(err);
             btn.disabled = false;
@@ -2413,8 +2457,14 @@ function sendToWhatsapp(e) {
     camOff.addEventListener('click', () => { if (!busy) { stopCamera(); setStatus(''); } });
 
     // הגדלת התמונה
-    const openLb = () => { if (lbImg.src) lightbox.classList.add('sb-show'); };
-    const closeLb = () => lightbox.classList.remove('sb-show');
+    let lbTimer = null;
+    const openLb = () => { if (!lbImg.src) return; clearTimeout(lbTimer); lightbox.classList.remove('sb-leaving'); lightbox.classList.add('sb-show'); };
+    // סגירה רכה כמו הפתיחה: דהייה קצרה ואז הסתרה
+    const closeLb = () => {
+        if (!lightbox.classList.contains('sb-show') || lightbox.classList.contains('sb-leaving')) return;
+        lightbox.classList.add('sb-leaving');
+        lbTimer = setTimeout(() => lightbox.classList.remove('sb-show', 'sb-leaving'), 150);
+    };
     paper.addEventListener('click', openLb);
     lightbox.addEventListener('click', (e) => { if (e.target !== lbImg) closeLb(); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLb(); });
