@@ -33,8 +33,10 @@
 
     <!-- מידע מובנה על העסק (פרטי עסק אמיתיים) -->
     <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
       "@type": "ProfessionalService",
       "name": "Snap Box",
       "alternateName": "סנאפ בוקס",
@@ -44,12 +46,154 @@
       "image": "https://snapbox.co.il/photo-booth-outdoor-event.jpg",
       "telephone": "+972546056180",
       "email": "snapboxevent.official@gmail.com",
-      "areaServed": "IL",
+      "areaServed": {
+        "@type": "Country",
+        "name": "ישראל"
+      },
       "sameAs": [
         "https://www.instagram.com/snapbox_event.official",
         "https://www.facebook.com/share/18GcWQXLqA/"
+      ],
+      "@id": "https://snapbox.co.il/#business",
+      "slogan": "בוטיק עמדות צילום ומגנטים לאירועים",
+      "knowsAbout": [
+        "עמדת צילום",
+        "עמדת צילום לאירועים",
+        "עמדת סלפי",
+        "עמדת מגנטים",
+        "מגנטים לאירועים",
+        "פוטו בוט",
+        "Photo Booth",
+        "סטריפים מודפסים",
+        "עמדת צילום לחתונה",
+        "עמדת צילום לבר מצווה",
+        "עמדת צילום לבת מצווה",
+        "עמדת צילום ליום הולדת",
+        "עמדת צילום לאירוע חברה"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "עמדות צילום לאירועים",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "עמדת צילום לחתונה",
+              "url": "https://snapbox.co.il/wedding-photo-booth.html"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "עמדת צילום לבר ובת מצווה",
+              "url": "https://snapbox.co.il/bar-mitzvah-photo-booth.html"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "עמדת צילום ליום הולדת",
+              "url": "https://snapbox.co.il/birthday-photo-booth.html"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "עמדת צילום לאירועים עסקיים",
+              "url": "https://snapbox.co.il/corporate-event-photo-booth.html"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://snapbox.co.il/#website",
+      "url": "https://snapbox.co.il/",
+      "name": "Snap Box",
+      "alternateName": "סנאפ בוקס",
+      "inLanguage": "he-IL",
+      "publisher": {
+        "@id": "https://snapbox.co.il/#business"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://snapbox.co.il/#faq",
+      "inLanguage": "he-IL",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "כמה זמן לוקח להדפיס תמונה בעמדת הצילום?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "כ-9 שניות בלבד. Snap Box משתמשים בהדפסה תרמית איכותית, כך שהאורחים מקבלים את המזכרת ביד כמעט מיד."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "יש הגבלה על כמות התמונות והמגנטים?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "לא. התמונות והמגנטים ללא הגבלה, כך שכל אורח יכול לחזור לעמדה כמה פעמים שירצה."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "אפשר לעצב את התמונות בהתאמה לאירוע?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "בהחלט. הסטריפים וממשק האייפד מעוצבים אישית לכל אירוע, עם השמות, התאריך והסגנון שלכם."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "לאילו אירועים מתאימה עמדת הצילום?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "חתונות, בר ובת מצווה, ימי הולדת, אירועים עסקיים וכל חגיגה שרוצים להפוך לבלתי נשכחת."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "לאן Snap Box מגיעים?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Snap Box מגיעים לאירועים בכל רחבי הארץ. מציינים את מיקום האירוע בטופס וחוזרים אליכם עם כל הפרטים."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "מה צריך להכין במקום האירוע?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "רק פינה קטנה ליד נקודת חשמל ואזור עם קליטה. את כל השאר Snap Box מביאים, מקימים ומפרקים בעצמם."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "כמה זמן מראש כדאי לשריין עמדת צילום?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "כמה שיותר מוקדם, במיוחד בעונת החתונות, כי התאריכים המבוקשים נתפסים מהר."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "איך משריינים תאריך?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ממלאים את טופס השריון באתר snapbox.co.il או שולחים הודעה בוואטסאפ ל-054-6056180, ו-Snap Box חוזרים אליכם בהקדם."
+          }
+        }
       ]
     }
+  ]
+}
     </script>
 
     <style>
