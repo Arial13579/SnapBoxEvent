@@ -2559,5 +2559,238 @@ function sendToWhatsapp(e) {
     onScroll();
 })();
 </script>
+
+<!-- ===== SnapBox · פופאפ "שריון מהיר" (שם + טלפון) · קופץ אחרי 10 שניות ===== -->
+<div class="sbx-pop" id="sbxPop" hidden dir="rtl">
+  <div class="sbx-pop__scrim" data-sbx-close></div>
+  <div class="sbx-pop__card" role="dialog" aria-modal="true" aria-labelledby="sbxPopTitle" aria-describedby="sbxPopDesc" tabindex="-1">
+    <button type="button" class="sbx-pop__x" data-sbx-close aria-label="סגירה">&#10005;</button>
+    <div class="sbx-pop__grab" data-sbx-grab>
+      <span class="sbx-pop__handle" aria-hidden="true"></span>
+      <p class="sbx-pop__eyebrow">SNAP BOX</p>
+      <h2 class="sbx-pop__title" id="sbxPopTitle">רוצים שנחזור אליכם?</h2>
+      <p class="sbx-pop__desc" id="sbxPopDesc">השאירו שם וטלפון, ונחזור אליכם עם כל הפרטים לשריון התאריך.</p>
+    </div>
+    <form class="sbx-pop__form" id="sbxPopForm" novalidate>
+      <div class="sbx-pop__field">
+        <label for="sbxPopName">שם מלא</label>
+        <input type="text" id="sbxPopName" required minlength="2" maxlength="60" autocomplete="name" placeholder="איך קוראים לכם?">
+      </div>
+      <div class="sbx-pop__field">
+        <label for="sbxPopPhone">טלפון</label>
+        <input type="tel" id="sbxPopPhone" required maxlength="20" autocomplete="tel" inputmode="tel" dir="ltr" placeholder="050-0000000">
+      </div>
+      <div class="sbx-pop__hp" aria-hidden="true">
+        <label for="sbxPopCompany">נא להשאיר ריק</label>
+        <input type="text" id="sbxPopCompany" tabindex="-1" autocomplete="off">
+      </div>
+      <button type="submit" class="sbx-pop__submit">שליחה בוואטסאפ</button>
+      <p class="sbx-pop__note">נחזור אליכם בהקדם · בלי התחייבות</p>
+    </form>
+  </div>
+</div>
+
+<style>
+  .sbx-pop, .sbx-pop *{ box-sizing:border-box; }
+  .sbx-pop{
+    position:fixed; inset:0; z-index:9999; display:flex; align-items:center; justify-content:center;
+    padding:16px; pointer-events:none; font-family:'Assistant',sans-serif;
+  }
+  .sbx-pop[hidden]{ display:none; }
+  .sbx-pop.is-open{ pointer-events:auto; }
+  .sbx-pop__scrim{
+    position:absolute; inset:0; background:rgba(26,26,26,.5);
+    opacity:0; transition:opacity .35s ease;
+  }
+  .sbx-pop.is-open .sbx-pop__scrim{ opacity:1; }
+  .sbx-pop__card{
+    position:relative; width:min(420px,100%); max-height:calc(100vh - 32px); overflow-y:auto;
+    background:#fff; border-radius:36px; padding:34px 28px 24px; text-align:center;
+    box-shadow:0 40px 90px -30px rgba(26,26,26,.55); border:1px solid rgba(212,175,55,.25);
+    opacity:0; transform:scale(.94) translateY(10px); transition:opacity .3s ease, transform .5s cubic-bezier(.32,.72,0,1);
+    will-change:transform,opacity;
+  }
+  .sbx-pop.is-open .sbx-pop__card{ opacity:1; transform:none; }
+  .sbx-pop__card:focus{ outline:none; }
+  .sbx-pop__x{
+    position:absolute; top:14px; left:14px; width:34px; height:34px; border:none; border-radius:50%;
+    background:#F3EFE4; color:#1A1A1A; font-size:15px; line-height:1; cursor:pointer;
+    display:grid; place-items:center; transition:transform .1s ease, background .2s ease;
+  }
+  .sbx-pop__x:hover{ background:#e9e2d0; }
+  .sbx-pop__x:active{ transform:scale(.9); }
+  .sbx-pop__handle{ display:none; }
+  .sbx-pop__eyebrow{ margin:0 0 6px; font-size:11px; font-weight:800; letter-spacing:.28em; color:#D4AF37; }
+  .sbx-pop__title{
+    margin:0 0 8px; font-family:'Playfair Display',serif; font-style:italic; font-weight:700;
+    font-size:30px; line-height:1.15; color:#1A1A1A;
+  }
+  .sbx-pop__desc{ margin:0 0 22px; font-size:16px; line-height:1.5; color:#6b6b6b; }
+  .sbx-pop__field{ text-align:right; border-bottom:1px solid #e4e0d4; padding:4px 0 2px; margin-bottom:18px; }
+  .sbx-pop__field label{ display:block; font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#D4AF37; margin-bottom:2px; }
+  .sbx-pop__field input{
+    width:100%; border:none; background:transparent; outline:none; padding:6px 0; font-family:inherit;
+    font-size:18px; color:#1A1A1A; text-align:right;
+  }
+  .sbx-pop__field input[dir="ltr"]{ text-align:left; }
+  .sbx-pop__field input::placeholder{ color:#b9b4a6; }
+  .sbx-pop__field.is-invalid{ border-bottom-color:#d9534f; }
+  .sbx-pop__hp{ position:absolute!important; right:-10000px; width:1px; height:1px; overflow:hidden; }
+  .sbx-pop__submit{
+    width:100%; margin-top:4px; padding:16px; border:none; border-radius:18px;
+    background:#1A1A1A; color:#fff; font-family:inherit; font-size:17px; font-weight:800;
+    letter-spacing:.12em; text-transform:uppercase; cursor:pointer;
+    transition:transform .1s ease, background .25s ease, color .25s ease;
+  }
+  .sbx-pop__submit:hover{ background:#D4AF37; color:#1A1A1A; }
+  .sbx-pop__submit:active{ transform:scale(.98); }
+  .sbx-pop__note{ margin:14px 0 0; font-size:13px; color:#9a9a9a; }
+  .sbx-pop__x:focus-visible, .sbx-pop__submit:focus-visible, .sbx-pop__field input:focus-visible{
+    outline:2px solid #D4AF37; outline-offset:3px;
+  }
+  @media (max-width:600px){
+    .sbx-pop{ align-items:flex-end; padding:0; }
+    .sbx-pop__card{
+      width:100%; max-height:92vh; border-radius:28px 28px 0 0; padding-bottom:calc(24px + env(safe-area-inset-bottom));
+      transform:translateY(100%); transition:transform .5s cubic-bezier(.32,.72,0,1); opacity:1;
+    }
+    .sbx-pop.is-open .sbx-pop__card{ transform:translateY(0); }
+    .sbx-pop__grab{ cursor:grab; touch-action:none; }
+    .sbx-pop__handle{ display:block; width:42px; height:5px; margin:-14px auto 16px; border-radius:3px; background:#e4e0d4; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sbx-pop__card, .sbx-pop.is-open .sbx-pop__card{ transform:none!important; transition:opacity .2s ease!important; }
+    .sbx-pop__card{ opacity:0!important; }
+    .sbx-pop.is-open .sbx-pop__card{ opacity:1!important; }
+  }
+</style>
+
+<script>
+(function(){
+  "use strict";
+  var WA_NUMBER = "972546056180";   // אותו מספר וואטסאפ של הטופס הראשי
+  var DELAY_MS  = 10000;            // 10 שניות
+
+  var pop = document.getElementById("sbxPop");
+  if(!pop) return;
+  var card = pop.querySelector(".sbx-pop__card");
+  var scrim = pop.querySelector(".sbx-pop__scrim");
+  var form = document.getElementById("sbxPopForm");
+  var nameEl = document.getElementById("sbxPopName");
+  var phoneEl = document.getElementById("sbxPopPhone");
+  var grab = pop.querySelector("[data-sbx-grab]");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var mobile = window.matchMedia("(max-width: 600px)");
+  var isOpen=false, openedThisLoad=false, lastFocus=null, closeTimer=null;
+
+  function typing(){ var a=document.activeElement; return a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName); }
+
+  function open(){
+    if(isOpen || openedThisLoad) return true;
+    if(typing()) return false;                 // לא לקטוע הקלדה
+    isOpen=true; openedThisLoad=true;
+    clearTimeout(closeTimer);
+    lastFocus=document.activeElement;
+    pop.hidden=false; void pop.offsetWidth;
+    pop.classList.add("is-open");
+    card.focus({preventScroll:true});
+    document.addEventListener("keydown", onKey);
+    return true;
+  }
+  function close(){
+    if(!isOpen) return;
+    isOpen=false;
+    pop.classList.remove("is-open");
+    if(mobile.matches) card.style.transform="";
+    document.removeEventListener("keydown", onKey);
+    closeTimer=setTimeout(function(){ pop.hidden=true; card.style.transform=""; }, reduce.matches?200:520);
+    if(lastFocus && lastFocus.focus) lastFocus.focus({preventScroll:true});
+  }
+  function onKey(e){
+    if(e.key==="Escape"){ close(); return; }
+    if(e.key!=="Tab") return;
+    var f=card.querySelectorAll("button, input, a[href]");
+    if(!f.length) return;
+    var first=f[0], last=f[f.length-1];
+    if(e.shiftKey && (document.activeElement===first||document.activeElement===card)){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+  }
+  pop.querySelectorAll("[data-sbx-close]").forEach(function(el){ el.addEventListener("click", close); });
+
+  function clean(v){
+    return String(v==null?"":v).replace(/[\u0000-\u001F\u007F​-‍‪-‮]/g,"").replace(/[<>]/g,"").replace(/\s+/g," ").trim().slice(0,60);
+  }
+  function normPhone(v){
+    var s=String(v||"").replace(/[^\d+]/g,"");
+    if(s.indexOf("+972")===0) s="0"+s.slice(4);
+    else if(s.indexOf("972")===0 && s.length>=11) s="0"+s.slice(3);
+    return s;
+  }
+  var NAME_RE=/^[֐-׿A-Za-z][֐-׿A-Za-z '".\-]{1,59}$/;
+  var PHONE_RE=/^(0\d{8,9}|\+\d{8,15})$/;
+
+  [nameEl,phoneEl].forEach(function(el){
+    el.addEventListener("input", function(){ el.parentNode.classList.remove("is-invalid"); el.setCustomValidity(""); });
+  });
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var company=document.getElementById("sbxPopCompany");
+    if(company && company.value){ close(); return; }   // bot
+
+    var name=clean(nameEl.value);
+    var phone=normPhone(phoneEl.value);
+    if(!NAME_RE.test(name)){ nameEl.parentNode.classList.add("is-invalid"); nameEl.setCustomValidity("נא להזין שם תקין"); nameEl.reportValidity(); nameEl.focus(); return; }
+    if(!PHONE_RE.test(phone)){ phoneEl.parentNode.classList.add("is-invalid"); phoneEl.setCustomValidity("נא להזין מספר טלפון תקין"); phoneEl.reportValidity(); phoneEl.focus(); return; }
+
+    var msg="✨ *בקשה חדשה לסנאפ בוקס* ✨\n\n"+
+            "👤 *שם:* "+name+"\n"+
+            "📞 *טלפון:* "+phone+"\n"+
+            "📍 *מקור:* פופאפ באתר";
+    window.open("https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(msg), "_blank", "noopener,noreferrer");
+    close();
+  });
+
+  /* גרירה לסגירה בנייד */
+  var drag=null;
+  grab.addEventListener("pointerdown", function(e){
+    if(!isOpen || !mobile.matches) return;
+    if(e.target.closest("button,a,input")) return;
+    card.style.transition="none";
+    drag={id:e.pointerId, y0:e.clientY};
+    grab.setPointerCapture(e.pointerId);
+  });
+  grab.addEventListener("pointermove", function(e){
+    if(!drag||e.pointerId!==drag.id) return;
+    var dy=Math.max(0, e.clientY-drag.y0);
+    card.style.transform="translateY("+dy+"px)";
+    scrim.style.opacity=String(Math.max(0, 1-dy/(card.offsetHeight||1)));
+  });
+  function endDrag(e){
+    if(!drag||e.pointerId!==drag.id) return;
+    var dy=Math.max(0, e.clientY-drag.y0); drag=null;
+    card.style.transition="";
+    scrim.style.opacity="";
+    if(dy > (card.offsetHeight||300)*0.35){ close(); }
+    else { card.style.transform="translateY(0)"; }
+  }
+  grab.addEventListener("pointerup", endDrag);
+  grab.addEventListener("pointercancel", endDrag);
+
+  /* הפעלה: 10 שניות + יציאת עכבר במחשב, פעם אחת לכל טעינה */
+  var tries=0;
+  function timer(){ if(open()) return; if(++tries<6) setTimeout(timer, 8000); }
+  setTimeout(timer, DELAY_MS);
+  setTimeout(function(){
+    if(window.matchMedia("(hover: hover) and (pointer: fine)").matches){
+      document.addEventListener("mouseout", function onOut(ev){
+        if(!ev.relatedTarget && ev.clientY<=0){ if(open()) document.removeEventListener("mouseout", onOut); }
+      });
+    }
+  }, 4000);
+})();
+</script>
+<!-- ===== סוף פופאפ SnapBox ===== -->
+
 </body>
 </html>
