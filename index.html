@@ -2777,17 +2777,10 @@ function sendToWhatsapp(e) {
   grab.addEventListener("pointerup", endDrag);
   grab.addEventListener("pointercancel", endDrag);
 
-  /* הפעלה: 10 שניות + יציאת עכבר במחשב, פעם אחת לכל טעינה */
+  /* הפעלה: רק 10 שניות אחרי כניסה לאתר, פעם אחת לכל טעינה (בלי קפיצות אקראיות) */
   var tries=0;
   function timer(){ if(open()) return; if(++tries<6) setTimeout(timer, 8000); }
   setTimeout(timer, DELAY_MS);
-  setTimeout(function(){
-    if(window.matchMedia("(hover: hover) and (pointer: fine)").matches){
-      document.addEventListener("mouseout", function onOut(ev){
-        if(!ev.relatedTarget && ev.clientY<=0){ if(open()) document.removeEventListener("mouseout", onOut); }
-      });
-    }
-  }, 4000);
 })();
 </script>
 <!-- ===== סוף פופאפ SnapBox ===== -->
