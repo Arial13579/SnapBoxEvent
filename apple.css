@@ -1,0 +1,62 @@
+/* שכבת תנועה וחומרים בסגנון Apple (לפי הסקיל ‎.claude/skills/apple-design).
+   CSS בלבד, בלי שינוי בתוכן או בפריסה. מתווסף אחרי שאר העיצוב בכל דף. */
+
+:root {
+    /* קפיץ בלי קפיצה (damping 1.0): מגיע מהר ונעצר רך, בלי overshoot */
+    --spring: linear(0, 0.079, 0.236, 0.403, 0.551, 0.671, 0.764, 0.833, 0.883, 0.919, 0.944, 0.962, 0.974, 0.983, 0.988, 0.992, 0.995, 1);
+}
+
+/* תגובה מיידית במגע: בלי השהיית ההקשה הכפולה ובלי ההבהוב האפור של הדפדפן */
+html { -webkit-tap-highlight-color: transparent; }
+a, button, [role="button"], label, summary { touch-action: manipulation; }
+
+/* משוב על הלחיצה עצמה, לא על השחרור. scale (ולא transform) כדי לא לבטל את אפקט ה-hover הקיים */
+:is(button, [role="button"], a[class*="rounded-full"], a[class*="rounded-2xl"], a[class*="rounded-xl"], .btn, .cta-small, .wa-float):not(:disabled):active {
+    scale: 0.97;
+}
+
+/* כל המעברים הקיימים באתר זזים כמו קפיץ ולא בעקומה מכנית */
+.transition, .transition-all, .transition-colors, .transition-transform, .transition-opacity, .transition-shadow, .btn, .cta-small, .wa-float {
+    transition-timing-function: var(--spring);
+}
+
+/* טיפוגרפיה: כותרות גדולות צפופות מעט יותר ושבירת שורות מאוזנת. :where כדי שכל עיצוב קיים יגבר */
+:where(h1, h2) { letter-spacing: -0.01em; text-wrap: balance; }
+:where(h3) { text-wrap: balance; }
+:where(p, li) { text-wrap: pretty; }
+
+/* קצה גלילה: הצל של התפריט מופיע בהדרגה רק כשיש תוכן שגולל מתחתיו */
+@supports (animation-timeline: scroll()) {
+    header nav[class*="backdrop-blur"], header.top {
+        animation: sb-edge linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 120px;
+    }
+    /* בדפי הנחיתה: הקו הקשה מתחת לתפריט מתחלף בצל שמופיע עם הגלילה */
+    header.top { border-bottom-color: transparent; animation-name: sb-edge-top; }
+    @keyframes sb-edge-top {
+        from { box-shadow: none; }
+        to   { box-shadow: 0 10px 28px -18px rgba(18, 33, 23, 0.35); }
+    }
+    @keyframes sb-edge {
+        from { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04); }
+        to   { box-shadow: 0 12px 32px -14px rgba(18, 33, 23, 0.28); }
+    }
+}
+
+/* מי שביקש פחות שקיפות: התפריט הופך אטום */
+@media (prefers-reduced-transparency: reduce) {
+    header nav[class*="backdrop-blur"], header.top { background-color: #fff !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+}
+
+/* מי שביקש ניגודיות גבוהה: רקע אטום עם מסגרת ברורה */
+@media (prefers-contrast: more) {
+    header nav[class*="backdrop-blur"], header.top { background-color: #fff !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; border-color: #1A1A1A !important; animation: none; }
+}
+
+/* מי שביקש פחות תנועה: בלי אפקט הלחיצה ובלי צל שזז עם הגלילה */
+@media (prefers-reduced-motion: reduce) {
+    :is(button, [role="button"], a):active { scale: none; }
+    header nav[class*="backdrop-blur"], header.top { animation: none; }
+    header.top { border-bottom-color: rgba(26, 26, 26, 0.06); }
+}
