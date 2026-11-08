@@ -1,45 +1,43 @@
 /* =====================================================================
-   Snap Box — ערכת עיצוב "גלריה שחורה"
-   שכבת עיצוב אחרונה שנטענת אחרי כל שאר הסגנונות בעמוד הבית.
-   רקע שחור, כרטיסים פחמיים עם פינות 28px, טיפוגרפיה נקייה במשקל 600,
-   וכחול אחד בלבד לכפתורי ההזמנה. בלי צלליות ובלי זהב.
+   Snap Box — מבנה וטיפוגרפיה נקיים בסגנון Apple, בצבעים המקוריים של האתר
+   (ירוק יער, זהב, קרם ושחור-דיו). נטען אחרון בעמוד הבית.
    ===================================================================== */
 
 :root {
-    --color-gallery-black: #000000;
-    --color-charcoal-stage: #111111;
-    --color-ink: #1d1d1f;
-    --color-porcelain: #f5f5f7;
-    --color-paper: #ffffff;
-    --color-steel: #86868b;
-    --color-graphite: #6e6e73;
-    --color-control-charcoal: #333336;
-    --color-cloud-gray: #e8e8ed;
-    --color-apple-blue: #0071e3;
-    --color-link-blue: #2997ff; /* גרסת הקישור הכחול לרקע כהה (קריאה יותר מ-#0066cc על שחור) */
+    --forest: #0F2415;        /* רקע הבמה */
+    --forest-2: #122117;      /* פסים כהים משניים */
+    --forest-deep: #0A1A0F;   /* פוטר */
+    --cream: #FCFBFA;         /* פאנלים בהירים */
+    --sand: #F3EFE4;          /* אריחים בתוך פאנלים */
+    --ink: #1A1A1A;           /* טקסט ראשי וכפתורים כהים */
+    --muted: #6b7280;         /* טקסט משני על בהיר */
+    --line: rgba(26, 26, 26, .1);
+    --gold: #D4AF37;          /* הדגשה וכפתור ראשי */
+    --gold-dark: #9C7622;     /* זהב לטקסט קטן על רקע בהיר */
+    --gold-light: #F4DC8E;    /* זהב לטקסט קטן על רקע כהה */
+    --on-dark: #F3EFE4;       /* טקסט משני על ירוק */
 
-    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Hebrew", "Heebo", "Inter", system-ui, sans-serif;
-    --font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Hebrew", "Heebo", "Inter", system-ui, sans-serif;
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Hebrew", "Heebo", system-ui, sans-serif;
+    --font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Hebrew", "Heebo", system-ui, sans-serif;
 
     --radius-cards: 28px;
     --radius-pill: 980px;
-    --ease: cubic-bezier(.16, 1, .3, 1);
 }
 
 /* ---------- בסיס ---------- */
-html { background: var(--color-gallery-black) !important; }
+html { background: var(--forest) !important; }
 body {
-    background: var(--color-gallery-black) !important;
-    color: var(--color-porcelain) !important;
+    background: var(--forest) !important;
+    color: var(--ink);
     font-family: var(--font-text) !important;
     letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-::selection { background: rgba(0, 113, 227, .45); color: #fff; }
-:focus-visible { outline: 2px solid var(--color-apple-blue) !important; outline-offset: 3px; }
+::selection { background: rgba(212, 175, 55, .4); }
+:focus-visible { outline: 2px solid var(--gold) !important; outline-offset: 3px; }
 
-/* כותרות: בלי סריף נטוי, משקל 600, ריווח צפוף */
+/* כותרות: משקל 600, ריווח צפוף, בלי סריף נטוי */
 .font-serif, h1, h2, .sb-window-quote, .sbx-pop__title {
     font-family: var(--font-display) !important;
     font-style: normal !important;
@@ -49,59 +47,38 @@ body {
 .italic { font-style: normal !important; }
 .font-light { font-weight: 400 !important; }
 .not-italic.font-light { font-weight: 600 !important; }
+.sbx-pop, .sbx-pop__submit, .sbx-pop__field input { font-family: var(--font-text) !important; }
 
-/* צבעי עזר מ-Tailwind שהיו זהב / אפור בהיר */
-.text-\[\#D4AF37\] { color: var(--color-steel) !important; }
-.hover\:text-\[\#D4AF37\]:hover { color: var(--color-paper) !important; }
-.text-gray-400, .text-gray-500, .text-gray-600, .text-zinc-400, .text-zinc-500 { color: var(--color-steel) !important; }
-.text-zinc-800 { color: var(--color-porcelain) !important; }
-.border-gray-100, .border-gray-200, .border-b, .border-t { border-color: rgba(255, 255, 255, .1) !important; }
-.bg-gray-200 { background-color: rgba(255, 255, 255, .12) !important; }
-.decoration-\[\#D4AF37\] { text-decoration-color: var(--color-graphite) !important; }
-
-/* ---------- רקעי היער והקישוטים: יוצאים, נשארת במה שחורה ---------- */
+/* ---------- רקעי היער והקישוטים יצאו (גם בשביל מהירות) ---------- */
 .sb-scenes, .sb-rays, #sbLeaves, .sb-glade, #sbFireflies, .sbx-planters,
 .sb-badge, .gold-line, .sb-mote { display: none !important; }
-.sb-progress { background: var(--color-porcelain) !important; height: 2px !important; opacity: .7; }
 
-/* ---------- ניווט עליון ---------- */
+/* ---------- ניווט עליון: סרגל מלא ונקי ---------- */
 header.fixed { padding: 0 !important; }
 header nav {
     max-width: none !important;
     border-radius: 0 !important;
     min-height: 52px;
     padding: 6px max(16px, calc((100% - 1024px) / 2)) !important;
-    background: rgba(17, 17, 17, .78) !important;
+    background: rgba(252, 251, 250, .94) !important;
     -webkit-backdrop-filter: saturate(180%) blur(20px) !important;
     backdrop-filter: saturate(180%) blur(20px) !important;
     border: 0 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, .08) !important;
+    border-bottom: 1px solid var(--line) !important;
     box-shadow: none !important;
-    color: rgba(255, 255, 255, .8);
+    color: var(--ink);
 }
-header nav .text-\[\#D4AF37\] { color: #cccccc !important; }
 header nav svg.h-10 { width: 30px; height: 30px; }
-.nav-brand-text { font-family: var(--font-text) !important; font-weight: 600 !important; font-size: 17px !important; letter-spacing: -0.02em !important; text-transform: none !important; color: var(--color-porcelain) !important; }
-header nav .text-gray-500 { color: var(--color-steel) !important; letter-spacing: .02em !important; text-transform: none !important; }
-header nav ul { font-size: 12px !important; font-weight: 400 !important; letter-spacing: -0.01em; gap: 2rem !important; }
-header nav ul a { color: rgba(255, 255, 255, .8) !important; transition: color .2s; }
-header nav ul a:hover { color: #fff !important; }
-/* כפתור "שריינו תאריך" — הכחול היחיד בבר */
+.nav-brand-text { font-family: var(--font-text) !important; font-weight: 700 !important; font-size: 17px !important; letter-spacing: -0.02em !important; text-transform: none !important; }
+header nav .text-gray-500 { letter-spacing: .02em !important; text-transform: none !important; }
+header nav ul { font-size: 13px !important; font-weight: 400 !important; gap: 2rem !important; }
 header nav .bg-\[\#1A1A1A\] {
-    background: var(--color-apple-blue) !important; color: #fff !important;
-    font-weight: 400 !important; font-size: 12px !important; letter-spacing: -0.01em;
-    padding: 5px 14px !important; border-radius: var(--radius-pill) !important;
+    font-weight: 400 !important; font-size: 12px !important;
+    padding: 6px 14px !important; border-radius: var(--radius-pill) !important;
 }
-header nav .bg-\[\#1A1A1A\]:hover { background: #0077ed !important; }
-#sbMenuBtn { border-color: rgba(255, 255, 255, .2) !important; color: var(--color-porcelain); }
-#sbMobileMenu {
-    margin: 0 !important; border-radius: 0 0 var(--radius-cards) var(--radius-cards) !important;
-    background: rgba(17, 17, 17, .96) !important; border: 0 !important; box-shadow: none !important;
-}
-#sbMobileMenu a { color: var(--color-porcelain); font-weight: 600; }
-#sbMobileMenu a:hover { background: rgba(255, 255, 255, .06) !important; }
+#sbMobileMenu { margin: 0 !important; border-radius: 0 0 var(--radius-cards) var(--radius-cards) !important; box-shadow: none !important; }
 
-/* ---------- Hero: במת מוצר שחורה ---------- */
+/* ---------- Hero: העמדה האמיתית על רקע ירוק יער ---------- */
 #main {
     position: relative;
     max-width: 1280px !important;
@@ -120,214 +97,143 @@ header nav .bg-\[\#1A1A1A\]:hover { background: #0077ed !important; }
     height: 100%; width: auto; max-width: 70%; object-fit: cover; object-position: center 30%;
     -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
     mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
-    opacity: .95;
 }
 #main .hero-tag-container { justify-content: flex-start !important; gap: 10px; margin-bottom: 16px; }
 #main .hero-tag {
-    display: inline-block; background: #311400; color: #ff791b !important;
+    display: inline-block; background: rgba(212, 175, 55, .16); color: var(--gold-light) !important;
     font-size: 12px !important; font-weight: 600 !important; line-height: 16px;
     letter-spacing: -0.01em !important; text-transform: none !important;
     padding: 4px 8px; border-radius: 5px;
 }
 body > section.animate-fade-in h1, #main h1 {
-    color: var(--color-porcelain) !important; text-shadow: none !important;
+    color: #fff !important; text-shadow: none !important;
     font-size: clamp(44px, 7.4vw, 80px) !important; line-height: 1.05 !important; letter-spacing: -0.015em !important;
     max-width: 11ch;
 }
-#main h1 span { color: var(--color-steel) !important; }
+#main h1 span { color: var(--gold) !important; }
 #main .sb-hero-sub {
     margin: 24px 0 0 !important; max-width: 520px !important;
     font-size: 17px !important; line-height: 1.47 !important; letter-spacing: -0.022em;
-    color: var(--color-steel) !important; text-shadow: none !important;
+    color: var(--on-dark) !important; opacity: .85; text-shadow: none !important;
 }
 #main .mt-10 { justify-content: flex-start !important; margin-top: 32px !important; }
-/* כפתור ראשי כחול */
 #main .bg-\[\#D4AF37\] {
-    background: var(--color-apple-blue) !important; color: #fff !important; box-shadow: none !important;
-    border-radius: var(--radius-pill) !important; font-weight: 400 !important; font-size: 17px;
-    padding: 12px 24px !important; transform: none !important;
+    box-shadow: none !important; border-radius: var(--radius-pill) !important;
+    font-weight: 600 !important; font-size: 17px; padding: 12px 24px !important; transform: none !important;
 }
-#main .bg-\[\#D4AF37\]:hover { background: #0077ed !important; }
-/* כפתור משני: מסגרת לבנה שקופה */
 #main .border-white\/70 {
     background: transparent !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
-    border: 1px solid rgba(245, 245, 247, .9) !important; color: var(--color-porcelain) !important;
     border-radius: var(--radius-pill) !important; font-weight: 400 !important; font-size: 17px;
     padding: 12px 24px !important; transform: none !important;
 }
-#main .border-white\/70:hover { background: var(--color-porcelain) !important; color: var(--color-ink) !important; }
 .sb-hero-trees { height: 0 !important; min-height: 0 !important; }
 .sb-scroll-cue { display: none !important; }
 
 /* ---------- גלריה זזה ---------- */
-.marquee-container { background: var(--color-gallery-black) !important; padding: 24px 0 !important; }
+.marquee-container { background: transparent !important; padding: 24px 0 !important; margin: 0 !important; }
 .gallery-item, .marquee-container .gallery-item {
     border-radius: var(--radius-cards) !important; border: 0 !important; box-shadow: none !important;
-    width: 300px !important; height: 400px !important;
+    width: 300px !important; height: 400px !important; background: var(--forest-2);
 }
 
-/* ---------- מודולים: פחמי על שחור, בלי זכוכית ובלי צל ---------- */
+/* ---------- מודולים: קרם על ירוק, פינות 28px, בלי זכוכית ובלי צל ---------- */
 .max-w-5xl, .sb-try-grid, #contact-form .form-container, #reviews > .max-w-6xl, .sb-faq > .max-w-4xl {
-    background: var(--color-charcoal-stage) !important;
+    background: var(--cream) !important;
     -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
     border: 0 !important; box-shadow: none !important;
     border-radius: var(--radius-cards) !important;
-    color: var(--color-porcelain);
+    color: var(--ink);
 }
-section.bg-\[\#FCFBFA\], #reviews, .sb-faq, .sb-try, #contact-form, .bg-white { background: transparent !important; }
+section.bg-\[\#FCFBFA\], #reviews, .sb-faq, .sb-try, #contact-form, #reviews.bg-white { background: transparent !important; }
 #package, #reviews, .sb-faq, .sb-try, #contact-form { padding-top: 24px !important; padding-bottom: 24px !important; }
 .sb-try { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
 
 /* כותרות מקטעים */
 #package h2, .sb-faq h2, .sb-try h2, #contact-form h2, #reviews h2 {
-    color: var(--color-porcelain) !important;
     font-size: clamp(36px, 5.2vw, 56px) !important; line-height: 1.07 !important; letter-spacing: -0.005em !important;
 }
-.sb-try h2 span { color: var(--color-steel) !important; }
+#package h2, .sb-faq h2, .sb-try h2, #contact-form h2 { color: var(--ink) !important; }
+.sb-try h2 span { color: var(--gold) !important; }
 #package h2 + p, .sb-faq h2 + p, .sb-try .hero-tag-container span {
-    color: var(--color-steel) !important; letter-spacing: 0 !important; text-transform: none !important;
+    color: var(--gold-dark) !important; letter-spacing: 0 !important; text-transform: none !important;
     font-size: 14px !important; font-weight: 600 !important;
 }
 .sb-try .hero-tag-container { justify-content: flex-start; }
 
-/* החבילה: אריחי מדד שחורים */
+/* החבילה: אריחים */
 #package .grid { gap: 12px !important; }
 #package .grid > div {
-    background: var(--color-gallery-black); border: 0 !important; border-radius: var(--radius-cards);
+    background: var(--sand); border: 0 !important; border-radius: var(--radius-cards);
     padding: 24px !important; min-height: 150px; flex-direction: column; gap: 14px !important;
 }
-#package .grid > div > span { color: var(--color-steel) !important; font-family: var(--font-text) !important; font-size: 14px !important; font-weight: 600; }
-#package h3 { font-size: 21px !important; font-weight: 600 !important; text-transform: none !important; letter-spacing: -0.01em !important; color: var(--color-porcelain); }
-#package h3 + p { font-size: 14px !important; color: var(--color-steel) !important; }
-#package .mt-16 p { text-decoration: none !important; text-transform: none !important; letter-spacing: 0 !important; font-size: 12px !important; }
+#package .grid > div > span { color: var(--gold-dark) !important; font-family: var(--font-text) !important; font-size: 14px !important; font-weight: 600; }
+#package h3 { font-size: 21px !important; font-weight: 600 !important; text-transform: none !important; letter-spacing: -0.01em !important; }
+#package h3 + p { font-size: 14px !important; }
+#package .mt-16 p { text-transform: none !important; letter-spacing: 0 !important; font-size: 12px !important; }
 
-/* חלונות ציטוט — הצהרות ענק על שחור */
-.sb-window { background: var(--color-gallery-black); min-height: 56vh !important; }
-.sb-window-kicker { color: var(--color-steel) !important; text-shadow: none !important; letter-spacing: .02em !important; font-size: 14px !important; font-weight: 600 !important; text-transform: none !important; }
+/* חלונות ציטוט — הצהרות גדולות על ירוק */
+.sb-window { min-height: 56vh !important; }
+.sb-window-kicker { color: var(--gold-light) !important; text-shadow: none !important; letter-spacing: .02em !important; font-size: 14px !important; font-weight: 600 !important; text-transform: none !important; }
 .sb-window-quote {
-    color: var(--color-porcelain) !important; text-shadow: none !important;
+    color: #fff !important; text-shadow: none !important;
     font-size: clamp(40px, 7vw, 80px) !important; line-height: 1.05 !important; letter-spacing: -0.015em !important;
 }
 
 /* ---------- נסו אותי ---------- */
-.sb-step { border-bottom-color: rgba(255, 255, 255, .1) !important; }
-.sb-step span { color: var(--color-steel) !important; font-family: var(--font-text) !important; font-style: normal !important; font-size: 14px !important; font-weight: 600; }
-.sb-step p { color: var(--color-porcelain); font-weight: 600 !important; font-size: 17px; }
-.sbx-modes {
-    background: rgba(255, 255, 255, .04) !important; border: 1px solid var(--color-graphite) !important;
-    box-shadow: none !important; -webkit-backdrop-filter: none; backdrop-filter: none;
-}
-.sbx-mode { color: var(--color-porcelain) !important; }
-.sbx-mode[aria-checked="true"] { background: var(--color-porcelain) !important; color: var(--color-ink) !important; }
-.sb-shoot {
-    background: var(--color-apple-blue) !important; color: #fff !important; border: 0 !important;
-    border-radius: var(--radius-pill) !important; box-shadow: none !important; font-weight: 400 !important;
-}
-.sb-shoot:hover { background: #0077ed !important; color: #fff !important; transform: none !important; }
-.sb-shoot::after { display: none !important; }
-.sb-status { background: var(--color-control-charcoal) !important; color: var(--color-porcelain) !important; -webkit-backdrop-filter: none; backdrop-filter: none; }
-.sb-actions a { background: var(--color-apple-blue) !important; color: #fff !important; border-color: transparent !important; }
-.sb-actions button { background: transparent !important; color: var(--color-porcelain) !important; border: 1px solid var(--color-porcelain) !important; }
-.sb-actions a:hover { background: #0077ed !important; color: #fff !important; }
-.sb-actions button:hover { background: var(--color-porcelain) !important; color: var(--color-ink) !important; }
+.sb-step span { color: var(--gold-dark) !important; font-family: var(--font-text) !important; font-style: normal !important; font-size: 14px !important; font-weight: 600; }
+.sb-step p { font-weight: 600 !important; font-size: 17px; }
+.sbx-modes { background: #fff !important; border: 1px solid #e4e0d4 !important; box-shadow: none !important; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.sb-shoot { border-radius: var(--radius-pill) !important; box-shadow: none !important; }
+.sb-status { -webkit-backdrop-filter: none; backdrop-filter: none; }
 
 /* ---------- טופס שריון ---------- */
 #contact-form .form-container { padding: clamp(28px, 6vw, 72px) !important; }
-#contact-form h2 + p { font-size: 21px !important; color: var(--color-steel) !important; }
-#contact-form label.text-\[\#D4AF37\] { color: var(--color-steel) !important; font-size: 12px !important; font-weight: 600 !important; text-transform: none !important; }
-#contact-form .border-b { border-bottom-color: var(--color-graphite) !important; }
-#contact-form input, #contact-form select, #contact-form textarea { color: var(--color-porcelain) !important; }
-#contact-form ::placeholder, .sb-field::placeholder { color: var(--color-graphite) !important; }
-select option { background: var(--color-charcoal-stage); color: var(--color-porcelain); }
+#contact-form h2 + p { font-size: 21px !important; }
+#contact-form label.text-\[\#D4AF37\] { color: var(--gold-dark) !important; font-size: 12px !important; font-weight: 600 !important; text-transform: none !important; }
+#contact-form .border-b { border-bottom-color: var(--line) !important; }
 #contact-form button[type="submit"] {
-    background: var(--color-apple-blue) !important; color: #fff !important; box-shadow: none !important;
-    border-radius: var(--radius-pill) !important; font-weight: 400 !important; font-size: 17px !important;
+    box-shadow: none !important; border-radius: var(--radius-pill) !important; font-weight: 600 !important; font-size: 17px !important;
     letter-spacing: -0.01em !important; text-transform: none !important; padding: 16px 24px !important;
 }
-#contact-form button[type="submit"]:hover { background: #0077ed !important; }
-.sb-consent-row { color: var(--color-steel) !important; }
-.sb-consent-row a, .sb-faq-a a, #cookieBanner a { color: var(--color-link-blue) !important; text-decoration: none !important; font-weight: 400 !important; }
-.sb-consent-row a:hover, .sb-faq-a a:hover, #cookieBanner a:hover { text-decoration: underline !important; }
-.sb-consent-row input, input[type="checkbox"] { accent-color: var(--color-apple-blue); }
+.sb-consent-row input, input[type="checkbox"] { accent-color: var(--ink); }
 
 /* ---------- רשתות חברתיות ---------- */
-.social-btn, body > div.flex.justify-center .social-btn {
-    background: var(--color-charcoal-stage) !important; border: 0 !important; box-shadow: none !important;
-}
-.social-btn > div { display: none; }
-.social-btn svg { color: var(--color-porcelain) !important; }
-.social-btn:hover svg { color: #fff !important; }
+.social-btn, body > div.flex.justify-center .social-btn { background: var(--cream) !important; border: 0 !important; box-shadow: none !important; }
 
 /* ---------- ביקורות ---------- */
+#reviews h2 { color: var(--gold) !important; }
+#reviews h2 + p { color: var(--muted) !important; letter-spacing: 0 !important; text-transform: none !important; font-size: 14px !important; }
 .sb-reviews-display-box, .sb-form-card {
-    background: var(--color-gallery-black) !important; border: 0 !important; box-shadow: none !important;
+    background: var(--sand) !important; border: 0 !important; box-shadow: none !important;
     border-radius: var(--radius-cards) !important;
 }
-.sb-review-item, .sb-review-item p, .sb-review-quote { color: var(--color-porcelain); }
-.sb-review-item .text-gray-400, .sb-review-item small { color: var(--color-steel) !important; }
-.sb-field {
-    background: rgba(255, 255, 255, .04) !important; border: 1px solid var(--color-graphite) !important;
-    color: var(--color-porcelain) !important; border-radius: 22px !important; box-shadow: none !important;
-}
+.sb-field { background: #fff !important; border: 1px solid #e4e0d4 !important; border-radius: 22px !important; box-shadow: none !important; }
 input.sb-field { border-radius: var(--radius-pill) !important; padding-inline: 24px !important; }
-.sb-field:focus { background: rgba(255, 255, 255, .07) !important; border-color: var(--color-apple-blue) !important; }
-.sb-submit-button {
-    background: var(--color-apple-blue) !important; color: #fff !important; box-shadow: none !important;
-    border-radius: var(--radius-pill) !important; font-weight: 400 !important; letter-spacing: -0.01em !important; text-transform: none !important;
-}
-.sb-submit-button:hover { background: #0077ed !important; transform: none !important; }
+.sb-field:focus { border-color: var(--gold) !important; }
+.sb-submit-button { box-shadow: none !important; border-radius: var(--radius-pill) !important; letter-spacing: -0.01em !important; text-transform: none !important; }
+.sb-submit-button:hover { transform: none !important; }
 
 /* ---------- שאלות נפוצות ---------- */
-.sb-faq-item { border-bottom-color: rgba(255, 255, 255, .1) !important; }
-.sb-faq-q { color: var(--color-porcelain) !important; }
+.sb-faq-item { border-bottom-color: var(--line) !important; }
 .sb-faq-q h3 { font-weight: 600 !important; font-size: 17px !important; letter-spacing: -0.022em; }
-.sb-faq-q:hover h3 { color: #fff !important; }
-.sb-faq-num { color: var(--color-steel) !important; font-family: var(--font-text) !important; font-style: normal !important; font-size: 14px !important; font-weight: 600; }
-.sb-faq-icon { border-color: var(--color-graphite) !important; color: var(--color-porcelain) !important; background: transparent !important; }
-.sb-faq-item.sb-open .sb-faq-icon { background: var(--color-porcelain) !important; color: var(--color-ink) !important; border-color: var(--color-porcelain) !important; }
-.sb-faq-a p { color: var(--color-steel) !important; font-size: 17px; line-height: 1.47 !important; }
+.sb-faq-num { color: var(--gold-dark) !important; font-family: var(--font-text) !important; font-style: normal !important; font-size: 14px !important; font-weight: 600; }
+.sb-faq-a p { font-size: 17px; line-height: 1.47 !important; }
 
 /* ---------- פוטר ---------- */
 footer {
-    background: var(--color-charcoal-stage) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
-    color: var(--color-steel) !important; border-top: 0 !important; box-shadow: var(--color-porcelain) 0 -1px 0 0 inset;
-    box-shadow: none !important;
+    background: var(--forest-deep) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+    color: var(--on-dark) !important; border-top: 1px solid rgba(255, 255, 255, .08) !important;
 }
-footer h3 { color: var(--color-porcelain); font-family: var(--font-text); font-weight: 600 !important; letter-spacing: .3em !important; font-size: 17px !important; }
-footer p { font-size: 12px !important; }
-footer a:hover { color: var(--color-porcelain) !important; }
-.sb-legal a {
-    background: var(--color-control-charcoal) !important; border: 0 !important; color: var(--color-porcelain) !important;
-    font-weight: 400 !important; font-size: 12px !important; border-radius: var(--radius-pill) !important; box-shadow: none !important;
-}
-.sb-legal a svg { color: var(--color-steel) !important; }
-.sb-legal a:hover, .sb-legal a:focus-visible { background: var(--color-porcelain) !important; color: var(--color-ink) !important; transform: none !important; }
-.sb-legal a:hover svg { color: var(--color-ink) !important; }
+footer h3 { font-family: var(--font-text); font-weight: 700 !important; letter-spacing: .3em !important; font-size: 17px !important; }
+footer p { font-size: 13px !important; }
+.sb-legal a { font-weight: 400 !important; font-size: 12px !important; border-radius: var(--radius-pill) !important; box-shadow: none !important; }
+.sb-legal a:hover, .sb-legal a:focus-visible { transform: none !important; }
 
-/* ---------- כפתורים צפים ---------- */
-.whatsapp-float { background-color: var(--color-control-charcoal) !important; box-shadow: none !important; }
-#accMainBtn { background: var(--color-control-charcoal) !important; box-shadow: none !important; border-color: rgba(255, 255, 255, .12) !important; }
-.acc-option { background: var(--color-charcoal-stage) !important; color: var(--color-porcelain) !important; border-color: rgba(255, 255, 255, .12) !important; box-shadow: none !important; }
-.acc-option:hover { background: var(--color-porcelain) !important; color: var(--color-ink) !important; }
-
-/* ---------- באנר עוגיות ---------- */
-#cookieBanner { background: var(--color-control-charcoal) !important; color: var(--color-porcelain) !important; box-shadow: none !important; border: 0 !important; }
-#cookieBanner button { background: var(--color-apple-blue) !important; color: #fff !important; border-radius: var(--radius-pill) !important; border: 0 !important; }
-
-/* ---------- פופאפ יצירת קשר ---------- */
-.sbx-pop__scrim { background: rgba(0, 0, 0, .7) !important; }
-.sbx-pop__card { background: var(--color-charcoal-stage) !important; border: 0 !important; box-shadow: none !important; border-radius: var(--radius-cards) !important; }
-.sbx-pop__x { background: var(--color-control-charcoal) !important; color: var(--color-porcelain) !important; }
-.sbx-pop__eyebrow { color: var(--color-steel) !important; letter-spacing: .02em !important; }
-.sbx-pop__title { color: var(--color-porcelain) !important; }
-.sbx-pop__desc, .sbx-pop__note { color: var(--color-steel) !important; }
-.sbx-pop__field { border-bottom-color: var(--color-graphite) !important; }
-.sbx-pop__field label { color: var(--color-steel) !important; letter-spacing: 0 !important; text-transform: none !important; }
-.sbx-pop__field input { color: var(--color-porcelain) !important; }
-.sbx-pop__field input::placeholder { color: var(--color-graphite) !important; }
-.sbx-pop__submit { background: var(--color-apple-blue) !important; color: #fff !important; border-radius: var(--radius-pill) !important; font-weight: 400 !important; letter-spacing: -0.01em !important; text-transform: none !important; }
-.sbx-pop__submit:hover { background: #0077ed !important; }
-.sbx-pop__handle { background: var(--color-graphite) !important; }
+/* ---------- פופאפ וכפתורים צפים: הצבעים המקוריים, צורות נקיות ---------- */
+.sbx-pop__card { border-radius: var(--radius-cards) !important; box-shadow: none !important; }
+.sbx-pop__eyebrow, .sbx-pop__field label { letter-spacing: .02em !important; text-transform: none !important; }
+.sbx-pop__submit { border-radius: var(--radius-pill) !important; letter-spacing: -0.01em !important; text-transform: none !important; }
+.whatsapp-float, #accMainBtn, .acc-option { box-shadow: none !important; }
 
 /* ---------- מובייל ---------- */
 @media (max-width: 767px) {
@@ -342,5 +248,4 @@ footer a:hover { color: var(--color-porcelain) !important; }
 
 /* ---------- נגישות: ניגודיות גבוהה ---------- */
 .high-contrast-active .max-w-5xl, .high-contrast-active .sb-try-grid, .high-contrast-active #contact-form .form-container,
-.high-contrast-active #reviews > .max-w-6xl, .high-contrast-active .sb-faq > .max-w-4xl { background: #000 !important; outline: 2px solid #fff; }
-.high-contrast-active .text-gray-400, .high-contrast-active .text-gray-500, .high-contrast-active .sb-faq-a p { color: #fff !important; }
+.high-contrast-active #reviews > .max-w-6xl, .high-contrast-active .sb-faq > .max-w-4xl { background: #000 !important; color: #fff !important; outline: 2px solid #fff; }
