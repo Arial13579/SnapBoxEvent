@@ -105,39 +105,3 @@ footer small { display: block; margin-top: 26px; opacity: .6; font-size: 11px; }
     *, *::before, *::after { transition: none !important; animation: none !important; }
     html { scroll-behavior: auto; }
 }
-
-/* =====================================================================
-   מבנה וטיפוגרפיה נקיים (בסגנון Apple) בצבעים המקוריים של Snap Box
-   ===================================================================== */
-:root {
-    --display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Hebrew", "Heebo", system-ui, sans-serif;
-    --text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Hebrew", "Heebo", system-ui, sans-serif;
-}
-body { font-family: var(--text); line-height: 1.6; letter-spacing: -0.01em; -webkit-font-smoothing: antialiased; }
-.serif, .hero h1, h2, .num { font-family: var(--display); font-style: normal; font-weight: 600; letter-spacing: -0.015em; }
-
-.brand { letter-spacing: -0.02em; text-transform: none; font-size: 17px; font-weight: 700; }
-.kicker { background: rgba(212,175,55,.16); color: #F4DC8E; padding: 4px 8px; border-radius: 5px; letter-spacing: -0.01em; font-size: 12px; font-weight: 600; }
-.hero h1 { font-size: clamp(44px, 7.4vw, 80px); line-height: 1.05; text-shadow: none; }
-.hero p { font-size: 17px; line-height: 1.47; font-weight: 400; }
-.btn { min-height: 44px; padding: 12px 24px; font-weight: 600; font-size: 17px; border-radius: 980px; box-shadow: none; }
-.btn:hover { transform: none; }
-.btn-gold { box-shadow: none; }
-
-h2 { font-size: clamp(32px, 5vw, 56px); line-height: 1.07; }
-.lead { font-size: 17px; line-height: 1.6; }
-.features { gap: 12px; }
-.features li { border: 0; background: #F3EFE4; border-radius: 28px; padding: 24px; box-shadow: none; }
-.features li:hover { transform: none; }
-.features b { font-size: 21px; font-weight: 600; }
-.num { color: #9C7622; font-size: 14px; }
-.split img { border-radius: 28px; box-shadow: none; }
-.faq summary { font-weight: 600; font-size: 17px; }
-.others a { border: 0; background: #F3EFE4; border-radius: 28px; font-weight: 600; }
-.others a:hover { transform: none; }
-.cta-box { border-radius: 28px; background: var(--forest); box-shadow: none; }
-
-footer .name { font-weight: 700; letter-spacing: .3em; font-size: 17px; }
-.legal a { font-weight: 400; font-size: 12px; }
-.legal a:hover { transform: none; }
-.wa-float { box-shadow: none; }
