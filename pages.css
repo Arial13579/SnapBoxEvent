@@ -1,6 +1,7 @@
 /* עיצוב משותף לעמודי סוגי האירועים */
 :root { --gold: #D4AF37; --gold-dark: #9C7622; --forest: #122117; --cream: #FCFBFA; --ink: #1A1A1A; --muted: #5f6368; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
+picture { display: contents; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body { font-family: 'Assistant', sans-serif; background: var(--cream); color: var(--ink); line-height: 1.8; overflow-x: hidden; }
 img { max-width: 100%; display: block; }
